@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TrabajoEdi3.Datos\TrabajoEdi3.Datos.csproj" />
+    <ProjectReference Include="..\TrabajoEdi3.Entidades\TrabajoEdi3.Entidades.csproj" />
+  </ItemGroup>
+
+</Project>

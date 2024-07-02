@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ConsoleTables" Version="2.6.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TrabajoEdi3.Datos\TrabajoEdi3.Datos.csproj" />
+    <ProjectReference Include="..\TrabajoEdi3.Entidades\TrabajoEdi3.Entidades.csproj" />
+    <ProjectReference Include="..\TrabajoEdi3.Loc\TrabajoEdi3.Loc.csproj" />
+    <ProjectReference Include="..\TrabajoEdi3.Servicios\TrabajoEdi3.Servicios.csproj" />
+    <ProjectReference Include="..\TrabajoEdi3.Shared\TrabajoEdi3.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

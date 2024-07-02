@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TrabajoEdi3.Datos\TrabajoEdi3.Datos.csproj" />
+    <ProjectReference Include="..\TrabajoEdi3.Entidades\TrabajoEdi3.Entidades.csproj" />
+    <ProjectReference Include="..\TrabajoEdi3.Loc\TrabajoEdi3.Loc.csproj" />
+    <ProjectReference Include="..\TrabajoEdi3.Servicios\TrabajoEdi3.Servicios.csproj" />
+  </ItemGroup>
+
+</Project>
