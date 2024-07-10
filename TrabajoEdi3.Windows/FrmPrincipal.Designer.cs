@@ -34,11 +34,12 @@
             btnSalir = new Button();
             BtnZapatilla = new Button();
             btnGenero = new Button();
+            btnTalles = new Button();
             SuspendLayout();
             // 
             // btnColor
             // 
-            btnColor.Location = new Point(354, 53);
+            btnColor.Location = new Point(404, 42);
             btnColor.Name = "btnColor";
             btnColor.Size = new Size(109, 79);
             btnColor.TabIndex = 1;
@@ -48,7 +49,7 @@
             // 
             // btnDeporte
             // 
-            btnDeporte.Location = new Point(209, 53);
+            btnDeporte.Location = new Point(233, 42);
             btnDeporte.Name = "btnDeporte";
             btnDeporte.Size = new Size(109, 79);
             btnDeporte.TabIndex = 2;
@@ -58,27 +59,31 @@
             // 
             // btnMarca
             // 
-            btnMarca.Location = new Point(63, 53);
+            btnMarca.Image = Properties.Resources.Captura_de_pantalla_2024_07_09_142506;
+            btnMarca.Location = new Point(47, 42);
             btnMarca.Name = "btnMarca";
-            btnMarca.Size = new Size(109, 79);
+            btnMarca.Size = new Size(109, 89);
             btnMarca.TabIndex = 3;
             btnMarca.Text = "Marca";
+            btnMarca.TextImageRelation = TextImageRelation.ImageAboveText;
             btnMarca.UseVisualStyleBackColor = true;
             btnMarca.Click += btnMarca_Click;
             // 
             // btnSalir
             // 
-            btnSalir.Location = new Point(209, 297);
+            btnSalir.Image = Properties.Resources.Cancel;
+            btnSalir.Location = new Point(233, 314);
             btnSalir.Name = "btnSalir";
             btnSalir.Size = new Size(109, 79);
             btnSalir.TabIndex = 4;
             btnSalir.Text = "Salir";
+            btnSalir.TextImageRelation = TextImageRelation.ImageAboveText;
             btnSalir.UseVisualStyleBackColor = true;
             btnSalir.Click += btnSalir_Click;
             // 
             // BtnZapatilla
             // 
-            BtnZapatilla.Location = new Point(354, 173);
+            BtnZapatilla.Location = new Point(416, 187);
             BtnZapatilla.Name = "BtnZapatilla";
             BtnZapatilla.Size = new Size(109, 79);
             BtnZapatilla.TabIndex = 5;
@@ -88,7 +93,7 @@
             // 
             // btnGenero
             // 
-            btnGenero.Location = new Point(109, 173);
+            btnGenero.Location = new Point(37, 187);
             btnGenero.Name = "btnGenero";
             btnGenero.Size = new Size(109, 79);
             btnGenero.TabIndex = 6;
@@ -96,12 +101,23 @@
             btnGenero.UseVisualStyleBackColor = true;
             btnGenero.Click += btnGenero_Click;
             // 
+            // btnTalles
+            // 
+            btnTalles.Location = new Point(233, 187);
+            btnTalles.Name = "btnTalles";
+            btnTalles.Size = new Size(109, 79);
+            btnTalles.TabIndex = 7;
+            btnTalles.Text = "Talles";
+            btnTalles.UseVisualStyleBackColor = true;
+            btnTalles.Click += btnTalles_Click;
+            // 
             // FrmPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(589, 415);
             ControlBox = false;
+            Controls.Add(btnTalles);
             Controls.Add(btnSalir);
             Controls.Add(BtnZapatilla);
             Controls.Add(btnGenero);
@@ -122,5 +138,6 @@
         private Button btnSalir;
         private Button BtnZapatilla;
         private Button btnGenero;
+        private Button btnTalles;
     }
 }

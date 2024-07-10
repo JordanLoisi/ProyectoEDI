@@ -18,6 +18,8 @@ namespace TrabajoEdi3.Entidades.Dto
         [StringLength(150)]
         public string Description { get; set; } = null!;
         public decimal Precio { get; set; }
+
+        public int CantidadTalles {  get; set; }
         
 
     }

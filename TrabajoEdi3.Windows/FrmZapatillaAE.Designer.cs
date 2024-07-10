@@ -55,8 +55,6 @@
             label8 = new Label();
             lblNuevaMarca = new Label();
             errorProvider1 = new ErrorProvider(components);
-            clstTalles = new CheckedListBox();
-            label6 = new Label();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
             // 
@@ -106,7 +104,7 @@
             // 
             // btnCancelar
             // 
-            btnCancelar.Location = new Point(910, 256);
+            btnCancelar.Location = new Point(914, 313);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(105, 54);
             btnCancelar.TabIndex = 53;
@@ -118,7 +116,7 @@
             // btnOk
             // 
             btnOk.Image = (Image)resources.GetObject("btnOk.Image");
-            btnOk.Location = new Point(559, 247);
+            btnOk.Location = new Point(546, 242);
             btnOk.Name = "btnOk";
             btnOk.Size = new Size(289, 54);
             btnOk.TabIndex = 54;
@@ -199,7 +197,7 @@
             // 
             // txtZapatilla
             // 
-            txtZapatilla.Location = new Point(110, 31);
+            txtZapatilla.Location = new Point(102, 26);
             txtZapatilla.MaxLength = 100;
             txtZapatilla.Name = "txtZapatilla";
             txtZapatilla.Size = new Size(433, 23);
@@ -300,33 +298,12 @@
             // 
             errorProvider1.ContainerControl = this;
             // 
-            // clstTalles
-            // 
-            clstTalles.FormattingEnabled = true;
-            clstTalles.Location = new Point(677, 57);
-            clstTalles.Name = "clstTalles";
-            clstTalles.Size = new Size(338, 130);
-            clstTalles.TabIndex = 68;
-           
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(602, 48);
-            label6.Name = "label6";
-            label6.Size = new Size(38, 15);
-            label6.TabIndex = 67;
-            label6.Text = "Talles:";
-            label6.Click += label6_Click;
-            // 
             // FrmZapatillaAE
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1089, 400);
             ControlBox = false;
-            Controls.Add(clstTalles);
-            Controls.Add(label6);
             Controls.Add(lblNuevaMarca);
             Controls.Add(lblNuevoGenero);
             Controls.Add(btnAgregarMarca);
@@ -386,7 +363,5 @@
         private Label label8;
         private Label lblNuevaMarca;
         private ErrorProvider errorProvider1;
-        private CheckedListBox clstTalles;
-        private Label label6;
     }
 }

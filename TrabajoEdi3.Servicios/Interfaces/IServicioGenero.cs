@@ -9,7 +9,8 @@ namespace TrabajoEdi3.Servicios.Interfaces
 {
     public interface IServicioGenero
     {
-        int GetCantidad(Func<Genero, bool>? filtro = null);
+        int GetCantidadFiltro(Func<Genero, bool>? filtro = null);
+        int GetCantidad();
         List<Genero> GetLista();
         void Guardar(Genero genero);
         void Borrar(Genero genero);

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TrabajoEdi3.Datos.Migrations;
 using TrabajoEdi3.Entidades;
 using TrabajoEdi3.Servicios.Interfaces;
 using TrabajoEdi3.Windows.Helpers;
@@ -17,6 +18,7 @@ namespace TrabajoEdi3.Windows
     {
         private readonly IServicioMarca _servicio;
         private List<Marca>? lista;
+        private readonly IServicioZapatilla _servicioZapatilla;
 
         private bool FilterOn = false;
 
@@ -24,15 +26,23 @@ namespace TrabajoEdi3.Windows
         private int pageSize = 15;
         private int pageNum = 0;
         private int recordCount;
-        public FrmMarca(IServicioMarca servicio)
+        public FrmMarca(IServicioMarca servicio,IServicioZapatilla servicioZapatilla)
         {
             InitializeComponent();
             _servicio = servicio;
+            _servicioZapatilla = servicioZapatilla;
         }
 
         private void FrmMarca_Load(object sender, EventArgs e)
         {
             RecargarGrilla();
+            ActualizarCantidad();
+
+        }
+
+        private void ActualizarCantidad()
+        {
+            txtCantidadRegistros.Text = _servicio.GetCantidad().ToString();
         }
 
         private void toolStripButton6_Click(object sender, EventArgs e)
@@ -57,6 +67,7 @@ namespace TrabajoEdi3.Windows
                     if (!_servicio.Existe(marca))
                     {
                         _servicio.Guardar(marca);
+                        ActualizarCantidad();
                         var r = GridHelper.ConstruirFila(dgvDatos);
                         GridHelper.SetearFila(r, marca);
                         GridHelper.AgregarFila(r, dgvDatos);
@@ -142,6 +153,7 @@ namespace TrabajoEdi3.Windows
                     if (!_servicio.EstaRelacionado(marca))
                     {
                         _servicio.Borrar(marca);
+                        ActualizarCantidad();
 
                         GridHelper.QuitarFila(r, dgvDatos);
                         MessageBox.Show("Registro Borrado Satisfactoriamente!!!",
@@ -229,59 +241,28 @@ namespace TrabajoEdi3.Windows
 
         }
 
-        private void btnPrimero_Click(object sender, EventArgs e)
+
+        private void tsbConsultar_Click(object sender, EventArgs e)
         {
-            // Ir a la primera página
-            pageNum = 0;
-            cboPaginas.SelectedIndex = pageNum;
-
-        }
-
-        private void btnAnterior_Click(object sender, EventArgs e)
-        {
-            // Ir a la página anterior
-            pageNum--;
-            if (pageNum < 0) { pageNum = 0; }
-            cboPaginas.SelectedIndex = pageNum;
-        }
-
-        private void btnSiguiente_Click(object sender, EventArgs e)
-        {
-            // Ir a la siguiente página
-            pageNum++;
-            if (pageNum > pageCount - 1) { pageNum = pageCount - 1; }
-            cboPaginas.SelectedIndex = pageNum;
-
-        }
-
-        private void btnUltimo_Click(object sender, EventArgs e)
-        {
-            // Ir a la última página
-            pageNum = pageCount - 1;
-            cboPaginas.SelectedIndex = pageNum;
-        }
-
-        private void tsbActualizar_Click(object sender, EventArgs e)
-        {
-            FilterOn = false;
-            RecargarGrillDeTodasLasMarcas();
-        }
-
-        private void RecargarGrillDeTodasLasMarcas()
-        {
-            try
+            if (dgvDatos.SelectedRows.Count == 0)
             {
-                recordCount = _servicio.GetCantidad();
-                pageCount = FromHelper.CalcularPaginas(recordCount, pageSize);
-                txtCantidadRegistros.Text = pageCount.ToString();
-                CombosHelper.CargarCombosPaginas(pageCount, ref cboPaginas);
-                MostrarDatosEnGrilla();
+                return;
             }
-            catch (Exception)
+            var r = dgvDatos.SelectedRows[0];
+            if (r is null)
             {
-                throw;
-
+                return;
             }
+            Marca marca = (Marca)r.Tag;
+            var marcas = _servicio.GetMarcaPorId(marca.MarcaId);
+            recordCount = _servicioZapatilla.GetCantidad(s => s.Marca == marcas);
+            pageCount = FromHelper.CalcularPaginas(recordCount, pageSize);
+            var lista = _servicioZapatilla.GetListaPaginadaOrdenadaFiltrada(pageNum, pageSize, null,null, marcas,null, null);
+
+            FrmZapatillasPorMarca frm = new FrmZapatillasPorMarca(_servicioZapatilla);
+            frm.SetDatosParaElPaginadoYFiltro(pageCount, pageNum, pageSize, recordCount, marcas);
+            frm.SetLista(lista);
+            frm.ShowDialog();
         }
     }
 }

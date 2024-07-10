@@ -9,7 +9,8 @@ namespace TrabajoEdi3.Datos.Intefaces
 {
     public interface IGeneroRepositorio
     {
-        int GetCantidad(Func<Genero, bool>? filtro = null);
+        int GetCantidadFiltro(Func<Genero, bool>? filtro = null);
+        int GetCantidad();
         void Agregar(Genero genero);
         void Borrar(Genero genero);
         void Editar(Genero genero);
@@ -19,7 +20,6 @@ namespace TrabajoEdi3.Datos.Intefaces
         bool EstaRelacionado(Genero genero);
 
         Genero? GetGeneroPorNombre(string nombreGenero);
-        //List<Deporte>? GetDeporte(Deporte? deporte);
-        //int GetCantidad();
+
     }
 }

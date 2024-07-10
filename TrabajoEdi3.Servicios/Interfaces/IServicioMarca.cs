@@ -9,7 +9,8 @@ namespace TrabajoEdi3.Servicios.Interfaces
 {
     public interface IServicioMarca
     {
-        int GetCantidad(Func<Marca, bool>? filtro = null);
+        int GetCantidadFiltro(Func<Marca, bool>? filtro = null);
+        int GetCantidad();
         List<Marca> GetLista();
         void Guardar(Marca marca);
         void Borrar(Marca marca);

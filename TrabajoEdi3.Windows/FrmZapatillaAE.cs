@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using TrabajoEdi3.Entidades;
+﻿using TrabajoEdi3.Entidades;
+using TrabajoEdi3.Servicios.Interfaces;
 using TrabajoEdi3.Windows.Helpers;
 
 namespace TrabajoEdi3.Windows
@@ -16,6 +7,7 @@ namespace TrabajoEdi3.Windows
     public partial class FrmZapatillaAE : Form
     {
         private readonly IServiceProvider _serviceProvider;
+        private readonly IServicioZapatilla servicioZapatilla;
         private Zapatilla? zapatilla;
         private Deporte? deporte;
         private Marca? marca;
@@ -28,6 +20,8 @@ namespace TrabajoEdi3.Windows
             InitializeComponent();
             _serviceProvider = serviceProvider;
         }
+        private bool EsEdition = false;
+
 
         private void FrmZapatillaAE_Load(object sender, EventArgs e)
         {
@@ -40,46 +34,25 @@ namespace TrabajoEdi3.Windows
             CombosHelper.CargarComboDeporte(_serviceProvider, ref cboDeporte);
             CombosHelper.CargarComboColor(_serviceProvider, ref cboColor);
             CombosHelper.CargarComboGenero(_serviceProvider, ref cboGenero);
-            ListBoxHelpers.CargarDatosListBoxTalles(_serviceProvider, ref clstTalles);
+
             if (zapatilla != null)
             {
                 txtZapatilla.Text = zapatilla.Description;
                 txtPrecio.Text = zapatilla.Precio.ToString();
                 txtModelo.Text = zapatilla.Modelo.ToString();
-                cboMarca.SelectedValue = marca.MarcaId;
-                cboDeporte.SelectedValue = deporte.DeporteId;
-                cboColor.SelectedValue = color.ColorId;
-                cboGenero.SelectedValue = genero.GeneroId;
+                cboMarca.SelectedValue = zapatilla.MarcaId;
+                cboDeporte.SelectedValue = zapatilla.DeporteId;
+                cboColor.SelectedValue = zapatilla.ColoresId;
+                cboGenero.SelectedValue = zapatilla.GeneroId;
                 deporte = zapatilla.Deporte;
                 marca = zapatilla.Marca;
                 color = zapatilla.Colores;
                 genero = zapatilla.Genero;
-            }
-            if (p.talles != null && p.talles.Any())
-            {
-                // Recorre todos los ítems del CheckedListBox
-                for (int i = 0; i < clstTalles.Items.Count; i++)
-                {
-                    // Obtén el proveedor actual del CheckedListBox
-                    var itemTalles = clstTalles.Items[i] as Talles;
 
-                    if (itemTalles != null)
-                    {
-                        // Verifica si el proveedor actual está en la lista de proveedores
-                        if (p.talles
-                            .Any(p => p.TallesId == itemTalles.TallesId))
-                        {
-                            // Selecciona el ítem si el proveedor está en la lista
-                            clstTalles.SetItemChecked(i, true);
-                        }
-                        else
-                        {
-                            // Desmarca el ítem si el proveedor no está en la lista
-                            clstTalles.SetItemChecked(i, false);
-                        }
-                    }
-                }
+
+                EsEdition = true;
             }
+
         }
 
         public (Zapatilla?, List<Talles>?) GetZapatillaTalles()
@@ -122,22 +95,48 @@ namespace TrabajoEdi3.Windows
                 zapatilla.ColoresId = color.ColorId;
                 zapatilla.GeneroId = genero.GeneroId;
 
-                if (clstTalles.CheckedItems.Count > 0)
+                try
                 {
-                    p.talles = new List<Talles>();
-                    //Se itera sobre los talles seleccionados
-                    foreach (var item in clstTalles.CheckedItems)
+
+
+
+                    if (!EsEdition)
                     {
-                        //Se almacenan los proveedores seleccionados
-
-                        p.talles.Add((Talles)item);
-
+                        
+                        InicializarControles();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Registro editado exitosamente", "Mensaje",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        DialogResult = DialogResult.OK;
                     }
                 }
+
+
+
+
+                catch (Exception)
+                {
+
+                    throw;
+                }
+
                 DialogResult = DialogResult.OK;
             }
         }
 
+        private void InicializarControles()
+        {
+            txtZapatilla.Focus();
+            txtPrecio.Clear();
+            txtModelo.Clear();
+            cboDeporte.SelectedIndex = 0;
+            cboColor.SelectedIndex = 0;
+            cboGenero.SelectedIndex = 0;
+            cboMarca.SelectedIndex = 0;
+
+        }
 
         private bool ValidarDatos()
         {
@@ -284,17 +283,27 @@ namespace TrabajoEdi3.Windows
             }
         }
 
-        public void SetZapatillaTalles((Zapatilla? zapatilla, List<Talles>? talles) p)
-        {
-            this.p = p;
-        }
+        //public void SetZapatillaTalles((Zapatilla? zapatilla, List<Talles>? talles) p)
+        //{
+        //    this.p = p;
+        //}
 
         private void label6_Click(object sender, EventArgs e)
         {
 
         }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }
-        
-    
+
+
 

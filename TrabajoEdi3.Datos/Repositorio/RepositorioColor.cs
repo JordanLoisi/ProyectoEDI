@@ -52,21 +52,9 @@ namespace TrabajoEdi3.Datos.Repositorio
                 te.ColorId != coloor.ColorId);
         }
 
-        //public int GetCantidad()
-        //{
-        //    //return _Context.colors.Count();
-        //}
-
-        public int GetCantidad(Func<Entidades.Color, bool>? filtro = null)
+        public int GetCantidad()
         {
-            if (filtro != null)
-            {
-                return _Context.colors.Count(filtro);
-            }
-            else
-            {
-                return _Context.colors.Count();
-            }
+            return _Context.colors.Count();
         }
 
         public Entidades.Color? GetColorPorId(int idEditar)

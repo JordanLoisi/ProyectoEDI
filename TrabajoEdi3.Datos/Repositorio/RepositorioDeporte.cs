@@ -54,12 +54,12 @@ namespace TrabajoEdi3.Datos.Repositorio
                     t.DeporteId != deporte.DeporteId);
         }
 
-        //public int GetCantidad()
-        //{
-        //    return _Context.deportes.Count();
-        //}
+        public int GetCantidad()
+        {
+            return _Context.deportes.Count();
+        }
 
-        public int GetCantidad(Func<Deporte, bool>? filtro = null)
+        public int GetCantidadFiltro(Func<Deporte, bool>? filtro = null)
         {
             if (filtro != null)
             {
@@ -71,10 +71,7 @@ namespace TrabajoEdi3.Datos.Repositorio
             }
         }
 
-        //public List<Deporte>? GetDeporte(Deporte? deporte)
-        //{
-        //    return
-        //}
+       
 
         public Deporte? GetDeportePorId(int IdEditar)
         {

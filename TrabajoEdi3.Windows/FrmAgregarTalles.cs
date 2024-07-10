@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -24,10 +25,14 @@ namespace TrabajoEdi3.Windows
 
         private void FrmAgregarTalles_Load(object sender, EventArgs e)
         {
-            base.OnLoad(e);
+           
             CombosHelper.CargarComboTalle(_serviceProvider, ref cboTalles);
         }
 
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+        }
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;

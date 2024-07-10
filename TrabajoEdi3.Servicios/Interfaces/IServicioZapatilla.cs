@@ -13,7 +13,9 @@ namespace TrabajoEdi3.Servicios.Interfaces
     public interface IServicioZapatilla
     {
         int GetCantidad(Func<Zapatilla, bool>? filtro = null);
-        void Guardar(Zapatilla zapatilla,List<Talles>? talles);
+        void Guardar(Zapatilla zapatilla, List<Talles>? talles = null);
+
+        void GuardarZapas(Zapatilla zapatilla);
         void Borrar(int zapatillaId);
         List<ZapatillaListDto> GetListaPaginadaOrdenadaFiltrada(int page,
             int pageSize, Orden? orden = null, Deporte? DeporteFiltro = null,
@@ -30,6 +32,7 @@ namespace TrabajoEdi3.Servicios.Interfaces
         List<Talles>? GetTallesPorZapatilla(int zapatillaId);
         bool ExisteRelacion(Zapatilla zapatilla, Talles talles);
 
+        bool EstaRelacionado(Zapatilla zapatilla);
         List<ZapatillaListDto>? GetZapatillaSinTalle();
 
     }

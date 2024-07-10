@@ -9,7 +9,7 @@ namespace TrabajoEdi3.Datos.Intefaces
 {
     public interface IMarcaRepositorio
     {
-        int GetCantidad(Func<Marca, bool>? filtro = null);
+        int GetCantidadFiltro(Func<Marca, bool>? filtro = null);
         void Agregar(Marca marca);
         void Borrar(Marca marca);
         void Editar(Marca marca);
@@ -19,7 +19,7 @@ namespace TrabajoEdi3.Datos.Intefaces
         bool EstaRelacionado(Marca marca);
 
         Marca? GetMarcaPorNombre(string nombreMarca);
-        //List<Deporte>? GetDeporte(Deporte? deporte);
-        //int GetCantidad();
+        
+        int GetCantidad();
     }
 }

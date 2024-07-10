@@ -16,10 +16,10 @@ namespace TrabajoEdi3.Windows
     {
         private readonly IServiceProvider _serviceProvider;
 
-       
+
         public FrmPrincipal(IServiceProvider serviceProvider)
         {
-           
+
             InitializeComponent();
             _serviceProvider = serviceProvider;
         }
@@ -37,14 +37,16 @@ namespace TrabajoEdi3.Windows
         private void btnMarca_Click(object sender, EventArgs e)
         {
             FrmMarca frm = new FrmMarca(_serviceProvider
-               .GetService<IServicioMarca>());
+               .GetService<IServicioMarca>(),
+               _serviceProvider?.GetService<IServicioZapatilla>());
             frm.ShowDialog();
         }
 
         private void btnDeporte_Click(object sender, EventArgs e)
         {
             FrmDeporte frm = new FrmDeporte(_serviceProvider
-              .GetService<IServicioDeporte>());
+              .GetService<IServicioDeporte>(),
+              _serviceProvider?.GetService<IServicioZapatilla>());
             frm.ShowDialog();
         }
 
@@ -65,7 +67,14 @@ namespace TrabajoEdi3.Windows
         private void BtnZapatilla_Click(object sender, EventArgs e)
         {
             FrmZapatilla frm = new FrmZapatilla(_serviceProvider
-              .GetService<IServicioZapatilla>());
+              .GetService<IServicioZapatilla>(),_serviceProvider);
+            frm.ShowDialog();
+        }
+
+        private void btnTalles_Click(object sender, EventArgs e)
+        {
+            FrmTalles frm = new FrmTalles(_serviceProvider.GetService<ITallesServicio>(),
+                _serviceProvider?.GetService<IServicioZapatilla>());
             frm.ShowDialog();
         }
     }

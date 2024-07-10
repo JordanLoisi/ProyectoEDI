@@ -11,13 +11,13 @@ namespace TrabajoEdi3.Servicios.Interfaces
 {
     public interface IServicioColor
     {
-        int GetCantidad(Func<Entidades.Color, bool>? filtro = null);
+        int GetCantidad();
         List<Entidades.Color> GetLista();
         void Guardar(Entidades.Color color);
         void Borrar(Entidades.Color color);
         bool Existe(Entidades.Color color);
         Entidades.Color? GetColorPorId(int idEditar);
-        Entidades.Color? GetColorPorNombre(string tipoDeEnvase);
+        Entidades.Color? GetColorPorNombre(string ColorName);
         bool EstaRelacionado(Entidades.Color color);
 
     }

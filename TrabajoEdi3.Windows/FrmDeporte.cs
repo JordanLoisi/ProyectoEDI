@@ -18,23 +18,31 @@ namespace TrabajoEdi3.Windows
     {
         private readonly IServicioDeporte _servicio;
         private List<Deporte>? lista;
+        private readonly IServicioZapatilla _servicioZapatilla;
 
-        private bool FilterOn = false;
 
         private int pageCount;
         private int pageSize = 15;
         private int pageNum = 0;
         private int recordCount;
-        public FrmDeporte(IServicioDeporte servicio)
+        public FrmDeporte(IServicioDeporte servicio, IServicioZapatilla servicioZapatilla)
         {
             InitializeComponent();
             _servicio = servicio;
+            _servicioZapatilla = servicioZapatilla;
         }
+
 
 
         private void FrmDeporte_Load(object sender, EventArgs e)
         {
             RecargarGrilla();
+            ActualizarCantidad();
+        }
+
+        private void ActualizarCantidad()
+        {
+            txtCantidadRegistros.Text = _servicio.GetCantidad().ToString();
         }
 
         private void RecargarGrilla()
@@ -88,6 +96,7 @@ namespace TrabajoEdi3.Windows
                     if (!_servicio.Existe(deporte))
                     {
                         _servicio.Guardar(deporte);
+                        ActualizarCantidad();
                         var r = GridHelper.ConstruirFila(dgvDatos);
                         GridHelper.SetearFila(r, deporte);
                         GridHelper.AgregarFila(r, dgvDatos);
@@ -145,6 +154,7 @@ namespace TrabajoEdi3.Windows
                     if (!_servicio.EstaRelacionado(deporte))
                     {
                         _servicio.Borrar(deporte);
+                        ActualizarCantidad();
 
                         GridHelper.QuitarFila(r, dgvDatos);
                         MessageBox.Show("Registro Borrado Satisfactoriamente!!!",
@@ -228,58 +238,32 @@ namespace TrabajoEdi3.Windows
 
         }
 
-        private void tsbActualizar_Click(object sender, EventArgs e)
+        private void aZToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FilterOn = false;
-            RecargarGrillDeTodosLosDeportes();
+
         }
 
-        private void RecargarGrillDeTodosLosDeportes()
+        private void tsbConsultar_Click(object sender, EventArgs e)
         {
-            try
+            if (dgvDatos.SelectedRows.Count == 0)
             {
-                recordCount = _servicio.GetCantidad();
-                pageCount = FromHelper.CalcularPaginas(recordCount, pageSize);
-                txtCantidadRegistros.Text = pageCount.ToString();
-                CombosHelper.CargarCombosPaginas(pageCount, ref cboPaginas);
-                MostrarDatosEnGrilla();
+                return;
             }
-            catch (Exception)
+            var r = dgvDatos.SelectedRows[0];
+            if (r is null)
             {
-                throw;
-
+                return;
             }
-        }
+            Deporte deporte = (Deporte)r.Tag;
+            var deportes = _servicio.GetDeportePorId(deporte.DeporteId);
+            recordCount = _servicioZapatilla.GetCantidad(s => s.Deporte == deportes);
+            pageCount = FromHelper.CalcularPaginas(recordCount, pageSize);
+            var lista = _servicioZapatilla.GetListaPaginadaOrdenadaFiltrada(pageNum, pageSize, null, deportes, null, null, null);
 
-        private void btnPrimero_Click(object sender, EventArgs e)
-        {
-            // Ir a la primera página
-            pageNum = 0;
-            cboPaginas.SelectedIndex = pageNum;
-        }
-
-        private void btnAnterior_Click(object sender, EventArgs e)
-        {
-            // Ir a la página anterior
-            pageNum--;
-            if (pageNum < 0) { pageNum = 0; }
-            cboPaginas.SelectedIndex = pageNum;
-
-        }
-
-        private void btnSiguiente_Click(object sender, EventArgs e)
-        {
-            // Ir a la siguiente página
-            pageNum++;
-            if (pageNum > pageCount - 1) { pageNum = pageCount - 1; }
-            cboPaginas.SelectedIndex = pageNum;
-        }
-
-        private void btnUltimo_Click(object sender, EventArgs e)
-        {
-            // Ir a la última página
-            pageNum = pageCount - 1;
-            cboPaginas.SelectedIndex = pageNum;
+            FrmZapatillasPorDeporte frm = new FrmZapatillasPorDeporte(_servicioZapatilla);
+            frm.SetDatosParaElPaginadoYFiltro(pageCount, pageNum, pageSize, recordCount, deportes);
+            frm.SetLista(lista);
+            frm.ShowDialog();
         }
     }
 }

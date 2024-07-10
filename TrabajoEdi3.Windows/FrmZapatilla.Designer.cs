@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             toolStrip1 = new ToolStrip();
             tsbNuevo = new ToolStripButton();
             tstBorrar = new ToolStripButton();
@@ -49,15 +50,24 @@
             tsbAsignarTalle = new ToolStripButton();
             toolStripButton6 = new ToolStripButton();
             panelNavegacion = new Panel();
-            txtCantidadRegistros = new TextBox();
-            cboPaginas = new ComboBox();
+            CantidadZapatillasLbl = new Label();
             label2 = new Label();
+            CantidadPaginasLbl = new Label();
+            label3 = new Label();
+            PaginaActualLbl = new Label();
             label1 = new Label();
             btnUltimo = new Button();
             btnSiguiente = new Button();
             btnAnterior = new Button();
             btnPrimero = new Button();
             dgvDatos = new DataGridView();
+            colMarca = new DataGridViewTextBoxColumn();
+            colDeporte = new DataGridViewTextBoxColumn();
+            colGenero = new DataGridViewTextBoxColumn();
+            colColor = new DataGridViewTextBoxColumn();
+            colModelo = new DataGridViewTextBoxColumn();
+            colDescrip = new DataGridViewTextBoxColumn();
+            colPrecio = new DataGridViewTextBoxColumn();
             toolStrip1.SuspendLayout();
             panelNavegacion.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvDatos).BeginInit();
@@ -68,36 +78,42 @@
             toolStrip1.Items.AddRange(new ToolStripItem[] { tsbNuevo, tstBorrar, tstEditar, tsbFiltrar, toolStripSeparator1, tsbActualizar, tsbOrden, toolStripSeparator2, tsbTalle, tsbAsignarTalle, toolStripButton6 });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(800, 25);
+            toolStrip1.Size = new Size(800, 57);
             toolStrip1.TabIndex = 1;
             toolStrip1.Text = "toolStrip1";
             // 
             // tsbNuevo
             // 
+            tsbNuevo.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            tsbNuevo.Image = Properties.Resources.NewPichon;
             tsbNuevo.ImageScaling = ToolStripItemImageScaling.None;
             tsbNuevo.ImageTransparentColor = Color.Magenta;
             tsbNuevo.Name = "tsbNuevo";
-            tsbNuevo.Size = new Size(46, 22);
+            tsbNuevo.Size = new Size(54, 54);
             tsbNuevo.Text = "Nuevo";
             tsbNuevo.TextImageRelation = TextImageRelation.ImageAboveText;
             tsbNuevo.Click += tsbNuevo_Click;
             // 
             // tstBorrar
             // 
+            tstBorrar.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            tstBorrar.Image = Properties.Resources.BorrarPichon;
             tstBorrar.ImageScaling = ToolStripItemImageScaling.None;
             tstBorrar.ImageTransparentColor = Color.Magenta;
             tstBorrar.Name = "tstBorrar";
-            tstBorrar.Size = new Size(43, 22);
+            tstBorrar.Size = new Size(54, 54);
             tstBorrar.Text = "Borrar";
             tstBorrar.TextImageRelation = TextImageRelation.ImageAboveText;
             tstBorrar.Click += tstBorrar_Click;
             // 
             // tstEditar
             // 
+            tstEditar.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            tstEditar.Image = Properties.Resources.Edit;
             tstEditar.ImageScaling = ToolStripItemImageScaling.None;
             tstEditar.ImageTransparentColor = Color.Magenta;
             tstEditar.Name = "tstEditar";
-            tstEditar.Size = new Size(41, 22);
+            tstEditar.Size = new Size(54, 54);
             tstEditar.Text = "Editar";
             tstEditar.TextImageRelation = TextImageRelation.ImageAboveText;
             tstEditar.Click += tstEditar_Click;
@@ -108,7 +124,7 @@
             tsbFiltrar.ImageScaling = ToolStripItemImageScaling.None;
             tsbFiltrar.ImageTransparentColor = Color.Magenta;
             tsbFiltrar.Name = "tsbFiltrar";
-            tsbFiltrar.Size = new Size(50, 22);
+            tsbFiltrar.Size = new Size(50, 54);
             tsbFiltrar.Text = "Filtrar";
             tsbFiltrar.TextImageRelation = TextImageRelation.ImageAboveText;
             tsbFiltrar.Click += tsbFiltrar_Click;
@@ -141,14 +157,14 @@
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(6, 25);
+            toolStripSeparator1.Size = new Size(6, 57);
             // 
             // tsbActualizar
             // 
             tsbActualizar.ImageScaling = ToolStripItemImageScaling.None;
             tsbActualizar.ImageTransparentColor = Color.Magenta;
             tsbActualizar.Name = "tsbActualizar";
-            tsbActualizar.Size = new Size(63, 22);
+            tsbActualizar.Size = new Size(63, 54);
             tsbActualizar.Text = "Actualizar";
             tsbActualizar.TextImageRelation = TextImageRelation.ImageAboveText;
             tsbActualizar.Click += tsbActualizar_Click;
@@ -159,7 +175,7 @@
             tsbOrden.ImageScaling = ToolStripItemImageScaling.None;
             tsbOrden.ImageTransparentColor = Color.Magenta;
             tsbOrden.Name = "tsbOrden";
-            tsbOrden.Size = new Size(53, 22);
+            tsbOrden.Size = new Size(53, 54);
             tsbOrden.Text = "Orden";
             tsbOrden.TextImageRelation = TextImageRelation.ImageAboveText;
             tsbOrden.Click += tsbOrden_Click;
@@ -195,14 +211,14 @@
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(6, 25);
+            toolStripSeparator2.Size = new Size(6, 57);
             // 
             // tsbTalle
             // 
             tsbTalle.ImageScaling = ToolStripItemImageScaling.None;
             tsbTalle.ImageTransparentColor = Color.Magenta;
             tsbTalle.Name = "tsbTalle";
-            tsbTalle.Size = new Size(39, 22);
+            tsbTalle.Size = new Size(39, 54);
             tsbTalle.Text = "Talles";
             tsbTalle.TextImageRelation = TextImageRelation.ImageAboveText;
             tsbTalle.Click += tsbTalle_Click;
@@ -212,26 +228,30 @@
             tsbAsignarTalle.ImageScaling = ToolStripItemImageScaling.None;
             tsbAsignarTalle.ImageTransparentColor = Color.Magenta;
             tsbAsignarTalle.Name = "tsbAsignarTalle";
-            tsbAsignarTalle.Size = new Size(79, 22);
+            tsbAsignarTalle.Size = new Size(79, 54);
             tsbAsignarTalle.Text = "Agregar Talle";
             tsbAsignarTalle.TextImageRelation = TextImageRelation.ImageAboveText;
             tsbAsignarTalle.Click += tsbAsignarTalle_Click;
             // 
             // toolStripButton6
             // 
+            toolStripButton6.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButton6.Image = Properties.Resources.Cancel;
             toolStripButton6.ImageScaling = ToolStripItemImageScaling.None;
             toolStripButton6.ImageTransparentColor = Color.Magenta;
             toolStripButton6.Name = "toolStripButton6";
-            toolStripButton6.Size = new Size(33, 22);
+            toolStripButton6.Size = new Size(54, 54);
             toolStripButton6.Text = "Salir";
             toolStripButton6.TextImageRelation = TextImageRelation.ImageAboveText;
             toolStripButton6.Click += toolStripButton6_Click;
             // 
             // panelNavegacion
             // 
-            panelNavegacion.Controls.Add(txtCantidadRegistros);
-            panelNavegacion.Controls.Add(cboPaginas);
+            panelNavegacion.Controls.Add(CantidadZapatillasLbl);
             panelNavegacion.Controls.Add(label2);
+            panelNavegacion.Controls.Add(CantidadPaginasLbl);
+            panelNavegacion.Controls.Add(label3);
+            panelNavegacion.Controls.Add(PaginaActualLbl);
             panelNavegacion.Controls.Add(label1);
             panelNavegacion.Controls.Add(btnUltimo);
             panelNavegacion.Controls.Add(btnSiguiente);
@@ -243,75 +263,105 @@
             panelNavegacion.Size = new Size(800, 75);
             panelNavegacion.TabIndex = 4;
             // 
-            // txtCantidadRegistros
+            // CantidadZapatillasLbl
             // 
-            txtCantidadRegistros.Location = new Point(176, 22);
-            txtCantidadRegistros.Name = "txtCantidadRegistros";
-            txtCantidadRegistros.ReadOnly = true;
-            txtCantidadRegistros.Size = new Size(85, 23);
-            txtCantidadRegistros.TabIndex = 11;
-            // 
-            // cboPaginas
-            // 
-            cboPaginas.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboPaginas.FormattingEnabled = true;
-            cboPaginas.Location = new Point(73, 22);
-            cboPaginas.Name = "cboPaginas";
-            cboPaginas.Size = new Size(68, 23);
-            cboPaginas.TabIndex = 10;
-            cboPaginas.SelectedIndexChanged += cboPaginas_SelectedIndexChanged;
+            CantidadZapatillasLbl.AutoSize = true;
+            CantidadZapatillasLbl.BackColor = SystemColors.ActiveCaptionText;
+            CantidadZapatillasLbl.ForeColor = Color.FromArgb(224, 224, 224);
+            CantidadZapatillasLbl.Location = new Point(714, 31);
+            CantidadZapatillasLbl.Name = "CantidadZapatillasLbl";
+            CantidadZapatillasLbl.Size = new Size(13, 15);
+            CantidadZapatillasLbl.TabIndex = 27;
+            CantidadZapatillasLbl.Text = "0";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(147, 25);
+            label2.BackColor = SystemColors.ActiveCaptionText;
+            label2.ForeColor = Color.FromArgb(224, 224, 224);
+            label2.Location = new Point(581, 31);
             label2.Name = "label2";
-            label2.Size = new Size(23, 15);
-            label2.TabIndex = 8;
-            label2.Text = "de:";
+            label2.Size = new Size(127, 15);
+            label2.TabIndex = 26;
+            label2.Text = "Cantidad de Zapatillas:";
+            // 
+            // CantidadPaginasLbl
+            // 
+            CantidadPaginasLbl.AutoSize = true;
+            CantidadPaginasLbl.BackColor = SystemColors.ActiveCaptionText;
+            CantidadPaginasLbl.ForeColor = Color.FromArgb(224, 224, 224);
+            CantidadPaginasLbl.Location = new Point(182, 31);
+            CantidadPaginasLbl.Name = "CantidadPaginasLbl";
+            CantidadPaginasLbl.Size = new Size(19, 15);
+            CantidadPaginasLbl.TabIndex = 25;
+            CantidadPaginasLbl.Text = "10";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.BackColor = SystemColors.ActiveCaptionText;
+            label3.ForeColor = Color.FromArgb(224, 224, 224);
+            label3.Location = new Point(156, 31);
+            label3.Name = "label3";
+            label3.Size = new Size(20, 15);
+            label3.TabIndex = 24;
+            label3.Text = "de";
+            // 
+            // PaginaActualLbl
+            // 
+            PaginaActualLbl.AutoSize = true;
+            PaginaActualLbl.BackColor = SystemColors.ActiveCaptionText;
+            PaginaActualLbl.ForeColor = Color.FromArgb(224, 224, 224);
+            PaginaActualLbl.Location = new Point(137, 31);
+            PaginaActualLbl.Name = "PaginaActualLbl";
+            PaginaActualLbl.Size = new Size(13, 15);
+            PaginaActualLbl.TabIndex = 23;
+            PaginaActualLbl.Text = "0";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(34, 25);
+            label1.BackColor = SystemColors.ActiveCaptionText;
+            label1.ForeColor = Color.FromArgb(224, 224, 224);
+            label1.Location = new Point(91, 30);
             label1.Name = "label1";
-            label1.Size = new Size(33, 15);
-            label1.TabIndex = 9;
-            label1.Text = "Pág.:";
+            label1.Size = new Size(43, 15);
+            label1.TabIndex = 22;
+            label1.Text = "Página";
             // 
             // btnUltimo
             // 
-            btnUltimo.Location = new Point(691, 17);
+            btnUltimo.Location = new Point(461, 17);
             btnUltimo.Name = "btnUltimo";
             btnUltimo.Size = new Size(75, 41);
-            btnUltimo.TabIndex = 4;
+            btnUltimo.TabIndex = 18;
             btnUltimo.UseVisualStyleBackColor = true;
             btnUltimo.Click += btnUltimo_Click;
             // 
             // btnSiguiente
             // 
-            btnSiguiente.Location = new Point(610, 17);
+            btnSiguiente.Location = new Point(380, 17);
             btnSiguiente.Name = "btnSiguiente";
             btnSiguiente.Size = new Size(75, 41);
-            btnSiguiente.TabIndex = 5;
+            btnSiguiente.TabIndex = 19;
             btnSiguiente.UseVisualStyleBackColor = true;
             btnSiguiente.Click += btnSiguiente_Click;
             // 
             // btnAnterior
             // 
-            btnAnterior.Location = new Point(529, 17);
+            btnAnterior.Location = new Point(299, 17);
             btnAnterior.Name = "btnAnterior";
             btnAnterior.Size = new Size(75, 41);
-            btnAnterior.TabIndex = 6;
+            btnAnterior.TabIndex = 20;
             btnAnterior.UseVisualStyleBackColor = true;
             btnAnterior.Click += btnAnterior_Click;
             // 
             // btnPrimero
             // 
-            btnPrimero.Location = new Point(448, 17);
+            btnPrimero.Location = new Point(218, 17);
             btnPrimero.Name = "btnPrimero";
             btnPrimero.Size = new Size(75, 41);
-            btnPrimero.TabIndex = 7;
+            btnPrimero.TabIndex = 21;
             btnPrimero.UseVisualStyleBackColor = true;
             btnPrimero.Click += btnPrimero_Click;
             // 
@@ -319,22 +369,72 @@
             // 
             dgvDatos.AllowUserToAddRows = false;
             dgvDatos.AllowUserToDeleteRows = false;
+            dgvDatos.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgvDatos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvDatos.Columns.AddRange(new DataGridViewColumn[] { colMarca, colDeporte, colGenero, colColor, colModelo, colDescrip, colPrecio });
             dgvDatos.Dock = DockStyle.Fill;
-            dgvDatos.Location = new Point(0, 25);
-            dgvDatos.MultiSelect = false;
+            dgvDatos.Location = new Point(0, 57);
             dgvDatos.Name = "dgvDatos";
-            dgvDatos.ReadOnly = true;
-            dgvDatos.RowHeadersVisible = false;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Times New Roman", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvDatos.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dgvDatos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvDatos.Size = new Size(800, 350);
+            dgvDatos.Size = new Size(800, 318);
             dgvDatos.TabIndex = 5;
+            // 
+            // colMarca
+            // 
+            colMarca.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colMarca.HeaderText = "Marca";
+            colMarca.Name = "colMarca";
+            // 
+            // colDeporte
+            // 
+            colDeporte.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colDeporte.HeaderText = "Deporte";
+            colDeporte.Name = "colDeporte";
+            // 
+            // colGenero
+            // 
+            colGenero.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colGenero.HeaderText = "Genero";
+            colGenero.Name = "colGenero";
+            // 
+            // colColor
+            // 
+            colColor.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colColor.HeaderText = "Color";
+            colColor.Name = "colColor";
+            // 
+            // colModelo
+            // 
+            colModelo.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colModelo.HeaderText = "Modelo";
+            colModelo.Name = "colModelo";
+            // 
+            // colDescrip
+            // 
+            colDescrip.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colDescrip.HeaderText = "Descripcion";
+            colDescrip.Name = "colDescrip";
+            // 
+            // colPrecio
+            // 
+            colPrecio.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colPrecio.HeaderText = "Precio";
+            colPrecio.Name = "colPrecio";
             // 
             // FrmZapatilla
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            ControlBox = false;
             Controls.Add(dgvDatos);
             Controls.Add(panelNavegacion);
             Controls.Add(toolStrip1);
@@ -361,14 +461,6 @@
         private ToolStripButton toolStripButton6;
         private Panel panelNavegacion;
         private DataGridView dgvDatos;
-        private TextBox txtCantidadRegistros;
-        private ComboBox cboPaginas;
-        private Label label2;
-        private Label label1;
-        private Button btnUltimo;
-        private Button btnSiguiente;
-        private Button btnAnterior;
-        private Button btnPrimero;
         private ToolStripDropDownButton tsbFiltrar;
         private ToolStripButton tsbActualizar;
         private ToolStripDropDownButton tsbOrden;
@@ -382,5 +474,23 @@
         private ToolStripComboBox porDeporteStripMenuItem;
         private ToolStripButton tsbTalle;
         private ToolStripButton tsbAsignarTalle;
+        private Label CantidadZapatillasLbl;
+        private Label label2;
+        private Label CantidadPaginasLbl;
+        private Label label3;
+        private Label PaginaActualLbl;
+        private Label label1;
+        private Button btnUltimo;
+        private Button btnSiguiente;
+        private Button btnAnterior;
+        private Button btnPrimero;
+        private DataGridView dgvConsulta;
+        private DataGridViewTextBoxColumn colMarca;
+        private DataGridViewTextBoxColumn colDeporte;
+        private DataGridViewTextBoxColumn colGenero;
+        private DataGridViewTextBoxColumn colColor;
+        private DataGridViewTextBoxColumn colModelo;
+        private DataGridViewTextBoxColumn colDescrip;
+        private DataGridViewTextBoxColumn colPrecio;
     }
 }

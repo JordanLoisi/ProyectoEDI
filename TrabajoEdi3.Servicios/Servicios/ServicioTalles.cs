@@ -1,11 +1,14 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TrabajoEdi3.Datos.Intefaces;
 using TrabajoEdi3.Datos.UnitOfWork;
 using TrabajoEdi3.Entidades;
+using TrabajoEdi3.Entidades.Enums;
 using TrabajoEdi3.Servicios.Interfaces;
 
 namespace TrabajoEdi3.Servicios.Servicios
@@ -36,6 +39,19 @@ namespace TrabajoEdi3.Servicios.Servicios
             }
         }
 
+        public bool EstaRelacionado(Talles talles)
+        {
+            try
+            {
+                return _repository.EstaRelacionado(talles);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool Existe(Talles talles)
         {
             try
@@ -49,11 +65,37 @@ namespace TrabajoEdi3.Servicios.Servicios
             }
         }
 
+        public int GetCantidad()
+        {
+            try
+            {
+                return _repository.GetCantidad();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public List<Talles> GetLista()
         {
             try
             {
                 return _repository.GetLista();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<Talles> GetTallesPaginadosOrdenados(int page, int pageSize, Orden? orden = null)
+        {
+            try
+            {
+                return _repository.GetTallesPaginadosOrdenados(page, pageSize, orden);
             }
             catch (Exception)
             {

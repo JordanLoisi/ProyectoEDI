@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -30,14 +32,18 @@ namespace TrabajoEdi3.Windows
 
         private bool FilterOn = false;
 
-        private int pageCount;
-        private int pageSize = 15;
+
+        Orden ordenado = Orden.SinOrden;
+
+        private int cantidadPaginas;
+        private int pageSize = 8;
         private int pageNum = 0;
-        private int recordCount;
-        public FrmZapatilla(IServicioZapatilla servicio)
+        private int cantidadRegistros;
+        public FrmZapatilla(IServicioZapatilla servicio, IServiceProvider serviceProvider)
         {
             InitializeComponent();
             _servicio = servicio;
+            _serviceProvider = serviceProvider;
         }
 
         private void FrmZapatilla_Load(object sender, EventArgs e)
@@ -53,13 +59,18 @@ namespace TrabajoEdi3.Windows
         {
             try
             {
-                recordCount = _servicio.GetCantidad();
-                pageCount = FromHelper.CalcularPaginas(recordCount, pageSize);
-                txtCantidadRegistros.Text = pageCount.ToString();
-                CombosHelper.CargarCombosPaginas(pageCount, ref cboPaginas);
-
-                // Obtener la lista paginada ordenada y filtrada por defecto (sin orden ni filtro)
+                cantidadRegistros = _servicio.GetCantidad();
+                cantidadPaginas = FromHelper.CalcularPaginas(cantidadRegistros, pageSize);
                 lista = _servicio.GetListaPaginadaOrdenadaFiltrada(pageNum, pageSize, orden, DeporteFiltro, MarcaFiltro, ColorFiltro, GeneroFiltro);
+                CantidadPaginasLbl.Text = cantidadPaginas.ToString();
+
+                PaginaActualLbl.Text = (pageNum + 1).ToString();
+
+                CantidadZapatillasLbl.Text = cantidadRegistros.ToString();
+
+
+
+
                 MostrarDatosEnGrilla();
             }
             catch (Exception)
@@ -120,77 +131,139 @@ namespace TrabajoEdi3.Windows
             MostrarOrdenado(Orden.MayorPrecio);
         }
 
-        private void btnSiguiente_Click(object sender, EventArgs e)
-        {
-            // Ir a la siguiente página
-            pageNum++;
-            if (pageNum > pageCount - 1) { pageNum = pageCount - 1; }
-            cboPaginas.SelectedIndex = pageNum;
-            ActualizarListaPaginada();
-        }
 
-        private void ActualizarListaPaginada()
-        {
-            // Actualizar la lista paginada según la página actual y tamaño de página
-            lista = _servicio.GetListaPaginadaOrdenadaFiltrada(pageNum, pageSize, orden,
-                 DeporteFiltro, MarcaFiltro, ColorFiltro, GeneroFiltro);
-            MostrarDatosEnGrilla();
-        }
-
-        private void btnAnterior_Click(object sender, EventArgs e)
-        {
-            // Ir a la página anterior
-            pageNum--;
-            if (pageNum < 0) { pageNum = 0; }
-            cboPaginas.SelectedIndex = pageNum;
-            ActualizarListaPaginada();
-        }
-
-        private void btnPrimero_Click(object sender, EventArgs e)
-        {
-            // Ir a la primera página
-            pageNum = 0;
-            cboPaginas.SelectedIndex = pageNum;
-            ActualizarListaPaginada();
-        }
-
-        private void btnUltimo_Click(object sender, EventArgs e)
-        {
-            // Ir a la última página
-            pageNum = pageCount - 1;
-            cboPaginas.SelectedIndex = pageNum;
-            ActualizarListaPaginada();
-        }
-
-        private void cboPaginas_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // Cambiar a la página seleccionada
-            pageNum = cboPaginas.SelectedIndex;
-            ActualizarListaPaginada();
-        }
 
         private void tsbNuevo_Click(object sender, EventArgs e)
         {
 
             FrmZapatillaAE frm = new FrmZapatillaAE(_serviceProvider);
-            DialogResult df = frm.ShowDialog(this);
-            if (df == DialogResult.Cancel) { return; }
+            DialogResult dr = frm.ShowDialog(this);
+            if (dr == DialogResult.Cancel)
+            {
+                return;
+            }
             try
             {
-                (Zapatilla? zapatilla, List<Talles>? talles) p = frm
-                    .GetZapatillaTalles();
-                if (p.zapatilla is null) return;
-                if (!_servicio.Existe(p.zapatilla))
+                Zapatilla? zapatilla = frm.GetZapatilla();
+
+                if (zapatilla is not null)
                 {
-                    _servicio.Guardar(p.zapatilla, p.talles);
-                    // Actualizar la lista después de agregar la planta
-                    ActualizarListaDespuesAgregar(p.zapatilla);
-                    MessageBox.Show("zapatilla agregada!!!", "Error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (!_servicio.Existe(zapatilla))
+                    {
+                        _servicio.GuardarZapas(zapatilla);
+                        RecargarGrillDeTodasLasZapatilla();
+                        MessageBox.Show("Registro Agregado Satisfactoriamente!!!",
+                            "Mensaje",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("Registro Duplicado",
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+            }
+        }
+
+
+
+        private void tstBorrar_Click(object sender, EventArgs e)
+        {
+            if (dgvDatos.SelectedRows.Count == 0)
+            {
+                return;
+            }
+            var r = dgvDatos.SelectedRows[0];
+            ZapatillaListDto zapatillaListDto = (ZapatillaListDto)r.Tag;
+            DialogResult dr = MessageBox.Show($"¿Desea dar de baja a {zapatillaListDto.Description}?",
+                "Confirmar Operación",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button2);
+            if (dr == DialogResult.No)
+            {
+                return;
+            }
+            try
+            {
+                Zapatilla zapatilla = _servicio.GetZapatillaPorId(zapatillaListDto.ZapatillaId);
+
+                if (!_servicio.EstaRelacionado(zapatilla))
+                {
+                    _servicio.Borrar(zapatilla.ZapatillaId);
+
+                    GridHelper.QuitarFila(r, dgvDatos);
+                    MessageBox.Show("Registro Borrado Satisfactoriamente!!!",
+                        "Mensaje",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+
+
                 }
                 else
                 {
-                    MessageBox.Show("zapatilla existente!!!", "Error",
+                    MessageBox.Show("Registro Relacionado...Baja denegada!!!",
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+            }
+        }
+
+        private void tstEditar_Click(object sender, EventArgs e)
+        {
+            if (dgvDatos.SelectedRows.Count == 0) { return; }
+            var r = dgvDatos.SelectedRows[0];
+            if (r.Tag is null) return;
+            ZapatillaListDto zapatillaList = (ZapatillaListDto)r.Tag;
+            Zapatilla? zapatilla = _servicio.GetZapatillaPorId(zapatillaList.ZapatillaId);
+            if (zapatilla == null) return;
+            List<Talles>? talles = _servicio
+                .GetTallesPorZapatilla(zapatilla.ZapatillaId);
+            (Zapatilla? zapatilla, List<Talles>? talles) p = (zapatilla, talles);
+            FrmZapatillaAE frm = new FrmZapatillaAE(_serviceProvider)
+            { Text = "Editar Zapatilla" };
+            frm.SetZapatilla(zapatilla);
+            DialogResult dr = frm.ShowDialog(this);
+            try
+            {
+                //p= frm.GetZapatillaTalles();
+                var zapatillaEditada = frm.GetZapatilla();
+                //if (p.zapatilla is null) return;
+                if (!_servicio.Existe(zapatillaEditada))
+                {
+
+                    _servicio.GuardarZapas(zapatillaEditada);
+                    RecargarGrillDeTodasLasZapatilla();
+
+                }
+                else
+                {
+                    MessageBox.Show("Zapatilla existente!!!", "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
@@ -204,83 +277,12 @@ namespace TrabajoEdi3.Windows
             }
         }
 
-        private void ActualizarListaDespuesAgregar(Zapatilla zapatillaAgregada)
-        {
-            // Obtener la página actual y actualizar la lista
-            int paginaActual = pageNum;
-            lista = _servicio.GetListaPaginadaOrdenadaFiltrada(paginaActual, pageSize);
-
-            // Mostrar la lista actualizada en la grilla
-            MostrarDatosEnGrilla();
-
-            // Verificar si la Zapatilla agregada está en la página actual
-
-            bool ZapatillaAgregadaEnPaginaActual = lista
-                .Any(p => p.ZapatillaId == zapatillaAgregada.ZapatillaId);
-
-            if (!ZapatillaAgregadaEnPaginaActual)
-            {
-                // Si la Zapatilla agregada no está en la página actual,
-                // seleccionar la última página y actualizar la lista
-                pageNum = pageCount - 1;
-                cboPaginas.SelectedIndex = pageNum;
-                lista = _servicio.GetListaPaginadaOrdenadaFiltrada(pageNum, pageSize);
-                MostrarDatosEnGrilla();
-            }
-        }
-
-        private void tstBorrar_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tstEditar_Click(object sender, EventArgs e)
-        {
-            //if (dgvDatos.SelectedRows.Count == 0) { return; }
-            //var r = dgvDatos.SelectedRows[0];
-            //if (r.Tag is null) return;
-            //ZapatillaListDto zapatillaList = (ZapatillaListDto)r.Tag;
-            //Zapatilla? zapatilla = _servicio.GetZapatillaPorId(zapatillaList.ZapatillaId);
-            //if (zapatilla == null) return;
-            //List<Talles>? talles = _servicio
-            //    .GetTallesPorZapatilla(zapatilla.ZapatillaId);
-            //(Zapatilla? zapatilla, List<Talles>? talles) p = (zapatilla, talles);
-            //FrmZapatillaAE frm = new FrmZapatillaAE(_serviceProvider)
-            //{ Text = "Editar Zapatilla" };
-            //frm.SetZapatillaTalles(p);
-            //DialogResult dr = frm.ShowDialog(this);
-            //try
-            //{
-            //    p = frm.GetZapatillaTalles();
-            //    if (p.zapatilla is null) return;
-            //    if (!_servicio.Existe(p.zapatilla))
-            //    {
-            //        _servicio.Guardar(p.zapatilla, p.talles);
-            //        ActualizarListaDespuesAgregar(zapatilla);
-
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("Planta existente!!!", "Error",
-            //            MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    }
-
-            //}
-            //catch (Exception ex)
-            //{
-
-            //    MessageBox.Show(ex.Message, "Error",
-            //            MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-            //}
-        }
-
         private void tsbActualizar_Click(object sender, EventArgs e)
         {
             FilterOn = false;
             RecargarGrillDeTodasLasZapatilla();
-            //tsbFiltrar.Image = Resources.filter_40px;
-            tsbFiltrar.BackColor = SystemColors.Control;
+
+
         }
 
         private void tsbFiltrar_Click(object sender, EventArgs e)
@@ -295,77 +297,109 @@ namespace TrabajoEdi3.Windows
 
         private void tsbTalle_Click(object sender, EventArgs e)
         {
-            //if (dgvDatos.SelectedRows.Count == 0)
-            //{
-            //    return;
-            //}
-            //var r = dgvDatos.SelectedRows[0];
-            //if (r.Tag is null) return;
-            //ZapatillaListDto zapatillaDto = (ZapatillaListDto)r.Tag;
-            //List<Talles>? talles = _servicio
-            //    .GetTallesPorZapatilla(zapatillaDto.ZapatillaId);
-            //if (talles is null || talles.Count == 0)
-            //{
-            //    MessageBox.Show("Zapatilla sin talle asignados",
-            //        "Advertencia",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    return;00
-            //}
-            //FrmDetalleTalles frm = new FrmDetalleTalles()
-            //{ Text = $"Talles de la zapatilla {zapatillaDto.Description}" };
-            //frm.SetDatos(talles);
-            //frm.ShowDialog(this);
+            if (dgvDatos.SelectedRows.Count == 0)
+            {
+                return;
+            }
+            var r = dgvDatos.SelectedRows[0];
+            if (r.Tag is null) return;
+            ZapatillaListDto zapatillaDto = (ZapatillaListDto)r.Tag;
+            List<Talles>? talles = _servicio
+                .GetTallesPorZapatilla(zapatillaDto.ZapatillaId);
+            if (talles is null || talles.Count == 0)
+            {
+                MessageBox.Show("Zapatilla sin talle asignados",
+                    "Advertencia",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            FrmDetalleTalles frm = new FrmDetalleTalles()
+            { Text = $"Talles de la zapatilla {zapatillaDto.Description}" };
+            frm.SetDatos(talles);
+            frm.ShowDialog(this);
         }
 
         private void tsbAsignarTalle_Click(object sender, EventArgs e)
         {
-            //if (dgvDatos.SelectedRows.Count == 0)
-            //{
-            //    return;
-            //}
-            //var r = dgvDatos.SelectedRows[0];
-            //if (r.Tag is null) return;
-            //var zapatillaDto = (ZapatillaListDto)r.Tag;
+            if (dgvDatos.SelectedRows.Count == 0)
+            {
+                return;
+            }
+            var r = dgvDatos.SelectedRows[0];
+            if (r.Tag is null) return;
+            var zapatillaDto = (ZapatillaListDto)r.Tag;
 
-            //Zapatilla? zapatilla = _servicio.GetZapatillaPorId(zapatillaDto?.ZapatillaId ?? 0);
-            //if (zapatilla is null) return;
-            //FrmAgregarTalles frm = new FrmAgregarTalles(_serviceProvider) { Text = "Agregar Talles" };
-            //DialogResult dr = frm.ShowDialog(this);
-            //if (dr == DialogResult.Cancel) { return; }
-            //try
-            //{
-            //    Talles? talles = frm.GetTalles();
-            //    if (talles is null) return;
-            //    if (!_servicio.ExisteRelacion(zapatilla, talles))
-            //    {
-            //        _servicio.AsignarTalleAZapatilla(zapatilla, talles);
-            //        if (zapatillaDto is not null)
-            //        {
-            //            zapatillaDto.CantidadTalles++;
-            //            GridHelper.SetearFila(r, zapatillaDto);
-            //        }
-            //        MessageBox.Show("Talle asignado a la Zapatilla!!!",
-            //            "Mensaje",
-            //            MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Zapatilla? zapatilla = _servicio.GetZapatillaPorId(zapatillaDto?.ZapatillaId ?? 0);
+            if (zapatilla is null) return;
+            FrmAgregarTalles frm = new FrmAgregarTalles(_serviceProvider) { Text = "Agregar Talles" };
+            DialogResult dr = frm.ShowDialog(this);
+            if (dr == DialogResult.Cancel) { return; }
+            try
+            {
+                Talles? talles = frm.GetTalles();
+                if (talles is null) return;
+                if (!_servicio.ExisteRelacion(zapatilla, talles))
+                {
+                    _servicio.AsignarTalleAZapatilla(zapatilla, talles);
+                    if (zapatillaDto is not null)
+                    {
+                        zapatillaDto.CantidadTalles++;
+                        GridHelper.SetearFila(r, zapatillaDto);
+                    }
+                    MessageBox.Show("Talle asignado a la Zapatilla!!!",
+                        "Mensaje",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("Asignación Existente!!!",
-            //        "Error",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    MessageBox.Show("Asignación Existente!!!",
+                    "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-            //    }
+                }
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message,
-            //                "Error",
-            //                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,
+                            "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-            //}
+            }
+        }
+
+        private void btnPrimero_Click(object sender, EventArgs e)
+        {
+            pageNum = 0;
+            PaginaActualLbl.Text = (pageNum + 1).ToString();
+            RecargarGrillDeTodasLasZapatilla();
+        }
+
+        private void btnAnterior_Click(object sender, EventArgs e)
+        {
+            pageNum--;
+            if (pageNum < 0) { pageNum = 0; }
+            PaginaActualLbl.Text = (pageNum + 1).ToString();
+            RecargarGrillDeTodasLasZapatilla();
+        }
+
+        private void btnSiguiente_Click(object sender, EventArgs e)
+        {
+            pageNum++;
+            if (pageNum > cantidadPaginas - 1) { pageNum = cantidadPaginas - 1; }
+            PaginaActualLbl.Text = (pageNum + 1).ToString();
+
+            RecargarGrillDeTodasLasZapatilla();
+        }
+
+        private void btnUltimo_Click(object sender, EventArgs e)
+        {
+            pageNum = cantidadPaginas - 1;
+            PaginaActualLbl.Text = (pageNum + 1).ToString();
+
+            RecargarGrillDeTodasLasZapatilla();
         }
     }
 

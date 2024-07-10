@@ -10,7 +10,7 @@ namespace TrabajoEdi3.Datos.Intefaces
 {
     public interface IColorRepositorio
     {
-        int GetCantidad(Func<Entidades.Color, bool>? filtro = null);
+        int GetCantidad();
         void Agregar(Entidades.Color coloor);
         void Borrar(Entidades.Color coloor);
         void Editar(Entidades.Color coloor);
@@ -19,8 +19,7 @@ namespace TrabajoEdi3.Datos.Intefaces
         List<Entidades.Color> GetLista();
         bool EstaRelacionado(Entidades.Color coloor);
         Entidades.Color? GetColorPorNombre(string nombreColor);
-        //List<Deporte>? GetDeporte(Deporte? deporte);
-        //int GetCantidad();
+        
 
     }
 }

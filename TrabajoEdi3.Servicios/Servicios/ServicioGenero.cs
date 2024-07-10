@@ -47,11 +47,14 @@ namespace TrabajoEdi3.Servicios.Servicios
             return _repository.Existe(genero);
         }
 
-        public int GetCantidad(Func<Genero, bool>? filtro = null)
+        public int GetCantidadFiltro(Func<Genero, bool>? filtro = null)
         {
-            return _repository.GetCantidad(filtro);
+            return _repository.GetCantidadFiltro(filtro);
         }
-
+        public int GetCantidad()
+        {
+            return _repository.GetCantidad();
+        }
         public Genero? GetGeneroPorId(int idEditar)
         {
             return _repository.GetGeneroPorId(idEditar);

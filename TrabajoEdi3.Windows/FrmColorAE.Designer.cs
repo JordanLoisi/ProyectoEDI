@@ -69,7 +69,7 @@ namespace TrabajoEdi3.Windows
             txtColor.Name = "txtColor";
             txtColor.Size = new Size(415, 23);
             txtColor.TabIndex = 24;
-            txtColor.TextChanged += this.txtColor_TextChanged;
+           
             // 
             // label1
             // 
@@ -103,10 +103,7 @@ namespace TrabajoEdi3.Windows
             PerformLayout();
         }
 
-        private void txtColor_TextChanged(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         #endregion
 

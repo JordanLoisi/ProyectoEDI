@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TrabajoEdi3.Entidades;
+using TrabajoEdi3.Entidades.Enums;
 
 namespace TrabajoEdi3.Servicios.Interfaces
 {
@@ -14,5 +16,10 @@ namespace TrabajoEdi3.Servicios.Interfaces
         bool Existe(Talles talles);
         List<Talles> GetLista();
         Talles? GetTallesPorId(int id, bool incluyeZapatilla = false);
+
+        int GetCantidad();
+        List<Talles> GetTallesPaginadosOrdenados(int page, int pageSize, Orden? orden = null);
+
+        bool EstaRelacionado(Talles talles);
     }
 }

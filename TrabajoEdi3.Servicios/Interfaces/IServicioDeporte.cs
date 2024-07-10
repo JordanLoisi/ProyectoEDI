@@ -9,7 +9,9 @@ namespace TrabajoEdi3.Servicios.Interfaces
 {
     public interface IServicioDeporte
     {
-        int GetCantidad(Func<Deporte, bool>? filtro = null);
+        int GetCantidadFiltro(Func<Deporte, bool>? filtro = null);
+
+        int GetCantidad();
         List<Deporte> GetLista();
         void Guardar(Deporte deporte);
         void Borrar(Deporte deporte);

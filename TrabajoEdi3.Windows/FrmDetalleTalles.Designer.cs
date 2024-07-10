@@ -59,7 +59,6 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(679, 324);
-            ControlBox = false;
             Controls.Add(dgvDatos);
             Name = "FrmDetalleTalles";
             Text = "FrmDetalleTalles";

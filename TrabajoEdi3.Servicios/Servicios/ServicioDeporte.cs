@@ -47,9 +47,14 @@ namespace TrabajoEdi3.Servicios.Servicios
             return _repository.Existe(deporte);
         }
 
-        public int GetCantidad(Func<Deporte, bool>? filtro = null)
+        public int GetCantidadFiltro(Func<Deporte, bool>? filtro = null)
         {
-            return _repository.GetCantidad(filtro);
+            return _repository.GetCantidadFiltro(filtro);
+        }
+
+        public int GetCantidad()
+        {
+            return _repository.GetCantidad();
         }
 
         public Deporte? GetDeportePorId(int idEditar)

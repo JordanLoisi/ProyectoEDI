@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -390,6 +391,10 @@ namespace TrabajoEdi3.Datos.Repositorio
                  .Include(p => p.Colores)
                  .FirstOrDefault(p => p.ZapatillaId == zapatillaId);
         }
-       
+
+        public bool EstaRelacionado(Zapatilla zapatilla)
+        {
+            return _Context.zapatillastalles.Any(ss => ss.ZapatillaId == zapatilla.ZapatillaId);
+        }
     }
 }

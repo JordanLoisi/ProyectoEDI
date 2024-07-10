@@ -10,7 +10,9 @@ namespace TrabajoEdi3.Datos.Intefaces
 {
     public interface IDeporteRepositorio
     {
-        int GetCantidad(Func<Deporte, bool>? filtro = null);
+        int GetCantidad();
+
+        int GetCantidadFiltro(Func<Deporte, bool>? filtro = null);
         void Agregar(Deporte deporte);
         void Borrar(Deporte deporte);
         void Editar(Deporte deporte);
@@ -20,8 +22,7 @@ namespace TrabajoEdi3.Datos.Intefaces
         bool EstaRelacionado(Deporte deporte);
 
         Deporte? GetDeportePorNombre(string nombreDeporte);
-        //List<Deporte>? GetDeporte(Deporte? deporte);
-        //int GetCantidad();
+      
 
     }
 }

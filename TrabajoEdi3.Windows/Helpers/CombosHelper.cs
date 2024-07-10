@@ -170,7 +170,7 @@ namespace TrabajoEdi3.Windows.Helpers
             };
             lista.Insert(0, defaultColor);
             cbo.DataSource = lista;
-            cbo.DisplayMember = "ColorNombre";
+            cbo.DisplayMember = "ColorName";
             cbo.ValueMember = "ColorId";
             cbo.SelectedIndex = 0;
         }
@@ -190,7 +190,7 @@ namespace TrabajoEdi3.Windows.Helpers
             // Limpiar el ToolStripComboBox
             cbo.Items.Clear();
             lista.Insert(0, defaultColor);
-            // Agregar los tipos de envases al ToolStripComboBox
+            
             foreach (Entidades.Color color in lista)
             {
                 cbo.Items.Add(color.ColorName);
@@ -210,14 +210,17 @@ namespace TrabajoEdi3.Windows.Helpers
             var lista = servicio?.GetLista();
             var defaultTalle = new Talles
             {
-                
+
+                TallesNumbero = 0
             };
             lista?.Insert(0, defaultTalle);
             cbo.DataSource = lista;
-            cbo.DisplayMember = "TallesNUmero";
-            cbo.ValueMember = "TalleId";
+            cbo.DisplayMember = "TallesNumbero";
+            cbo.ValueMember = "TallesId";
             cbo.SelectedIndex = 0;
         }
+        
+        
     }
 }
 

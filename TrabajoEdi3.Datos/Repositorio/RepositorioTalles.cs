@@ -1,11 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TrabajoEdi3.Datos.Intefaces;
 using TrabajoEdi3.Entidades;
+using TrabajoEdi3.Entidades.Enums;
 
 namespace TrabajoEdi3.Datos.Repositorio
 {
@@ -38,6 +40,11 @@ namespace TrabajoEdi3.Datos.Repositorio
             _context.talles.Update(talles);
         }
 
+        public bool EstaRelacionado(Talles talles)
+        {
+            return _context.zapatillastalles.Any(ss => ss.TallesId == talles.TallesId);
+        }
+
         public bool Existe(Talles talles)
         {
             return _context.talles
@@ -45,9 +52,43 @@ namespace TrabajoEdi3.Datos.Repositorio
                  && p.TallesId != talles.TallesId);
         }
 
+        public int GetCantidad()
+        {
+            return _context.talles.Count();
+        }
+
         public List<Talles> GetLista()
         {
             return _context.talles.ToList();
+        }
+
+        public List<Talles> GetTallesPaginadosOrdenados(int page, int pageSize, Orden? orden = null)
+        {
+            IQueryable<Talles> query = _context.talles;
+
+            //ORDEN
+            if (orden != null)
+            {
+                switch (orden)
+                {
+                    case Orden.AZ:
+                        query = query.OrderBy(s => s.TallesNumbero);
+                        break;
+                    case Orden.ZA:
+                        query = query.OrderByDescending(s => s.TallesNumbero);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            //PAGINADO
+            List<Talles> listaPaginada = query.AsNoTracking()
+                .Skip(page * pageSize) //Saltea estos registros
+                .Take(pageSize) //Muestra estos
+                .ToList();
+
+            return listaPaginada;
         }
 
         public Talles? GetTallesPorId(int id, bool incluyeZapatilla = false)

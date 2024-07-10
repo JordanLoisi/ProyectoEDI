@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -125,6 +126,19 @@ namespace TrabajoEdi3.Servicios.Servicios
             }
         }
 
+        public bool EstaRelacionado(Zapatilla zapatilla)
+        {
+            try
+            {
+                return _repository.EstaRelacionado(zapatilla);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool Existe(Zapatilla zapatilla)
         {
             return _repository.Existe(zapatilla);
@@ -244,6 +258,35 @@ namespace TrabajoEdi3.Servicios.Servicios
             catch (Exception ex)
             {
                 // En caso de error, revertir la transacción
+                _unitOfWork.Rollback();
+                throw;
+            }
+        }
+
+        public void GuardarZapas(Zapatilla zapatilla)
+        {
+            try
+            {
+                _unitOfWork.BeginTransaction();
+                if (zapatilla.ZapatillaId == 0)
+                {
+                    if (!_repository.Existe(zapatilla))
+                    {
+                        _repository.Agregar(zapatilla);
+                    }
+                    else
+                    {
+                        throw new Exception("el zapatilla ya existe.");
+                    }
+                }
+                else
+                {
+                    _repository.Editar(zapatilla);
+                }
+                _unitOfWork.Commit();
+            }
+            catch (Exception)
+            {
                 _unitOfWork.Rollback();
                 throw;
             }

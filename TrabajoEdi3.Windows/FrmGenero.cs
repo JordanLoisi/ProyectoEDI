@@ -62,6 +62,12 @@ namespace TrabajoEdi3.Windows
         private void FrmGenero_Load(object sender, EventArgs e)
         {
             RecargarGrilla();
+            ActualizarCantidad();
+        }
+
+        private void ActualizarCantidad()
+        {
+            txtCantidadRegistros.Text = _servicio.GetCantidad().ToString();
         }
 
         private void tstSalir_Click(object sender, EventArgs e)
@@ -86,6 +92,7 @@ namespace TrabajoEdi3.Windows
                     if (!_servicio.Existe(genero))
                     {
                         _servicio.Guardar(genero);
+                        ActualizarCantidad();
                         var r = GridHelper.ConstruirFila(dgvDatos);
                         GridHelper.SetearFila(r, genero);
                         GridHelper.AgregarFila(r, dgvDatos);
@@ -142,6 +149,7 @@ namespace TrabajoEdi3.Windows
                     if (!_servicio.EstaRelacionado(genero))
                     {
                         _servicio.Borrar(genero);
+                        ActualizarCantidad();
 
                         GridHelper.QuitarFila(r, dgvDatos);
                         MessageBox.Show("Registro Borrado Satisfactoriamente!!!",
@@ -224,62 +232,6 @@ namespace TrabajoEdi3.Windows
             }
         }
 
-        private void toolStripButton5_Click(object sender, EventArgs e)
-        {
-            FilterOn = false;
-            RecargarGrillDeGenero();
-        }
-
-        private void RecargarGrillDeGenero()
-        {
-            try
-            {
-                recordCount = _servicio.GetCantidad();
-                pageCount = FromHelper.CalcularPaginas(recordCount, pageSize);
-                txtCantidadRegistros.Text = pageCount.ToString();
-                CombosHelper.CargarCombosPaginas(pageCount, ref cboPaginas);
-                MostrarDatosEnGrilla();
-            }
-            catch (Exception)
-            {
-                throw;
-
-            }
-        }
-
-        private void btnPrimero_Click(object sender, EventArgs e)
-        {
-            // Ir a la primera página
-            pageNum = 0;
-            cboPaginas.SelectedIndex = pageNum;
-        }
-
-        private void btnAnterior_Click(object sender, EventArgs e)
-        {
-            // Ir a la página anterior
-            pageNum--;
-            if (pageNum < 0) { pageNum = 0; }
-            cboPaginas.SelectedIndex = pageNum;
-        }
-
-        private void btnUltimo_Click(object sender, EventArgs e)
-        {
-            // Ir a la última página
-            pageNum = pageCount - 1;
-            cboPaginas.SelectedIndex = pageNum;
-        }
-
-        private void panelNavegacion_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void btnSiguiente_Click(object sender, EventArgs e)
-        {
-            // Ir a la siguiente página
-            pageNum++;
-            if (pageNum > pageCount - 1) { pageNum = pageCount - 1; }
-            cboPaginas.SelectedIndex = pageNum;
-        }
+      
     }
 }

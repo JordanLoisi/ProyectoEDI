@@ -19,13 +19,7 @@ namespace TrabajoEdi3.Windows
         private readonly IServicioColor _servicio;
         private List<Entidades.Color>? lista;
 
-
-        private bool FilterOn = false;
-
-        private int pageCount;
-        private int pageSize = 15;
-        private int pageNum = 0;
-        private int recordCount;
+       
 
         public FrmColor(IServicioColor servicio)
         {
@@ -37,10 +31,6 @@ namespace TrabajoEdi3.Windows
         {
             try
             {
-                recordCount = _servicio.GetCantidad();
-                pageCount = FromHelper.CalcularPaginas(recordCount, pageSize);
-                txtCantidadRegistros.Text = pageCount.ToString();
-                CombosHelper.CargarCombosPaginas(pageCount, ref cboPaginas);
                 lista = _servicio.GetLista();
                 MostrarDatosEnGrilla();
             }
@@ -49,6 +39,13 @@ namespace TrabajoEdi3.Windows
 
                 throw;
             }
+           
+            
+        }
+
+        private void ActualizarCantidad()
+        {
+           txtCantidadRegistros.Text=_servicio.GetCantidad().ToString();
         }
 
         private void MostrarDatosEnGrilla()
@@ -87,6 +84,7 @@ namespace TrabajoEdi3.Windows
                     if (!_servicio.Existe(color))
                     {
                         _servicio.Guardar(color);
+                        ActualizarCantidad();
                         var r = GridHelper.ConstruirFila(dgvDatos);
                         GridHelper.SetearFila(r, color);
                         GridHelper.AgregarFila(r, dgvDatos);
@@ -143,6 +141,7 @@ namespace TrabajoEdi3.Windows
                     if (!_servicio.EstaRelacionado(color))
                     {
                         _servicio.Borrar(color);
+                        ActualizarCantidad();
 
                         GridHelper.QuitarFila(r, dgvDatos);
                         MessageBox.Show("Registro Borrado Satisfactoriamente!!!",
@@ -228,75 +227,21 @@ namespace TrabajoEdi3.Windows
         private void FrmColor_Load_1(object sender, EventArgs e)
         {
             RecargarGrilla();
+            ActualizarCantidad();
         }
 
-        private void btnSiguiente_Click(object sender, EventArgs e)
-        {
-            // Ir a la siguiente página
-            pageNum++;
-            if (pageNum > pageCount - 1) { pageNum = pageCount - 1; }
-            cboPaginas.SelectedIndex = pageNum;
+       
 
-        }
-
-        private void btnAnterior_Click(object sender, EventArgs e)
-        {
-            // Ir a la página anterior
-            pageNum--;
-            if (pageNum < 0) { pageNum = 0; }
-            cboPaginas.SelectedIndex = pageNum;
-
-        }
-
-
-
-        private void btnPrimero_Click(object sender, EventArgs e)
-        {
-            // Ir a la primera página
-            pageNum = 0;
-            cboPaginas.SelectedIndex = pageNum;
-
-        }
-
-        private void btnUltimo_Click(object sender, EventArgs e)
-        {
-            // Ir a la última página
-            pageNum = pageCount - 1;
-            cboPaginas.SelectedIndex = pageNum;
-
-        }
-
-        private void tsbActualizar_Click(object sender, EventArgs e)
-        {
-            FilterOn = false;
-            RecargarGrillDeTodosLosColores();
-        }
-
-        private void RecargarGrillDeTodosLosColores()
-        {
-            try
-            {
-                recordCount = _servicio.GetCantidad();
-                pageCount = FromHelper.CalcularPaginas(recordCount, pageSize);
-                txtCantidadRegistros.Text = pageCount.ToString();
-                CombosHelper.CargarCombosPaginas(pageCount, ref cboPaginas);
-                MostrarDatosEnGrilla();
-            }
-            catch (Exception)
-            {
-                throw;
-
-            }
-        }
+    
+        
 
         private void panelNavegacion_Paint(object sender, PaintEventArgs e)
         {
 
         }
 
-        private void txtCantidadRegistros_TextChanged(object sender, EventArgs e)
-        {
+      
 
-        }
+       
     }
 }

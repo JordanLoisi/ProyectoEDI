@@ -50,12 +50,12 @@ namespace TrabajoEdi3.Datos.Repositorio
                     t.MarcaId != marca.MarcaId);
         }
 
-        //public int GetCantidad()
-        //{
-        //    return _Context.deportes.Count();
-        //}
+        public int GetCantidad()
+        {
+            return _Context.deportes.Count();
+        }
 
-        public int GetCantidad(Func<Marca, bool>? filtro = null)
+        public int GetCantidadFiltro(Func<Marca, bool>? filtro = null)
         {
             if (filtro != null)
             {

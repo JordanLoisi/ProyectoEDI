@@ -57,7 +57,7 @@ namespace TrabajoEdi3.Datos.Repositorio
             return _Context.generos.Count();
         }
 
-        public int GetCantidad(Func<Genero, bool>? filtro = null)
+        public int GetCantidadFiltro(Func<Genero, bool>? filtro = null)
         {
             if (filtro != null)
             {
@@ -68,6 +68,8 @@ namespace TrabajoEdi3.Datos.Repositorio
                 return _Context.generos.Count();
             }
         }
+
+      
 
         public Genero? GetGeneroPorId(int idEditar)
         {

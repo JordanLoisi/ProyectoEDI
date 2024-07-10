@@ -446,7 +446,7 @@ internal class Program
     {
         var servicio = servicioProvider?.GetService<IServicioZapatilla>();
         Console.Clear();
-        Console.WriteLine("Ingreso Planta a borrar");
+        Console.WriteLine("Ingreso Zapatilla a borrar");
         ListadoZapatilla();
         var listaChar = servicio?
                 .GetLista()

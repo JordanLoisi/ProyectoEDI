@@ -47,9 +47,9 @@ namespace TrabajoEdi3.Servicios.Servicios
             return _repository.Existe(color);
         }
 
-        public int GetCantidad(Func<Color, bool>? filtro = null)
+        public int GetCantidad()
         {
-            return _repository.GetCantidad(filtro);
+            return _repository.GetCantidad();
         }
 
         public Color? GetColorPorId(int idEditar)
@@ -57,9 +57,9 @@ namespace TrabajoEdi3.Servicios.Servicios
             return _repository.GetColorPorId(idEditar);
         }
 
-        public Color? GetColorPorNombre(string tipoDeEnvase)
+        public Color? GetColorPorNombre(string ColorName)
         {
-            return _repository.GetColorPorNombre(tipoDeEnvase);
+            return _repository.GetColorPorNombre(ColorName);
         }
 
         public List<Color> GetLista()

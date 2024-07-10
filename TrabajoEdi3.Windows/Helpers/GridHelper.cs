@@ -50,12 +50,14 @@ namespace TrabajoEdi3.Windows.Helpers
                     break;
 
                 case ZapatillaListDto zapatilla:
-                    r.Cells[0].Value = zapatilla.Description;
-                    r.Cells[1].Value = zapatilla.Modelo;
-                    r.Cells[2].Value = zapatilla.Deporte;
-                    r.Cells[3].Value = zapatilla.Precio.ToString("C");
-                    r.Cells[4].Value = zapatilla.Colores;
-                    r.Cells[5].Value = zapatilla.Genero;
+                    r.Cells[0].Value = zapatilla.Marca;
+                    r.Cells[1].Value = zapatilla.Deporte;
+                    r.Cells[2].Value = zapatilla.Genero;
+                    r.Cells[3].Value = zapatilla.Colores;
+                    r.Cells[4].Value = zapatilla.Modelo;
+                    r.Cells[5].Value = zapatilla.Description;
+                    r.Cells[6].Value = zapatilla.Precio.ToString("C");
+                    
 
                     break;
                 case Zapatilla zapatilla:

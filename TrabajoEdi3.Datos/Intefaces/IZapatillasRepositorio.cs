@@ -33,6 +33,8 @@ namespace TrabajoEdi3.Datos.Intefaces
         bool ExisteRelacion(Zapatilla zapatilla, Talles talles);
         void AgregarZapatillaTalles(Zapatilla zapatilla, List<Talles> talles);
 
+        bool EstaRelacionado(Zapatilla zapatilla);
+
         void EliminarRelaciones(Zapatilla zapatilla);
     }
 }
