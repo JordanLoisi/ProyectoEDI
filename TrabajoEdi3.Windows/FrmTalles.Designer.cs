@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             toolStrip1 = new ToolStrip();
             tsbNuevo = new ToolStripButton();
             tsbBorrar = new ToolStripButton();
@@ -117,11 +117,13 @@
             // 
             // tsbOrden
             // 
+            tsbOrden.DisplayStyle = ToolStripItemDisplayStyle.Image;
             tsbOrden.DropDownItems.AddRange(new ToolStripItem[] { aZToolStripMenuItem, zAToolStripMenuItem });
+            tsbOrden.Image = Properties.Resources.Captura_de_pantalla_2024_07_11_115948;
             tsbOrden.ImageScaling = ToolStripItemImageScaling.None;
             tsbOrden.ImageTransparentColor = Color.Magenta;
             tsbOrden.Name = "tsbOrden";
-            tsbOrden.Size = new Size(53, 54);
+            tsbOrden.Size = new Size(63, 54);
             tsbOrden.Text = "Orden";
             tsbOrden.TextImageRelation = TextImageRelation.ImageAboveText;
             tsbOrden.Click += tsbOrden_Click;
@@ -166,8 +168,8 @@
             // 
             dgvDatos.AllowUserToAddRows = false;
             dgvDatos.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(224, 224, 224);
-            dgvDatos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(224, 224, 224);
+            dgvDatos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             dgvDatos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvDatos.Columns.AddRange(new DataGridViewColumn[] { colTalle });
             dgvDatos.Dock = DockStyle.Fill;
@@ -220,8 +222,8 @@
             // 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(224, 224, 224);
-            dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(224, 224, 224);
+            dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1 });
             dataGridView1.Dock = DockStyle.Fill;
@@ -309,6 +311,7 @@
             // 
             // btnUltimo
             // 
+            btnUltimo.Image = Properties.Resources.Last;
             btnUltimo.Location = new Point(398, 14);
             btnUltimo.Name = "btnUltimo";
             btnUltimo.Size = new Size(75, 41);
@@ -318,6 +321,7 @@
             // 
             // btnSiguiente
             // 
+            btnSiguiente.Image = Properties.Resources.Next_page;
             btnSiguiente.Location = new Point(317, 14);
             btnSiguiente.Name = "btnSiguiente";
             btnSiguiente.Size = new Size(75, 41);
@@ -327,6 +331,7 @@
             // 
             // btnAnterior
             // 
+            btnAnterior.Image = Properties.Resources.Prev;
             btnAnterior.Location = new Point(236, 14);
             btnAnterior.Name = "btnAnterior";
             btnAnterior.Size = new Size(75, 41);
@@ -336,6 +341,8 @@
             // 
             // btnPrimero
             // 
+            btnPrimero.ForeColor = SystemColors.ActiveCaptionText;
+            btnPrimero.Image = Properties.Resources.Previous;
             btnPrimero.Location = new Point(155, 14);
             btnPrimero.Name = "btnPrimero";
             btnPrimero.Size = new Size(75, 41);

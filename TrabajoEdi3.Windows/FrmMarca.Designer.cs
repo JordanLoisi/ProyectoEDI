@@ -99,10 +99,12 @@ namespace TrabajoEdi3.Windows
             // 
             // tsbConsultar
             // 
+            tsbConsultar.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            tsbConsultar.Image = Properties.Resources.Captura_de_pantalla_2024_07_11_113847;
             tsbConsultar.ImageScaling = ToolStripItemImageScaling.None;
             tsbConsultar.ImageTransparentColor = Color.Magenta;
             tsbConsultar.Name = "tsbConsultar";
-            tsbConsultar.Size = new Size(62, 54);
+            tsbConsultar.Size = new Size(52, 54);
             tsbConsultar.Text = "Consultar";
             tsbConsultar.TextImageRelation = TextImageRelation.ImageAboveText;
             tsbConsultar.Click += tsbConsultar_Click;

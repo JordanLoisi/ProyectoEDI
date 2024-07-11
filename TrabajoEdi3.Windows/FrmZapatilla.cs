@@ -30,10 +30,10 @@ namespace TrabajoEdi3.Windows
         private Entidades.Color? ColorFiltro = null;
         private Genero? GeneroFiltro = null;
 
-        private bool FilterOn = false;
+        
+        private Func<Zapatilla, bool>? filtro = null;
 
-
-        Orden ordenado = Orden.SinOrden;
+         Orden ordenado = Orden.SinOrden;
 
         private int cantidadPaginas;
         private int pageSize = 8;
@@ -48,10 +48,7 @@ namespace TrabajoEdi3.Windows
 
         private void FrmZapatilla_Load(object sender, EventArgs e)
         {
-            CombosHelper.CargarComboColor(_serviceProvider, ref porColorToolStripMenuItem);
-            CombosHelper.CargarComboDeporte(_serviceProvider, ref porDeporteStripMenuItem);
-            CombosHelper.CargarComboMarca(_serviceProvider, ref porMarcaStripMenuItem);
-            CombosHelper.CargarComboGenero(_serviceProvider, ref porGeneroToolStripMenuItem);
+            
             RecargarGrillDeTodasLasZapatilla();
         }
 
@@ -242,11 +239,11 @@ namespace TrabajoEdi3.Windows
             ZapatillaListDto zapatillaList = (ZapatillaListDto)r.Tag;
             Zapatilla? zapatilla = _servicio.GetZapatillaPorId(zapatillaList.ZapatillaId);
             if (zapatilla == null) return;
+            FrmZapatillaAE frm = new FrmZapatillaAE(_serviceProvider)
+            { Text = "Editar Zapatilla" };
             List<Talles>? talles = _servicio
                 .GetTallesPorZapatilla(zapatilla.ZapatillaId);
             (Zapatilla? zapatilla, List<Talles>? talles) p = (zapatilla, talles);
-            FrmZapatillaAE frm = new FrmZapatillaAE(_serviceProvider)
-            { Text = "Editar Zapatilla" };
             frm.SetZapatilla(zapatilla);
             DialogResult dr = frm.ShowDialog(this);
             try
@@ -279,15 +276,27 @@ namespace TrabajoEdi3.Windows
 
         private void tsbActualizar_Click(object sender, EventArgs e)
         {
-            FilterOn = false;
+            MarcaFiltro = null;
+            DeporteFiltro = null;
+            GeneroFiltro = null;
+            ColorFiltro = null;
+            filtro = null;
             RecargarGrillDeTodasLasZapatilla();
-
+            tsbFiltrar.BackColor = SystemColors.Control;
 
         }
 
         private void tsbFiltrar_Click(object sender, EventArgs e)
         {
-
+            FrmZapatillaFiltro frm = new FrmZapatillaFiltro(_serviceProvider);
+            frm.ShowDialog(this);
+            filtro = frm.GetFiltro();
+            MarcaFiltro = frm.GetFiltroMarca();
+            DeporteFiltro = frm.GetFiltroDeporte();
+            GeneroFiltro = frm.GetFiltroGenero();
+            ColorFiltro = frm.GetFiltroColor();
+   
+            RecargarGrillDeTodasLasZapatilla();
         }
 
         private void tsbOrden_Click(object sender, EventArgs e)

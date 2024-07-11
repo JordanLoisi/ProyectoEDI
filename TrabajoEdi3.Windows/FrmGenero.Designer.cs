@@ -33,8 +33,6 @@
             tstBorrar = new ToolStripButton();
             tstEditar = new ToolStripButton();
             toolStripSeparator1 = new ToolStripSeparator();
-            toolStripButton4 = new ToolStripButton();
-            toolStripButton5 = new ToolStripButton();
             toolStripSeparator2 = new ToolStripSeparator();
             tstSalir = new ToolStripButton();
             panelNavegacion = new Panel();
@@ -49,7 +47,7 @@
             // 
             // toolStrip1
             // 
-            toolStrip1.Items.AddRange(new ToolStripItem[] { tstNuevo, tstBorrar, tstEditar, toolStripSeparator1, toolStripButton4, toolStripButton5, toolStripSeparator2, tstSalir });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { tstNuevo, tstBorrar, tstEditar, toolStripSeparator1, toolStripSeparator2, tstSalir });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(542, 57);
@@ -95,30 +93,12 @@
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(6, 25);
-            // 
-            // toolStripButton4
-            // 
-            toolStripButton4.ImageScaling = ToolStripItemImageScaling.None;
-            toolStripButton4.ImageTransparentColor = Color.Magenta;
-            toolStripButton4.Name = "toolStripButton4";
-            toolStripButton4.Size = new Size(41, 22);
-            toolStripButton4.Text = "Filtrar";
-            toolStripButton4.TextImageRelation = TextImageRelation.ImageAboveText;
-            // 
-            // toolStripButton5
-            // 
-            toolStripButton5.ImageScaling = ToolStripItemImageScaling.None;
-            toolStripButton5.ImageTransparentColor = Color.Magenta;
-            toolStripButton5.Name = "toolStripButton5";
-            toolStripButton5.Size = new Size(63, 22);
-            toolStripButton5.Text = "Actualizar";
-            toolStripButton5.TextImageRelation = TextImageRelation.ImageAboveText;
+            toolStripSeparator1.Size = new Size(6, 57);
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(6, 25);
+            toolStripSeparator2.Size = new Size(6, 57);
             // 
             // tstSalir
             // 
@@ -212,8 +192,6 @@
         private ToolStripButton tstBorrar;
         private ToolStripButton tstEditar;
         private ToolStripSeparator toolStripSeparator1;
-        private ToolStripButton toolStripButton4;
-        private ToolStripButton toolStripButton5;
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripButton tstSalir;
         private Panel panelNavegacion;

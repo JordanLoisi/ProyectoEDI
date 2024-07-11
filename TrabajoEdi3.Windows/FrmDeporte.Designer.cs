@@ -32,6 +32,7 @@
             tstNuevo = new ToolStripButton();
             tstBorrar = new ToolStripButton();
             tstEditar = new ToolStripButton();
+            tsbConsultar = new ToolStripButton();
             toolStripSeparator1 = new ToolStripSeparator();
             toolStripSeparator2 = new ToolStripSeparator();
             tstSalir = new ToolStripButton();
@@ -40,7 +41,6 @@
             label1 = new Label();
             dgvDatos = new DataGridView();
             ColDeporte = new DataGridViewTextBoxColumn();
-            tsbConsultar = new ToolStripButton();
             toolStrip1.SuspendLayout();
             panelNavegacion.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvDatos).BeginInit();
@@ -62,7 +62,7 @@
             tstNuevo.ImageScaling = ToolStripItemImageScaling.None;
             tstNuevo.ImageTransparentColor = Color.Magenta;
             tstNuevo.Name = "tstNuevo";
-            tstNuevo.Size = new Size(54, 54);
+            tstNuevo.Size = new Size(54, 60);
             tstNuevo.Text = "Nuevo";
             tstNuevo.TextImageRelation = TextImageRelation.ImageAboveText;
             tstNuevo.Click += tstNuevo_Click;
@@ -74,7 +74,7 @@
             tstBorrar.ImageScaling = ToolStripItemImageScaling.None;
             tstBorrar.ImageTransparentColor = Color.Magenta;
             tstBorrar.Name = "tstBorrar";
-            tstBorrar.Size = new Size(54, 54);
+            tstBorrar.Size = new Size(54, 60);
             tstBorrar.Text = "Borrar";
             tstBorrar.TextImageRelation = TextImageRelation.ImageAboveText;
             tstBorrar.Click += tstBorrar_Click;
@@ -86,20 +86,32 @@
             tstEditar.ImageScaling = ToolStripItemImageScaling.None;
             tstEditar.ImageTransparentColor = Color.Magenta;
             tstEditar.Name = "tstEditar";
-            tstEditar.Size = new Size(54, 54);
+            tstEditar.Size = new Size(54, 60);
             tstEditar.Text = "Editar";
             tstEditar.TextImageRelation = TextImageRelation.ImageAboveText;
             tstEditar.Click += tstEditar_Click;
             // 
+            // tsbConsultar
+            // 
+            tsbConsultar.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            tsbConsultar.Image = Properties.Resources.Captura_de_pantalla_2024_07_11_113847;
+            tsbConsultar.ImageScaling = ToolStripItemImageScaling.None;
+            tsbConsultar.ImageTransparentColor = Color.Magenta;
+            tsbConsultar.Name = "tsbConsultar";
+            tsbConsultar.Size = new Size(52, 54);
+            tsbConsultar.Text = "Consultar";
+            tsbConsultar.TextImageRelation = TextImageRelation.ImageAboveText;
+            tsbConsultar.Click += tsbConsultar_Click;
+            // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(6, 57);
+            toolStripSeparator1.Size = new Size(6, 63);
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(6, 57);
+            toolStripSeparator2.Size = new Size(6, 63);
             // 
             // tstSalir
             // 
@@ -108,7 +120,7 @@
             tstSalir.ImageScaling = ToolStripItemImageScaling.None;
             tstSalir.ImageTransparentColor = Color.Magenta;
             tstSalir.Name = "tstSalir";
-            tstSalir.Size = new Size(54, 54);
+            tstSalir.Size = new Size(54, 60);
             tstSalir.Text = "Salir";
             tstSalir.TextImageRelation = TextImageRelation.ImageAboveText;
             tstSalir.Click += tstSalir_Click;
@@ -164,16 +176,6 @@
             ColDeporte.HeaderText = "DeporteNombre";
             ColDeporte.Name = "ColDeporte";
             ColDeporte.ReadOnly = true;
-            // 
-            // tsbConsultar
-            // 
-            tsbConsultar.ImageScaling = ToolStripItemImageScaling.None;
-            tsbConsultar.ImageTransparentColor = Color.Magenta;
-            tsbConsultar.Name = "tsbConsultar";
-            tsbConsultar.Size = new Size(62, 54);
-            tsbConsultar.Text = "Consultar";
-            tsbConsultar.TextImageRelation = TextImageRelation.ImageAboveText;
-            tsbConsultar.Click += tsbConsultar_Click;
             // 
             // FrmDeporte
             // 

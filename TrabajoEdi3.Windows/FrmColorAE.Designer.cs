@@ -69,7 +69,6 @@ namespace TrabajoEdi3.Windows
             txtColor.Name = "txtColor";
             txtColor.Size = new Size(415, 23);
             txtColor.TabIndex = 24;
-           
             // 
             // label1
             // 
@@ -89,12 +88,14 @@ namespace TrabajoEdi3.Windows
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.ActiveCaption;
             ClientSize = new Size(545, 341);
             ControlBox = false;
             Controls.Add(btnCancelar);
             Controls.Add(btnOk);
             Controls.Add(txtColor);
             Controls.Add(label1);
+            ForeColor = SystemColors.ActiveCaptionText;
             Name = "FrmColorAE";
             Text = "FrmColorAE";
             Load += FrmColorAE_Load;
@@ -103,7 +104,7 @@ namespace TrabajoEdi3.Windows
             PerformLayout();
         }
 
-        
+
 
         #endregion
 

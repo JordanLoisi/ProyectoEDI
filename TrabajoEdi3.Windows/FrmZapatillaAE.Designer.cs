@@ -63,7 +63,7 @@
             lblNuevoColor.AutoSize = true;
             lblNuevoColor.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblNuevoColor.ForeColor = Color.Red;
-            lblNuevoColor.Location = new Point(110, 246);
+            lblNuevoColor.Location = new Point(673, 201);
             lblNuevoColor.Name = "lblNuevoColor";
             lblNuevoColor.Size = new Size(76, 15);
             lblNuevoColor.TabIndex = 58;
@@ -84,7 +84,7 @@
             // 
             // btnAgregarColor
             // 
-            btnAgregarColor.Location = new Point(404, 205);
+            btnAgregarColor.Location = new Point(905, 152);
             btnAgregarColor.Name = "btnAgregarColor";
             btnAgregarColor.Size = new Size(57, 32);
             btnAgregarColor.TabIndex = 56;
@@ -104,9 +104,10 @@
             // 
             // btnCancelar
             // 
-            btnCancelar.Location = new Point(914, 313);
+            btnCancelar.Image = Properties.Resources.Cancel;
+            btnCancelar.Location = new Point(491, 312);
             btnCancelar.Name = "btnCancelar";
-            btnCancelar.Size = new Size(105, 54);
+            btnCancelar.Size = new Size(159, 76);
             btnCancelar.TabIndex = 53;
             btnCancelar.Text = "Cancelar";
             btnCancelar.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -116,9 +117,9 @@
             // btnOk
             // 
             btnOk.Image = (Image)resources.GetObject("btnOk.Image");
-            btnOk.Location = new Point(546, 242);
+            btnOk.Location = new Point(205, 325);
             btnOk.Name = "btnOk";
-            btnOk.Size = new Size(289, 54);
+            btnOk.Size = new Size(224, 54);
             btnOk.TabIndex = 54;
             btnOk.Text = "Ok";
             btnOk.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -129,7 +130,7 @@
             // 
             cboColor.DropDownStyle = ComboBoxStyle.DropDownList;
             cboColor.FormattingEnabled = true;
-            cboColor.Location = new Point(110, 211);
+            cboColor.Location = new Point(598, 160);
             cboColor.Name = "cboColor";
             cboColor.Size = new Size(272, 23);
             cboColor.TabIndex = 51;
@@ -138,7 +139,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(48, 212);
+            label4.Location = new Point(545, 163);
             label4.Name = "label4";
             label4.Size = new Size(36, 15);
             label4.TabIndex = 49;
@@ -217,7 +218,7 @@
             lblNuevoGenero.AutoSize = true;
             lblNuevoGenero.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblNuevoGenero.ForeColor = Color.Red;
-            lblNuevoGenero.Location = new Point(110, 313);
+            lblNuevoGenero.Location = new Point(131, 277);
             lblNuevoGenero.Name = "lblNuevoGenero";
             lblNuevoGenero.Size = new Size(89, 15);
             lblNuevoGenero.TabIndex = 65;
@@ -226,7 +227,7 @@
             // 
             // btnAgregarMarca
             // 
-            btnAgregarMarca.Location = new Point(404, 348);
+            btnAgregarMarca.Location = new Point(905, 244);
             btnAgregarMarca.Name = "btnAgregarMarca";
             btnAgregarMarca.Size = new Size(57, 32);
             btnAgregarMarca.TabIndex = 64;
@@ -236,7 +237,7 @@
             // 
             // btnAgregarGenero
             // 
-            btnAgregarGenero.Location = new Point(404, 278);
+            btnAgregarGenero.Location = new Point(404, 236);
             btnAgregarGenero.Name = "btnAgregarGenero";
             btnAgregarGenero.Size = new Size(57, 32);
             btnAgregarGenero.TabIndex = 63;
@@ -248,7 +249,7 @@
             // 
             cboMarca.DropDownStyle = ComboBoxStyle.DropDownList;
             cboMarca.FormattingEnabled = true;
-            cboMarca.Location = new Point(110, 357);
+            cboMarca.Location = new Point(598, 250);
             cboMarca.Name = "cboMarca";
             cboMarca.Size = new Size(272, 23);
             cboMarca.TabIndex = 61;
@@ -257,7 +258,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(49, 365);
+            label7.Location = new Point(541, 253);
             label7.Name = "label7";
             label7.Size = new Size(40, 15);
             label7.TabIndex = 59;
@@ -267,7 +268,7 @@
             // 
             cboGenero.DropDownStyle = ComboBoxStyle.DropDownList;
             cboGenero.FormattingEnabled = true;
-            cboGenero.Location = new Point(110, 278);
+            cboGenero.Location = new Point(115, 236);
             cboGenero.Name = "cboGenero";
             cboGenero.Size = new Size(272, 23);
             cboGenero.TabIndex = 62;
@@ -276,7 +277,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(49, 281);
+            label8.Location = new Point(49, 239);
             label8.Name = "label8";
             label8.Size = new Size(45, 15);
             label8.TabIndex = 60;
@@ -287,7 +288,7 @@
             lblNuevaMarca.AutoSize = true;
             lblNuevaMarca.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblNuevaMarca.ForeColor = Color.Red;
-            lblNuevaMarca.Location = new Point(115, 383);
+            lblNuevaMarca.Location = new Point(669, 277);
             lblNuevaMarca.Name = "lblNuevaMarca";
             lblNuevaMarca.Size = new Size(80, 15);
             lblNuevaMarca.TabIndex = 66;

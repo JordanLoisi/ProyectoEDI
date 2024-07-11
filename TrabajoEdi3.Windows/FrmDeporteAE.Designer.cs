@@ -73,9 +73,10 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(80, 113);
+            label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Location = new Point(63, 112);
             label1.Name = "label1";
-            label1.Size = new Size(49, 15);
+            label1.Size = new Size(66, 21);
             label1.TabIndex = 19;
             label1.Text = "Deporte";
             // 
@@ -87,6 +88,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.AppWorkspace;
             ClientSize = new Size(643, 350);
             ControlBox = false;
             Controls.Add(btnCancelar);
