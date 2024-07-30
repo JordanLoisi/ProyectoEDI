@@ -1,6 +1,6 @@
 ﻿namespace TrabajoEdi3.Windows
 {
-    partial class FrmTallesAE
+    partial class FrmCantidadDeseada
     {
         /// <summary>
         /// Required designer variable.
@@ -29,21 +29,39 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmTallesAE));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCantidadDeseada));
+            txtCantidad = new TextBox();
+            label2 = new Label();
             btnCancelar = new Button();
             btnOk = new Button();
-            txtNumeroTalle = new TextBox();
-            label3 = new Label();
+            Cantidad = new Label();
             errorProvider1 = new ErrorProvider(components);
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
             // 
+            // txtCantidad
+            // 
+            txtCantidad.Location = new Point(175, 34);
+            txtCantidad.MaxLength = 50;
+            txtCantidad.Name = "txtCantidad";
+            txtCantidad.Size = new Size(90, 23);
+            txtCantidad.TabIndex = 33;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(-84, 40);
+            label2.Name = "label2";
+            label2.Size = new Size(36, 15);
+            label2.TabIndex = 32;
+            label2.Text = "Stock";
+            // 
             // btnCancelar
             // 
-            btnCancelar.Location = new Point(373, 125);
+            btnCancelar.Location = new Point(205, 98);
             btnCancelar.Name = "btnCancelar";
-            btnCancelar.Size = new Size(105, 54);
-            btnCancelar.TabIndex = 43;
+            btnCancelar.Size = new Size(71, 48);
+            btnCancelar.TabIndex = 31;
             btnCancelar.Text = "Cancelar";
             btnCancelar.TextImageRelation = TextImageRelation.ImageAboveText;
             btnCancelar.UseVisualStyleBackColor = true;
@@ -52,49 +70,42 @@
             // btnOk
             // 
             btnOk.Image = (Image)resources.GetObject("btnOk.Image");
-            btnOk.Location = new Point(46, 125);
+            btnOk.Location = new Point(25, 98);
             btnOk.Name = "btnOk";
-            btnOk.Size = new Size(289, 54);
-            btnOk.TabIndex = 44;
+            btnOk.Size = new Size(135, 48);
+            btnOk.TabIndex = 30;
             btnOk.Text = "Ok";
             btnOk.TextImageRelation = TextImageRelation.ImageAboveText;
             btnOk.UseVisualStyleBackColor = true;
             btnOk.Click += btnOk_Click;
             // 
-            // txtNumeroTalle
+            // Cantidad
             // 
-            txtNumeroTalle.Location = new Point(114, 81);
-            txtNumeroTalle.Name = "txtNumeroTalle";
-            txtNumeroTalle.Size = new Size(433, 23);
-            txtNumeroTalle.TabIndex = 42;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(31, 84);
-            label3.Name = "label3";
-            label3.Size = new Size(77, 15);
-            label3.TabIndex = 41;
-            label3.Text = "TalleNumero:";
+            Cantidad.AutoSize = true;
+            Cantidad.Location = new Point(59, 42);
+            Cantidad.Name = "Cantidad";
+            Cantidad.Size = new Size(55, 15);
+            Cantidad.TabIndex = 34;
+            Cantidad.Text = "Cantidad";
             // 
             // errorProvider1
             // 
             errorProvider1.ContainerControl = this;
             // 
-            // FrmTallesAE
+            // FrmCantidadDeseada
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.ActiveCaption;
-            ClientSize = new Size(559, 255);
+            ClientSize = new Size(331, 192);
             ControlBox = false;
+            Controls.Add(Cantidad);
+            Controls.Add(txtCantidad);
+            Controls.Add(label2);
             Controls.Add(btnCancelar);
             Controls.Add(btnOk);
-            Controls.Add(txtNumeroTalle);
-            Controls.Add(label3);
-            Name = "FrmTallesAE";
-            Text = "FrmTallesAE";
-            Load += FrmTallesAE_Load;
+            Name = "FrmCantidadDeseada";
+            Text = "FrmCantidadDeseada";
+            Load += FrmCantidadDeseada_Load;
             ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -102,10 +113,11 @@
 
         #endregion
 
+        private TextBox txtCantidad;
+        private Label label2;
         private Button btnCancelar;
         private Button btnOk;
-        private TextBox txtNumeroTalle;
-        private Label label3;
+        private Label Cantidad;
         private ErrorProvider errorProvider1;
     }
 }

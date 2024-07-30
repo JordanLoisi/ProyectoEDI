@@ -63,7 +63,7 @@
             lblNuevoColor.AutoSize = true;
             lblNuevoColor.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblNuevoColor.ForeColor = Color.Red;
-            lblNuevoColor.Location = new Point(673, 201);
+            lblNuevoColor.Location = new Point(669, 222);
             lblNuevoColor.Name = "lblNuevoColor";
             lblNuevoColor.Size = new Size(76, 15);
             lblNuevoColor.TabIndex = 58;
@@ -84,7 +84,7 @@
             // 
             // btnAgregarColor
             // 
-            btnAgregarColor.Location = new Point(905, 152);
+            btnAgregarColor.Location = new Point(905, 186);
             btnAgregarColor.Name = "btnAgregarColor";
             btnAgregarColor.Size = new Size(57, 32);
             btnAgregarColor.TabIndex = 56;
@@ -130,7 +130,7 @@
             // 
             cboColor.DropDownStyle = ComboBoxStyle.DropDownList;
             cboColor.FormattingEnabled = true;
-            cboColor.Location = new Point(598, 160);
+            cboColor.Location = new Point(598, 196);
             cboColor.Name = "cboColor";
             cboColor.Size = new Size(272, 23);
             cboColor.TabIndex = 51;
@@ -139,7 +139,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(545, 163);
+            label4.Location = new Point(520, 204);
             label4.Name = "label4";
             label4.Size = new Size(36, 15);
             label4.TabIndex = 49;
@@ -182,10 +182,11 @@
             // 
             // txtPrecio
             // 
-            txtPrecio.Location = new Point(108, 69);
+            txtPrecio.Location = new Point(104, 64);
             txtPrecio.Name = "txtPrecio";
             txtPrecio.Size = new Size(433, 23);
             txtPrecio.TabIndex = 47;
+            txtPrecio.TextChanged += txtPrecio_TextChanged;
             // 
             // label2
             // 

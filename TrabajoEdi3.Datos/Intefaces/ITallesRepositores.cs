@@ -22,5 +22,7 @@ namespace TrabajoEdi3.Datos.Intefaces
         int GetCantidad();
         List<Talles> GetTallesPaginadosOrdenados(int page, int pageSize, Orden? orden = null);
         bool EstaRelacionado(Talles talles);
+
+        void EditarStocks(ZapatillasTalles zapatillasTalles);
     }
 }

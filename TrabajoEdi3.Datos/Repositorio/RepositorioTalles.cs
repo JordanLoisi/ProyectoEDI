@@ -40,6 +40,11 @@ namespace TrabajoEdi3.Datos.Repositorio
             _context.talles.Update(talles);
         }
 
+        public void EditarStocks(ZapatillasTalles zapatillasTalles)
+        {
+            _context.zapatillastalles.Update(zapatillasTalles);
+        }
+
         public bool EstaRelacionado(Talles talles)
         {
             return _context.zapatillastalles.Any(ss => ss.TallesId == talles.TallesId);
@@ -48,7 +53,7 @@ namespace TrabajoEdi3.Datos.Repositorio
         public bool Existe(Talles talles)
         {
             return _context.talles
-                 .Any(p => p.TallesId == talles.TallesNumbero
+                 .Any(p => p.TallesNumbero == talles.TallesNumbero
                  && p.TallesId != talles.TallesId);
         }
 

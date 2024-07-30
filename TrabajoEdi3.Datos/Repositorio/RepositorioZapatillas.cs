@@ -373,12 +373,11 @@ namespace TrabajoEdi3.Datos.Repositorio
                 .ToList();
         }
 
-        public List<Talles>? GetTallesPorZapatilla(int zapatillaId)
+        public List<ZapatillasTalles>? GetTallesPorZapatilla(int zapatillaId)
         {
             return _Context.zapatillastalles
-               .Include(pp => pp.Talles)
+                .Include(pp => pp.Talles)
                .Where(pp => pp.ZapatillaId == zapatillaId)
-               .Select(pp => pp.Talles)
                .ToList();
         }
 

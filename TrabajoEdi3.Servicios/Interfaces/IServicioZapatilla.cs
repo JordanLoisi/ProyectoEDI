@@ -27,9 +27,9 @@ namespace TrabajoEdi3.Servicios.Interfaces
         List<ZapatillaListDto> GetListaDto();
         Zapatilla? GetZapatillaPorId(int zapatillaId);
         void GuardarConTalle(Zapatilla zapatilla, Talles nuevotalle);
-        void AsignarTalleAZapatilla(Zapatilla zapatillaSinProveedor, Talles nuevoTalle);
+        void AsignarTalleAZapatilla(Zapatilla zapatillaSinProveedor, Talles nuevoTalle, int stock);
         void Editar(Zapatilla zapatilla, int? talleId);
-        List<Talles>? GetTallesPorZapatilla(int zapatillaId);
+        List<ZapatillasTalles>? GetTallesPorZapatilla(int zapatillaId);
         bool ExisteRelacion(Zapatilla zapatilla, Talles talles);
 
         bool EstaRelacionado(Zapatilla zapatilla);

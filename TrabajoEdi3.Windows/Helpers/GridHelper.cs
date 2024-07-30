@@ -82,7 +82,7 @@ namespace TrabajoEdi3.Windows.Helpers
             dgv.Rows.Add(r);
         }
 
-        public static void MostrarDatosEnGrilla<T>(List<T> lista, DataGridView dgvDatos) where T: class
+        public static void MostrarDatosEnGrilla<T>(List<T> lista,DataGridView dgvDatos) where T: class
         {
             LimpiarGrilla(dgvDatos);
             foreach (T t in lista)

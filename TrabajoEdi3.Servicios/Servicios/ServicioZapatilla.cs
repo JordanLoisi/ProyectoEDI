@@ -28,7 +28,7 @@ namespace TrabajoEdi3.Servicios.Servicios
             _tallesRepositores = tallesRepositores;
         }
 
-        public void AsignarTalleAZapatilla(Zapatilla zapatilla, Talles talles)
+        public void AsignarTalleAZapatilla(Zapatilla zapatilla, Talles talles,int stock)
         {
             try
             {
@@ -39,7 +39,8 @@ namespace TrabajoEdi3.Servicios.Servicios
                 ZapatillasTalles nuevaRelacion = new ZapatillasTalles
                 {
                     Zapatilla = zapatilla,
-                    Talles = talles
+                    Talles = talles,
+                    Stok=stock
                 };
 
                 _repository.AgregarTallesZapatilla(nuevaRelacion);
@@ -178,7 +179,7 @@ namespace TrabajoEdi3.Servicios.Servicios
                orden, DeporteFiltro, MarcaFiltro, colorFiltro, GeneroFiltro);
         }
 
-        public List<Talles>? GetTallesPorZapatilla(int zapatillaId)
+        public List<ZapatillasTalles>? GetTallesPorZapatilla(int zapatillaId)
         {
             return _repository.GetTallesPorZapatilla(zapatillaId);
         }

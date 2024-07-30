@@ -35,6 +35,8 @@
             cboTalles = new ComboBox();
             label1 = new Label();
             errorProvider1 = new ErrorProvider(components);
+            label2 = new Label();
+            txtStock = new TextBox();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
             // 
@@ -65,7 +67,7 @@
             // 
             cboTalles.DropDownStyle = ComboBoxStyle.DropDownList;
             cboTalles.FormattingEnabled = true;
-            cboTalles.Location = new Point(126, 52);
+            cboTalles.Location = new Point(115, 32);
             cboTalles.Name = "cboTalles";
             cboTalles.Size = new Size(383, 23);
             cboTalles.TabIndex = 18;
@@ -74,15 +76,35 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(56, 55);
+            label1.Location = new Point(42, 35);
             label1.Name = "label1";
             label1.Size = new Size(38, 15);
             label1.TabIndex = 17;
             label1.Text = "Talles:";
+            label1.Click += label1_Click;
             // 
             // errorProvider1
             // 
             errorProvider1.ContainerControl = this;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(42, 76);
+            label2.Name = "label2";
+            label2.Size = new Size(36, 15);
+            label2.TabIndex = 21;
+            label2.Text = "Stock";
+            label2.Click += label2_Click;
+            // 
+            // txtStock
+            // 
+            txtStock.Location = new Point(98, 68);
+            txtStock.MaxLength = 50;
+            txtStock.Name = "txtStock";
+            txtStock.Size = new Size(124, 23);
+            txtStock.TabIndex = 29;
+            txtStock.TextChanged += txtStock_TextChanged;
             // 
             // FrmAgregarTalles
             // 
@@ -90,6 +112,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(578, 223);
             ControlBox = false;
+            Controls.Add(txtStock);
+            Controls.Add(label2);
             Controls.Add(btnCancelar);
             Controls.Add(btnOk);
             Controls.Add(cboTalles);
@@ -109,5 +133,7 @@
         private ComboBox cboTalles;
         private Label label1;
         private ErrorProvider errorProvider1;
+        private Label label2;
+        private TextBox txtStock;
     }
 }

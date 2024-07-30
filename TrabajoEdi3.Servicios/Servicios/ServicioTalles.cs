@@ -39,6 +39,21 @@ namespace TrabajoEdi3.Servicios.Servicios
             }
         }
 
+        public void EditarStocks(ZapatillasTalles zapatillasTalles)
+        {
+            try
+            {
+                _unitOfWork.BeginTransaction();
+                _repository.EditarStocks(zapatillasTalles);
+                _unitOfWork.Commit();
+            }
+            catch (Exception)
+            {
+                _unitOfWork.Rollback();
+                throw;
+            }
+        }
+
         public bool EstaRelacionado(Talles talles)
         {
             try

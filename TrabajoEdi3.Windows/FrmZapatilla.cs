@@ -148,23 +148,73 @@ namespace TrabajoEdi3.Windows
                     if (!_servicio.Existe(zapatilla))
                     {
                         _servicio.GuardarZapas(zapatilla);
-                        RecargarGrillDeTodasLasZapatilla();
-                        MessageBox.Show("Registro Agregado Satisfactoriamente!!!",
-                            "Mensaje",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
+                        AgregarTalles(zapatilla);
+                       DialogResult dr2= MessageBox.Show("Desea agregar más talles?","Pregunta",MessageBoxButtons.YesNo, MessageBoxIcon.Question,MessageBoxDefaultButton.Button2);
+                        if (dr2 == DialogResult.Yes)
+                        {
+                            FrmCantidadDeseada frm3 = new FrmCantidadDeseada();
+                                 DialogResult dr3 =frm3.ShowDialog(this);
+                            for (int i = 0; i < frm3.GetCantidad(); i++)
+                            {
+                                AgregarTalles(zapatilla);
+                            }
+                        }
+                        else
+                        {
+                            return;
+                        }
+                        MessageBox.Show("Agregado Satisfactoriamente");
 
-                    }
-                    else
-                    {
-                        MessageBox.Show("Registro Duplicado",
-                            "Error",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error);
+                        
 
                     }
                 }
+
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+            }
+
+        }
+        private void AgregarTalles(Zapatilla zapatilla)
+        {
+
+            MessageBox.Show("Selleccione un talle para la zapatilla y su stock ");
+            FrmAgregarTalles frm2 = new FrmAgregarTalles(_serviceProvider, 0, null);
+            DialogResult dr2 = frm2.ShowDialog(this);
+            if (dr2 == DialogResult.Cancel) { return; }
+            try
+            {
+                Talles? talles = frm2.GetTalles();
+                int Stock = frm2.GetStock();
+                if (talles is null) return;
+                if (!_servicio.ExisteRelacion(zapatilla, talles))
+                {
+                    _servicio.AsignarTalleAZapatilla(zapatilla, talles, Stock);
+                    RecargarGrillDeTodasLasZapatilla();
+                    MessageBox.Show("Registro Agregado Satisfactoriamente!!!",
+                        "Mensaje",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+
+
+                }
+
+                else
+                {
+                    MessageBox.Show("Registro Duplicado",
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+
+                }
+            }
+
 
             catch (Exception ex)
             {
@@ -175,7 +225,6 @@ namespace TrabajoEdi3.Windows
 
             }
         }
-
 
 
         private void tstBorrar_Click(object sender, EventArgs e)
@@ -241,9 +290,9 @@ namespace TrabajoEdi3.Windows
             if (zapatilla == null) return;
             FrmZapatillaAE frm = new FrmZapatillaAE(_serviceProvider)
             { Text = "Editar Zapatilla" };
-            List<Talles>? talles = _servicio
+            List<ZapatillasTalles>? talles = _servicio
                 .GetTallesPorZapatilla(zapatilla.ZapatillaId);
-            (Zapatilla? zapatilla, List<Talles>? talles) p = (zapatilla, talles);
+           /* (*//*Z*//*apatilla? zapatilla, List<Talles>? talles) p = (zapatilla, talles);*/
             frm.SetZapatilla(zapatilla);
             DialogResult dr = frm.ShowDialog(this);
             try
@@ -313,7 +362,7 @@ namespace TrabajoEdi3.Windows
             var r = dgvDatos.SelectedRows[0];
             if (r.Tag is null) return;
             ZapatillaListDto zapatillaDto = (ZapatillaListDto)r.Tag;
-            List<Talles>? talles = _servicio
+            List<ZapatillasTalles>? talles = _servicio
                 .GetTallesPorZapatilla(zapatillaDto.ZapatillaId);
             if (talles is null || talles.Count == 0)
             {
@@ -322,7 +371,7 @@ namespace TrabajoEdi3.Windows
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            FrmDetalleTalles frm = new FrmDetalleTalles()
+            FrmDetalleTalles frm = new FrmDetalleTalles(_serviceProvider)
             { Text = $"Talles de la zapatilla {zapatillaDto.Description}" };
             frm.SetDatos(talles);
             frm.ShowDialog(this);
@@ -340,43 +389,7 @@ namespace TrabajoEdi3.Windows
 
             Zapatilla? zapatilla = _servicio.GetZapatillaPorId(zapatillaDto?.ZapatillaId ?? 0);
             if (zapatilla is null) return;
-            FrmAgregarTalles frm = new FrmAgregarTalles(_serviceProvider) { Text = "Agregar Talles" };
-            DialogResult dr = frm.ShowDialog(this);
-            if (dr == DialogResult.Cancel) { return; }
-            try
-            {
-                Talles? talles = frm.GetTalles();
-                if (talles is null) return;
-                if (!_servicio.ExisteRelacion(zapatilla, talles))
-                {
-                    _servicio.AsignarTalleAZapatilla(zapatilla, talles);
-                    if (zapatillaDto is not null)
-                    {
-                        zapatillaDto.CantidadTalles++;
-                        GridHelper.SetearFila(r, zapatillaDto);
-                    }
-                    MessageBox.Show("Talle asignado a la Zapatilla!!!",
-                        "Mensaje",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-
-                }
-                else
-                {
-                    MessageBox.Show("Asignación Existente!!!",
-                    "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message,
-                            "Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-            }
+            AgregarTalles(zapatilla);
         }
 
         private void btnPrimero_Click(object sender, EventArgs e)

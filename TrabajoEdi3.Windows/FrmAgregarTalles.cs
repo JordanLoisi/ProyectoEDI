@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -10,6 +11,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TrabajoEdi3.Entidades;
 using TrabajoEdi3.Windows.Helpers;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace TrabajoEdi3.Windows
 {
@@ -17,21 +20,31 @@ namespace TrabajoEdi3.Windows
     {
         private readonly IServiceProvider _serviceProvider;
         private Talles? TallesSeleccionado;
-        public FrmAgregarTalles(IServiceProvider serviceProvider)
+        private Zapatilla? ZapatillaSeleccionado;
+        private int stock = 0;
+        public FrmAgregarTalles(IServiceProvider serviceProvider,int stocks,Talles? talles)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
+            stock = stocks;
+            TallesSeleccionado = talles;
         }
 
         private void FrmAgregarTalles_Load(object sender, EventArgs e)
         {
-           
+
             CombosHelper.CargarComboTalle(_serviceProvider, ref cboTalles);
         }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+            if (TallesSeleccionado != null && stock!=null)
+            {
+                cboTalles.SelectedItem = TallesSeleccionado;
+                txtStock.Text = stock.ToString();
+
+            }
         }
         private void btnCancelar_Click(object sender, EventArgs e)
         {
@@ -43,6 +56,7 @@ namespace TrabajoEdi3.Windows
         {
             if (ValidarDatos())
             {
+                stock = int.Parse(txtStock.Text);
                 DialogResult = DialogResult.OK;
             }
         }
@@ -51,6 +65,13 @@ namespace TrabajoEdi3.Windows
         {
             bool valido = true;
             errorProvider1.Clear();
+            if (int.Parse(txtStock.Text)<=0)
+            {
+                valido = false;
+                errorProvider1.SetError(txtStock, "Precio no válido o mal ingresado");
+
+            }
+
             return valido;
         }
 
@@ -64,9 +85,42 @@ namespace TrabajoEdi3.Windows
             }
         }
 
-       public Talles? GetTalles()
+        public Talles? GetTalles()
         {
             return TallesSeleccionado;
         }
+        public Zapatilla? GetZapatilla()
+        {
+            return ZapatillaSeleccionado;
+        }
+        internal int GetStock()
+        {
+            return stock;
+        }
+
+        //public void SetStock(int stocks)
+        //{
+           
+        //}
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtStock_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        //internal void SetTalle(Talles talles)
+        //{
+        //    TallesSeleccionado= talles;
+        //}
     }
 }

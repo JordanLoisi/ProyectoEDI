@@ -9,13 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrabajoEdi3.Entidades", "Tr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrabajoEdi3.Consola", "TrabajoEdi3.Consola\TrabajoEdi3.Consola.csproj", "{349B11F9-3587-4ED7-902A-71572EFEC1F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrabajoEdi3.Servicios", "TrabajoEdi3.Servicios\TrabajoEdi3.Servicios.csproj", "{2ED788C4-271E-4823-B8BA-AC3389958263}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrabajoEdi3.Servicios", "TrabajoEdi3.Servicios\TrabajoEdi3.Servicios.csproj", "{2ED788C4-271E-4823-B8BA-AC3389958263}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrabajoEdi3.Loc", "TrabajoEdi3.Loc\TrabajoEdi3.Loc.csproj", "{AF87491C-F18F-446D-BE60-245E83E379C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrabajoEdi3.Loc", "TrabajoEdi3.Loc\TrabajoEdi3.Loc.csproj", "{AF87491C-F18F-446D-BE60-245E83E379C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrabajoEdi3.Shared", "TrabajoEdi3.Shared\TrabajoEdi3.Shared.csproj", "{A0757E97-1EFC-41EF-AA5E-1DB8203F7176}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrabajoEdi3.Shared", "TrabajoEdi3.Shared\TrabajoEdi3.Shared.csproj", "{A0757E97-1EFC-41EF-AA5E-1DB8203F7176}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrabajoEdi3.Windows", "TrabajoEdi3.Windows\TrabajoEdi3.Windows.csproj", "{8C287CF5-B59E-49A9-91CD-0EBE3C8E6184}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrabajoEdi3.Windows", "TrabajoEdi3.Windows\TrabajoEdi3.Windows.csproj", "{8C287CF5-B59E-49A9-91CD-0EBE3C8E6184}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

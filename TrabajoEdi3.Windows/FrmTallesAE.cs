@@ -42,7 +42,7 @@ namespace TrabajoEdi3.Windows
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            
+
             if (ValidarDatos())
             {
                 if (talle == null)
@@ -50,7 +50,7 @@ namespace TrabajoEdi3.Windows
                     talle = new Talles();
 
                 }
-                talle.TallesNumbero=decimal.Parse(txtNumeroTalle.Text); 
+                talle.TallesNumbero = decimal.Parse(txtNumeroTalle.Text);
 
                 DialogResult = DialogResult.OK;
             }
@@ -61,12 +61,17 @@ namespace TrabajoEdi3.Windows
             bool valid = true;
             errorProvider1.Clear();
             if (!decimal.TryParse(txtNumeroTalle.Text, out decimal precio) ||
-                (precio<=0))
+                (precio <= 0))
             {
                 valid = false;
                 errorProvider1.SetError(txtNumeroTalle, "Numero de Talle requerido!!!");
             }
             return valid;
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

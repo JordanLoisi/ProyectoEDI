@@ -21,5 +21,7 @@ namespace TrabajoEdi3.Servicios.Interfaces
         List<Talles> GetTallesPaginadosOrdenados(int page, int pageSize, Orden? orden = null);
 
         bool EstaRelacionado(Talles talles);
+
+        void EditarStocks(ZapatillasTalles zapatillasTalles);
     }
 }

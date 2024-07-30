@@ -68,6 +68,7 @@
             txtMarca.Name = "txtMarca";
             txtMarca.Size = new Size(415, 23);
             txtMarca.TabIndex = 16;
+            txtMarca.TextChanged += txtMarca_TextChanged;
             // 
             // label1
             // 

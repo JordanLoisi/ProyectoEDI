@@ -8,11 +8,15 @@ namespace TrabajoEdi3.Windows
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IServicioZapatilla servicioZapatilla;
+        private readonly ITallesServicio tallesServicio;
         private Zapatilla? zapatilla;
         private Deporte? deporte;
         private Marca? marca;
         private Entidades.Color? color;
         private Genero? genero;
+        private List<Talles>? _listaTalles;
+        private List<Talles>? _CrearTalles;
+        private List<int> Stock;
 
         private (Zapatilla? zapatilla, List<Talles> talles) p;
         public FrmZapatillaAE(IServiceProvider serviceProvider)
@@ -102,7 +106,7 @@ namespace TrabajoEdi3.Windows
 
                     if (!EsEdition)
                     {
-                        
+
                         InicializarControles();
                     }
                     else
@@ -299,6 +303,16 @@ namespace TrabajoEdi3.Windows
         }
 
         private void label6_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtPrecio_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvDatos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

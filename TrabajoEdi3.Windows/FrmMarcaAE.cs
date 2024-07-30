@@ -66,5 +66,10 @@ namespace TrabajoEdi3.Windows
         {
             DialogResult = DialogResult.Cancel;
         }
+
+        private void txtMarca_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
