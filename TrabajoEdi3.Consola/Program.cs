@@ -188,6 +188,7 @@ internal class Program
 
     private static void AsignarTallesporZapatillla()
     {
+        int stock = 0;
         // Inicializar el servicio y el talle
         var ZapatillaServicio = servicioProvider?.GetService<IServicioZapatilla>();
         var TallesServicio = servicioProvider?.GetService<ITallesServicio>();
@@ -246,10 +247,10 @@ internal class Program
                         
                     };
 
-                    // Asignar el proveedor a la planta
+             
                     ZapatillaServicio
                         .AsignarTalleAZapatilla(zapatillasSinTalle,
-                        nuevoTalle);
+                        nuevoTalle,stock);
                 }
                 else
                 {
@@ -259,7 +260,7 @@ internal class Program
 
                     // Asignar el talle existente a la zapatilla
                     ZapatillaServicio.AsignarTalleAZapatilla(zapatillasSinTalle,
-                        talleSeleccionado);
+                        talleSeleccionado,stock);
                 }
 
             }
