@@ -45,8 +45,29 @@ namespace TrabajoEdi3.Shared
                 }
             }
         }
+        public static bool ReadBool(string message)
+        {
+            while (true)
+            {
+                Console.WriteLine(message);
+                string input = Console.ReadLine()?.Trim().ToUpper();
 
-        public static decimal ReadDecimal(string message)
+                if (input == "SI")
+                {
+                    return true;
+                }
+                else if (input == "NO")
+                {
+                    return false;
+                }
+                else
+                {
+                    Console.WriteLine("Entrada no válida. Por favor ingrese 'SI' para sí o 'NO' para no.");
+                }
+            }
+        }
+
+            public static decimal ReadDecimal(string message)
         {
             while (true)
             {

@@ -203,6 +203,7 @@ namespace TrabajoEdi3.Datos.Repositorio
             return _Context.zapatillastalles
                 .Any(pp => pp.ZapatillaId == zapatilla.ZapatillaId
                 && pp.TallesId == talles.TallesId);
+
         }
 
         public int GetCantidad(Func<Zapatilla, bool>? filtro = null)

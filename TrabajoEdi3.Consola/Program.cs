@@ -1,12 +1,14 @@
 ﻿using ConsoleTables;
 using Microsoft.Extensions.DependencyInjection;
 using System.Numerics;
+using TrabajoEdi3.Datos.Repositorio;
 using TrabajoEdi3.Datos.UnitOfWork;
 using TrabajoEdi3.Entidades;
 using TrabajoEdi3.Entidades.Dto;
 using TrabajoEdi3.Entidades.Enums;
 using TrabajoEdi3.Loc;
 using TrabajoEdi3.Servicios.Interfaces;
+using TrabajoEdi3.Servicios.Servicios;
 using TrabajoEdi3.Shared;
 
 internal class Program
@@ -145,7 +147,7 @@ internal class Program
                     ListadoZapatillaDto();
                     break;
                 case "22":
-                    AgregarZapatilla();
+                    AgregarZapatillasinTalles();
                     break;
                 case "23":
                     EliminarZapatilla();
@@ -162,10 +164,10 @@ internal class Program
             
 
                 case "29":
-                    AgregarZapatillaporTalles();
+                    CrearZapatillaconTalles();
                     break;
                 case "30":
-                    AsignarTallesporZapatillla();
+                    AsignarTalles();
                     break;
 
 
@@ -186,9 +188,10 @@ internal class Program
 
     }
 
-    private static void AsignarTallesporZapatillla()
+    private static void AsignarTalles()
     {
         int stock = 0;
+        
         // Inicializar el servicio y el talle
         var ZapatillaServicio = servicioProvider?.GetService<IServicioZapatilla>();
         var TallesServicio = servicioProvider?.GetService<ITallesServicio>();
@@ -200,79 +203,20 @@ internal class Program
         }
 
         // Obtener las zapatilla sin talle asignado
-        var zapatillaSinTalle = ZapatillaServicio.GetZapatillaSinTalle();
-        if (zapatillaSinTalle.Count > 0)
+        var MostrarZapatilla = ZapatillaServicio.GetListaDto();
+        if (MostrarZapatilla.Count > 0)
         {
-            MostrarListaZapatilla(zapatillaSinTalle);
+            MostrarListaZapatilla(MostrarZapatilla);
             // Solicitar al usuario seleccionar una zapatilla de la lista
             var opcionzapatilla = ConsoleExtension.GetValidOptions("Seleccione una zapatilla:",
-                zapatillaSinTalle.Select(x => x.ZapatillaId.ToString()).ToList());
-
-            var zapatillasSinTalle = ZapatillaServicio
-                .GetZapatillaPorId(Convert.ToInt32(opcionzapatilla));
-
-            // Verificar si se encontró una planta sin proveedor
-            if (zapatillasSinTalle != null)
-            {
-                // Mostrar la zapatilla sin talle
-                Console.WriteLine("Zapatilla sin talle encontrado:");
-                Console.WriteLine($"ID: {zapatillasSinTalle.ZapatillaId}");
-                Console.WriteLine($"Descripción: {zapatillasSinTalle.Description}");
-                Console.WriteLine();
-
-                // Obtener la lista de talle
-                var listaTalles = TallesServicio.GetLista();
-
-                // Mostrar la lista de talle
-                Console.WriteLine("Lista de talles:");
-                foreach (var talles in listaTalles)
-                {
-                    Console.WriteLine($"ID: {talles.TallesId}, Numero: {talles.TallesNumbero}");
-                }
-                Console.WriteLine();
-
-                // Solicitar al usuario seleccionar un talle existente o crear uno nuevo
-                var opcion = ConsoleExtension.GetValidOptions("Seleccione un Talle (N para nuevo):",
-                    listaTalles.Select(x => x.TallesId.ToString()).ToList());
-
-                if (opcion == "N")
-                {
-                    // Crear un nuevo talle
-                    var NumeroTalle = ConsoleExtension.ReadInt("Numero del nuevo talle:");
-                   
-
-                    Talles nuevoTalle = new Talles
-                    {
-                        TallesNumbero = NumeroTalle,
-                        
-                    };
-
-             
-                    ZapatillaServicio
-                        .AsignarTalleAZapatilla(zapatillasSinTalle,
-                        nuevoTalle,stock);
-                }
-                else
-                {
-                    // Obtener el talle seleccionado
-                    var talleSeleccionado = listaTalles
-                        .FirstOrDefault(x => x.TallesId.ToString() == opcion);
-
-                    // Asignar el talle existente a la zapatilla
-                    ZapatillaServicio.AsignarTalleAZapatilla(zapatillasSinTalle,
-                        talleSeleccionado,stock);
-                }
-
-            }
-            else
-            {
-                Console.WriteLine("No se encontraron zapatilla sin talle.");
-            }
+                MostrarZapatilla.Select(x => x.ZapatillaId.ToString()).ToList());
+            AgregarTalles(ZapatillaServicio, TallesServicio, ZapatillaServicio.GetZapatillaPorId(int.Parse(opcionzapatilla)));
+           
 
         }
         else
         {
-            Console.WriteLine("No hay zapatilla sin talle!!!");
+            
         }
         ConsoleExtension.EsperaEnter();
     }
@@ -292,7 +236,7 @@ internal class Program
         }
     }
 
-    private static void AgregarZapatillaporTalles()
+    private static void CrearZapatillaconTalles()
     {
         var servicioZapatilla = servicioProvider?.GetService<IServicioZapatilla>();
         var servicioTalles = servicioProvider?.GetService<ITallesServicio>();
@@ -304,6 +248,24 @@ internal class Program
         }
 
         Zapatilla zapatilla = CrearZapatilla();
+        AgregarTalles(servicioZapatilla, servicioTalles, zapatilla);
+        var VALIDACION = ConsoleExtension.ReadBool("Quieres ingresar mas talles? (SI/NO) ");
+        if (VALIDACION)
+        {
+            int talles = ConsoleExtension.ReadInt("Cuantos talles deseas ingresar ");
+            for (int i = 0; i < talles; i++)
+            {
+                AgregarTalles(servicioZapatilla, servicioTalles, zapatilla);
+            }
+
+        }
+        Console.WriteLine("Se Agrego las zapatilla con sus talles ");
+
+       
+    }
+
+    private static void AgregarTalles(IServicioZapatilla? servicioZapatilla, ITallesServicio? servicioTalles, Zapatilla zapatilla)
+    {
         int Stock = ConsoleExtension.ReadInt("Ingrese el Stock de la zapatilla: ");
 
         ListaDeTalles();
@@ -316,23 +278,16 @@ internal class Program
         if (talleId == "N")
         {
             var numerotalle = ConsoleExtension.ReadInt("Talles:");
-            
+
 
             Talles nuevotalle = new Talles
             {
                 TallesNumbero = numerotalle,
-               
-            };
 
-            var zt = new ZapatillasTalles
-            {
-                Zapatilla = zapatilla,
-                Talles = nuevotalle,
-                Stok=Stock
             };
-            zapatilla.zapatillastalles.Add(zt);
-            servicioZapatilla.GuardarConTalle(zapatilla, nuevotalle);
-            Console.WriteLine("Zapatilla agregada con nuevo talle!");
+            servicioZapatilla.AsignarTalleAZapatilla(zapatilla, nuevotalle, Stock);
+            
+            
         }
         else
         {
@@ -341,16 +296,8 @@ internal class Program
                 .GetTallesPorId(talleIdInt, true);
             if (tallesExistente != null)
             {
-                var zt = new ZapatillasTalles
-                {
-                    Zapatilla= zapatilla,
-                    Talles = tallesExistente,
-                     Stok = Stock
-                };
-                zapatilla.zapatillastalles.Add(zt);
-
-                servicioZapatilla.GuardarConTalle(zapatilla, tallesExistente);
-                Console.WriteLine("Zapatilla agregada con talle existente!");
+                servicioZapatilla.AsignarTalleAZapatilla(zapatilla, tallesExistente, Stock);
+               
             }
             else
             {
@@ -487,7 +434,7 @@ internal class Program
         Thread.Sleep(5000);
     }
 
-    private static void AgregarZapatilla()
+    private static void AgregarZapatillasinTalles()
     {
         Console.Clear();
         var servicioZapatilla = servicioProvider?.GetService<IServicioZapatilla>();

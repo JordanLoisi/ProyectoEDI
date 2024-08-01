@@ -42,9 +42,19 @@ namespace TrabajoEdi3.Servicios.Servicios
                     Talles = talles,
                     Stok=stock
                 };
-
-                _repository.AgregarTallesZapatilla(nuevaRelacion);
-                _unitOfWork.Commit();
+                var validacion = _repository.ExisteRelacion(zapatilla,talles);
+                if (validacion)
+                {
+                    Console.WriteLine("Relacion Existente ");
+                    _unitOfWork.Rollback();
+                }
+                else
+                {
+                      _repository.AgregarTallesZapatilla(nuevaRelacion);
+                    _unitOfWork.Commit();
+                }
+              
+                
             }
             catch (Exception)
             {
