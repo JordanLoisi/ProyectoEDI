@@ -1,5 +1,6 @@
 ﻿using ConsoleTables;
 using Microsoft.Extensions.DependencyInjection;
+using System.ComponentModel.Design;
 using System.Numerics;
 using TrabajoEdi3.Datos.Repositorio;
 using TrabajoEdi3.Datos.UnitOfWork;
@@ -63,6 +64,7 @@ internal class Program
 
             Console.WriteLine("29. Asignar zapatilla por Talles");
             Console.WriteLine("30. Asignar Talles por Zapatilla");
+            Console.WriteLine("31. Mostrar Talles por Zapatilla");
 
 
 
@@ -169,6 +171,9 @@ internal class Program
                 case "30":
                     AsignarTalles();
                     break;
+                case "31":
+                    MostrarTallesPorZapatilla();
+                    break;
 
 
 
@@ -185,6 +190,67 @@ internal class Program
 
             Console.WriteLine(); // Añade una línea en blanco para mejorar la legibilidad
         }
+
+    }
+    private static void MostrarTallesPorZapatilla()
+    {
+        var servicioTalles = servicioProvider.GetService<ITallesServicio>();
+        var ServicioMarca = servicioProvider.GetService<IServicioMarca>();
+        var ServicioDeporte = servicioProvider.GetService<IServicioDeporte>();
+        var ServicioGenero = servicioProvider.GetService<IServicioGenero>();
+        var ServicioColor = servicioProvider.GetService<IServicioColor>();
+
+        Console.Clear();
+        ListaDeTalles();
+        var talle = ConsoleExtension.ReadInt("ingrese el ID deseado: ");
+        Talles? talles = servicioTalles.GetTallesPorId(talle, true);
+        if (talles == null)
+        {
+            Console.WriteLine("id incorrecto, ingrese un id correcto ");
+            ConsoleExtension.EsperaEnter();
+
+        }
+        else
+        {
+            Console.WriteLine($" El talle: {talles.TallesNumbero}");
+            var table = new ConsoleTable("Id", "Marca", "Deporte", "Genero", "Color", "Descripcion", "Price", "Stock");
+            if (talles.zapatillastalles != null)
+            {
+                foreach (var item in talles.zapatillastalles)
+                {
+                    table.AddRow(item.Zapatilla.ZapatillaId,
+                        ServicioMarca.GetMarcaPorId(item.Zapatilla.MarcaId)?.MarcaNombre,
+                        ServicioDeporte.GetDeportePorId(item.Zapatilla.DeporteId)?.NombreDeporte,
+                        ServicioGenero.GetGeneroPorId(item.Zapatilla.GeneroId)?.GeneroNombre,
+                        ServicioColor.GetColorPorId(item.Zapatilla.ColoresId)?.ColorName,
+                        item.Zapatilla.Description,
+                        item.Zapatilla.Precio,
+                        item.Stok);
+                }
+                table.Options.EnableCount = false;
+                table.Write();
+
+            }
+            Console.WriteLine("enter para continuar ");
+            Console.ReadLine();
+        }
+    }
+
+
+    private static void ListadoDeTallesConSusZapatilla()
+    {
+        //var servicioTalles = servicioProvider.GetServices<ITallesServicio>;
+        //var ServicioMarca = servicioProvider.GetServices<IServicioMarca>;
+        //var ServicioDeporte = servicioProvider.GetServices<IServicioDeporte>;
+        //var ServicioGenero = servicioProvider.GetServices<IServicioGenero>;
+        //var ServicioColor = servicioProvider.GetServices<IServicioColor>;
+
+        //Console.Clear();
+        //ListaDeTalles();
+        //var talle = ConsoleExtension.ReadInt("ingrese el id deseado ");
+        //Talles? talles=servicioTalles.
+        
+
 
     }
 

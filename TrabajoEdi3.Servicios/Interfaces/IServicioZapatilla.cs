@@ -19,7 +19,7 @@ namespace TrabajoEdi3.Servicios.Interfaces
         void Borrar(int zapatillaId);
         List<ZapatillaListDto> GetListaPaginadaOrdenadaFiltrada(int page,
             int pageSize, Orden? orden = null, Deporte? DeporteFiltro = null,
-            Marca? MarcaFiltro = null, Color? colorFiltro = null, Genero? GeneroFiltro = null);
+            Marca? MarcaFiltro = null, Color? colorFiltro = null, Genero? GeneroFiltro = null,Talles? talleSelec= null , Talles? tallemax= null);
 
         List<Zapatilla> GetLista();
         IEnumerable<object> GetListaAnonima();
