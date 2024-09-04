@@ -14,10 +14,10 @@ using TrabajoEdi3.Entidades.Enums;
 
 namespace TrabajoEdi3.Datos.Repositorio
 {
-    public class RepositorioZapatillas : IZapatillasRepositorio
+    public class RepositorioZapatillas : RepositorioGenerico<Zapatilla>,IZapatillasRepositorio
     {
         private readonly DbContex _Context;
-        public RepositorioZapatillas(DbContex context)
+        public RepositorioZapatillas(DbContex context) : base(context)
         {
             _Context = context;
         }

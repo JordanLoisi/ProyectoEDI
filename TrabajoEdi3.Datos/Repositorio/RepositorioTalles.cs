@@ -11,11 +11,11 @@ using TrabajoEdi3.Entidades.Enums;
 
 namespace TrabajoEdi3.Datos.Repositorio
 {
-    public class RepositorioTalles : ITallesRepositores
+    public class RepositorioTalles : RepositorioGenerico<Talles>,ITallesRepositores
     {
         private readonly DbContex _context;
 
-        public RepositorioTalles(DbContex context)
+        public RepositorioTalles(DbContex context): base (context)
         {
             _context = context;
         }
@@ -45,9 +45,9 @@ namespace TrabajoEdi3.Datos.Repositorio
             _context.zapatillastalles.Update(zapatillasTalles);
         }
 
-        public bool EstaRelacionado(Talles talles)
+        public bool EstaRelacionado(int id)
         {
-            return _context.zapatillastalles.Any(ss => ss.TallesId == talles.TallesId);
+            return _context.zapatillastalles.Any(ss => ss.TallesId == id);
         }
 
         public bool Existe(Talles talles)

@@ -10,7 +10,7 @@ using TrabajoEdi3.Entidades.Enums;
 
 namespace TrabajoEdi3.Datos.Intefaces
 {
-    public interface IZapatillasRepositorio
+    public interface IZapatillasRepositorio: IGenericRepositorio<Zapatilla>
     {
         int GetCantidad(Func<Zapatilla, bool>? filtro = null);
         void Agregar(Zapatilla zapatilla);

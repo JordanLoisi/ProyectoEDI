@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrabajoEdi3.Shared", "Traba
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrabajoEdi3.Windows", "TrabajoEdi3.Windows\TrabajoEdi3.Windows.csproj", "{8C287CF5-B59E-49A9-91CD-0EBE3C8E6184}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectoEdi.Web", "ProyectoEdi.Web\ProyectoEdi.Web.csproj", "{C2D340CB-FB3D-4460-8E4F-FDD548B1A698}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{8C287CF5-B59E-49A9-91CD-0EBE3C8E6184}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C287CF5-B59E-49A9-91CD-0EBE3C8E6184}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C287CF5-B59E-49A9-91CD-0EBE3C8E6184}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2D340CB-FB3D-4460-8E4F-FDD548B1A698}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2D340CB-FB3D-4460-8E4F-FDD548B1A698}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2D340CB-FB3D-4460-8E4F-FDD548B1A698}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2D340CB-FB3D-4460-8E4F-FDD548B1A698}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

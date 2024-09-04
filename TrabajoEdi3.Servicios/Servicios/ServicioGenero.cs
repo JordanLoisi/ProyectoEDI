@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using TrabajoEdi3.Datos.Intefaces;
@@ -37,9 +38,9 @@ namespace TrabajoEdi3.Servicios.Servicios
         }
     
 
-        public bool EstaRelacionado(Genero genero)
+        public bool EstaRelacionado(int id)
         {
-        return _repository.EstaRelacionado(genero);
+        return _repository.EstaRelacionado(id);
         }
 
         public bool Existe(Genero genero)
@@ -91,6 +92,16 @@ namespace TrabajoEdi3.Servicios.Servicios
                 _unitOfWork.Rollback();
                 throw;
             }
+        }
+
+        public IEnumerable<Genero>? GetAll(Expression<Func<Genero, bool>>? filter = null, Func<IQueryable<Genero>, IOrderedQueryable<Genero>>? orderBy = null, string? propertiesNames = null)
+        {
+            return _repository!.GetAll(filter, orderBy, propertiesNames);
+        }
+
+        public Genero? Get(Expression<Func<Genero, bool>>? filter = null, string? propertiesNames = null, bool tracked = true)
+        {
+            return _repository!.Get(filter, propertiesNames, tracked);
         }
     }
 }

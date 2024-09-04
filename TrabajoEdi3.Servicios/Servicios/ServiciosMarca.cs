@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 using TrabajoEdi3.Datos.Intefaces;
 using TrabajoEdi3.Datos.UnitOfWork;
 using TrabajoEdi3.Entidades;
@@ -36,9 +32,9 @@ namespace TrabajoEdi3.Servicios.Servicios
             }
         }
 
-        public bool EstaRelacionado(Marca marca)
+        public bool EstaRelacionado(int id)
         {
-            return _repository.EstaRelacionado(marca);
+            return _repository.EstaRelacionado(id);
         }
 
         public bool Existe(Marca marca)
@@ -91,6 +87,17 @@ namespace TrabajoEdi3.Servicios.Servicios
                 _unitOfWork.Rollback();
                 throw;
             }
+        }
+        public IEnumerable<Marca> GetAll(Expression<Func<Marca, bool>>? filter = null,
+           Func<IQueryable<Marca>, IOrderedQueryable<Marca>>? orderBy = null,
+           string? propertiesNames = null)
+        {
+            return _repository!.GetAll(filter, orderBy, propertiesNames);
+        }
+
+        public Marca? Get(Expression<Func<Marca, bool>>? filter = null, string? propertiesNames = null, bool tracked = true)
+        {
+            return _repository!.Get(filter, propertiesNames, tracked);
         }
     }
 }

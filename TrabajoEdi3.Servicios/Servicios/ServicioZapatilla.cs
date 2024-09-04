@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
@@ -158,6 +159,16 @@ namespace TrabajoEdi3.Servicios.Servicios
         public bool ExisteRelacion(Zapatilla zapatilla, Talles talles)
         {
             return _repository.ExisteRelacion(zapatilla, talles);
+        }
+
+        public Zapatilla? Get(Expression<Func<Zapatilla, bool>>? filter = null, string? propertiesNames = null, bool tracked = true)
+        {
+            return _repository!.Get(filter, propertiesNames, tracked);
+        }
+
+        public IEnumerable<Zapatilla>? GetAll(Expression<Func<Zapatilla, bool>>? filter = null, Func<IQueryable<Zapatilla>, IOrderedQueryable<Zapatilla>>? orderBy = null, string? propertiesNames = null)
+        {
+            return _repository!.GetAll(filter, orderBy, propertiesNames);
         }
 
         public int GetCantidad(Func<Zapatilla, bool>? filtro = null)

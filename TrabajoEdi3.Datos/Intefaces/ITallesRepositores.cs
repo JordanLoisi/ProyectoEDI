@@ -9,7 +9,7 @@ using TrabajoEdi3.Entidades.Enums;
 
 namespace TrabajoEdi3.Datos.Intefaces
 {
-    public interface ITallesRepositores
+    public interface ITallesRepositores:IGenericRepositorio<Talles>
     {
         void Agregar(Talles talles);
         void AgregarZapatillasTalles(ZapatillasTalles nuevaRelacion);
@@ -21,7 +21,7 @@ namespace TrabajoEdi3.Datos.Intefaces
 
         int GetCantidad();
         List<Talles> GetTallesPaginadosOrdenados(int page, int pageSize, Orden? orden = null);
-        bool EstaRelacionado(Talles talles);
+        bool EstaRelacionado(int id);
 
         void EditarStocks(ZapatillasTalles zapatillasTalles);
     }

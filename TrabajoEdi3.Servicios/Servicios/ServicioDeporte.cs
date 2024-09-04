@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using TrabajoEdi3.Datos.Intefaces;
@@ -37,9 +38,9 @@ namespace TrabajoEdi3.Servicios.Servicios
             }
         }
 
-        public bool EstaRelacionado(Deporte deporte)
+        public bool EstaRelacionado(int id)
         {
-            return _repository.EstaRelacionado(deporte);
+            return _repository.EstaRelacionado(id);
         }
 
         public bool Existe(Deporte deporte)
@@ -93,6 +94,16 @@ namespace TrabajoEdi3.Servicios.Servicios
                 _unitOfWork.Rollback();
                 throw;
             }
+        }
+
+        public IEnumerable<Deporte>? GetAll(Expression<Func<Deporte, bool>>? filter = null, Func<IQueryable<Deporte>, IOrderedQueryable<Deporte>>? orderBy = null, string? propertiesNames = null)
+        {
+            return _repository!.GetAll(filter, orderBy, propertiesNames);
+        }
+
+        public Deporte? Get(Expression<Func<Deporte, bool>>? filter = null, string? propertiesNames = null, bool tracked = true)
+        {
+            return _repository!.Get(filter, propertiesNames, tracked);
         }
     }
 }

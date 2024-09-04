@@ -9,11 +9,11 @@ using TrabajoEdi3.Entidades;
 
 namespace TrabajoEdi3.Datos.Repositorio
 {
-    public class RepositorioDeporte : IDeporteRepositorio
+    public class RepositorioDeporte : RepositorioGenerico<Deporte>, IDeporteRepositorio
     {
         private readonly DbContex _Context;
 
-        public RepositorioDeporte(DbContex Context)
+        public RepositorioDeporte(DbContex Context): base (Context)
         {
             _Context = Context;
         }
@@ -36,10 +36,10 @@ namespace TrabajoEdi3.Datos.Repositorio
           
         }
 
-        public bool EstaRelacionado(Deporte deporte)
+        public bool EstaRelacionado(int id)
         {
             return _Context.zapatillas
-                .Any(p => p.DeporteId == deporte.DeporteId);
+                .Any(p => p.DeporteId == id);
         }
 
         public bool Existe(Deporte deporte)

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using TrabajoEdi3.Datos.Intefaces;
@@ -54,11 +55,11 @@ namespace TrabajoEdi3.Servicios.Servicios
             }
         }
 
-        public bool EstaRelacionado(Talles talles)
+        public bool EstaRelacionado(int id)
         {
             try
             {
-                return _repository.EstaRelacionado(talles);
+                return _repository.EstaRelacionado(id);
             }
             catch (Exception)
             {
@@ -78,6 +79,16 @@ namespace TrabajoEdi3.Servicios.Servicios
 
                 throw;
             }
+        }
+
+        public Talles? Get(Expression<Func<Talles, bool>>? filter = null, string? propertiesNames = null, bool tracked = true)
+        {
+            return _repository!.Get(filter, propertiesNames, tracked);
+        }
+
+        public IEnumerable<Talles>? GetAll(Expression<Func<Talles, bool>>? filter = null, Func<IQueryable<Talles>, IOrderedQueryable<Talles>>? orderBy = null, string? propertiesNames = null)
+        {
+            return _repository!.GetAll(filter, orderBy, propertiesNames);
         }
 
         public int GetCantidad()

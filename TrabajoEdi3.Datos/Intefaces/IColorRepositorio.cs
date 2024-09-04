@@ -8,7 +8,7 @@ using TrabajoEdi3.Entidades;
 
 namespace TrabajoEdi3.Datos.Intefaces
 {
-    public interface IColorRepositorio
+    public interface IColorRepositorio: IGenericRepositorio<Entidades.Color>
     {
         int GetCantidad();
         void Agregar(Entidades.Color coloor);
@@ -17,7 +17,7 @@ namespace TrabajoEdi3.Datos.Intefaces
         bool Existe(Entidades.Color coloor);
         Entidades.Color? GetColorPorId(int idEditar);
         List<Entidades.Color> GetLista();
-        bool EstaRelacionado(Entidades.Color coloor);
+        bool EstaRelacionado(int id);
         Entidades.Color? GetColorPorNombre(string nombreColor);
         
 

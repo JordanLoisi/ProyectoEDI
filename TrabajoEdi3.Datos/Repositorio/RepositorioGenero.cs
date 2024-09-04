@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -10,15 +11,16 @@ using TrabajoEdi3.Entidades;
 
 namespace TrabajoEdi3.Datos.Repositorio
 {
-    public class RepositorioGenero : IGeneroRepositorio
+    public class RepositorioGenero : RepositorioGenerico<Genero>, IGeneroRepositorio
     {
 
         private readonly DbContex _Context;
 
-        public RepositorioGenero(DbContex Context)
+        public RepositorioGenero(DbContex Context): base (Context)
         {
             _Context = Context;
         }
+
         public void Agregar(Genero genero)
         {
             _Context.generos.Add(genero);
@@ -34,10 +36,10 @@ namespace TrabajoEdi3.Datos.Repositorio
             _Context.generos.Update(genero);
         }
 
-        public bool EstaRelacionado(Genero genero)
+        public bool EstaRelacionado(int id)
         {
             return _Context.zapatillas
-                .Any(p => p.GeneroId == genero.GeneroId);
+                .Any(p => p.GeneroId == id);
         }
 
         public bool Existe(Genero genero)
@@ -51,6 +53,8 @@ namespace TrabajoEdi3.Datos.Repositorio
                 .Any(t => t.GeneroNombre == genero.GeneroNombre &&
                     t.GeneroId != genero.GeneroId);
         }
+
+        
 
         public int GetCantidad()
         {

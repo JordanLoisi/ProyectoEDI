@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using TrabajoEdi3.Datos.Intefaces;
@@ -37,14 +38,24 @@ namespace TrabajoEdi3.Servicios.Servicios
         }
     
 
-        public bool EstaRelacionado(Color color)
+        public bool EstaRelacionado(int id)
         {
-            return _repository.EstaRelacionado(color);
+            return _repository.EstaRelacionado(id);
         }
 
         public bool Existe(Color color)
         {
             return _repository.Existe(color);
+        }
+
+        public Color? Get(Expression<Func<Color, bool>>? filter = null, string? propertiesNames = null, bool tracked = true)
+        {
+            return _repository!.Get(filter, propertiesNames, tracked);
+        }
+
+        public IEnumerable<Color>? GetAll(Expression<Func<Color, bool>>? filter = null, Func<IQueryable<Color>, IOrderedQueryable<Color>>? orderBy = null, string? propertiesNames = null)
+        {
+            return _repository!.GetAll(filter, orderBy, propertiesNames);
         }
 
         public int GetCantidad()

@@ -7,7 +7,7 @@ using TrabajoEdi3.Entidades;
 
 namespace TrabajoEdi3.Datos.Intefaces
 {
-    public interface IGeneroRepositorio
+    public interface IGeneroRepositorio : IGenericRepositorio<Genero>
     {
         int GetCantidadFiltro(Func<Genero, bool>? filtro = null);
         int GetCantidad();
@@ -17,7 +17,7 @@ namespace TrabajoEdi3.Datos.Intefaces
         bool Existe(Genero genero);
         Genero? GetGeneroPorId(int idEditar);
         List<Genero> GetLista();
-        bool EstaRelacionado(Genero genero);
+        bool EstaRelacionado(int id);
 
         Genero? GetGeneroPorNombre(string nombreGenero);
 

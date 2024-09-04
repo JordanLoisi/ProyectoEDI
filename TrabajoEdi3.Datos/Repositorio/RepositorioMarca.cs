@@ -9,13 +9,13 @@ using TrabajoEdi3.Entidades;
 
 namespace TrabajoEdi3.Datos.Repositorio
 {
-    public class RepositorioMarca : IMarcaRepositorio
+    public class RepositorioMarca : RepositorioGenerico<Marca>,IMarcaRepositorio
     {
         private readonly DbContex _Context;
 
-        public RepositorioMarca(DbContex Context)
+        public RepositorioMarca(DbContex Context): base(Context)
         {
-            _Context = Context;
+            _Context = Context ?? throw new ArgumentNullException(nameof(Context));
         }
         public void Agregar(Marca marca)
         {
@@ -32,10 +32,10 @@ namespace TrabajoEdi3.Datos.Repositorio
             _Context.marcas.Update(marca);
         }
 
-        public bool EstaRelacionado(Marca marca)
+        public bool EstaRelacionado(int id)
         {
             return _Context.zapatillas
-                .Any(p => p.MarcaId == marca.MarcaId);
+                .Any(p => p.MarcaId == id);
         }
 
         public bool Existe(Marca marca)

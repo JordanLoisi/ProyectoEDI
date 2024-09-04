@@ -6,16 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TrabajoEdi3.Datos.Intefaces;
+using TrabajoEdi3.Entidades;
 
 namespace TrabajoEdi3.Datos.Repositorio
 {
-    public class RepositorioColor : IColorRepositorio
+    public class RepositorioColor : RepositorioGenerico<Entidades.Color>, IColorRepositorio
     {
         private readonly DbContex _Context;
 
-        public RepositorioColor(DbContex dbContext)
+        public RepositorioColor(DbContex Context): base(Context)
         {
-            _Context = dbContext;
+            _Context = Context;
         }
 
         public void Agregar(Entidades.Color coloor)
@@ -33,11 +34,11 @@ namespace TrabajoEdi3.Datos.Repositorio
             _Context.colors.Update(coloor);
         }
 
-        public bool EstaRelacionado(Entidades.Color coloor)
+        public bool EstaRelacionado(int id)
         {
             return _Context
                 .zapatillas
-                .Any(p => p.ColoresId == coloor.ColorId);
+                .Any(p => p.ColoresId == id);
         }
 
         public bool Existe(Entidades.Color coloor)

@@ -8,7 +8,7 @@ using TrabajoEdi3.Entidades;
 
 namespace TrabajoEdi3.Datos.Intefaces
 {
-    public interface IDeporteRepositorio
+    public interface IDeporteRepositorio :IGenericRepositorio<Deporte>
     {
         int GetCantidad();
 
@@ -19,7 +19,7 @@ namespace TrabajoEdi3.Datos.Intefaces
         bool Existe(Deporte deporte);
         Deporte? GetDeportePorId(int idEditar);
         List<Deporte> GetLista();
-        bool EstaRelacionado(Deporte deporte);
+        bool EstaRelacionado(int id);
 
         Deporte? GetDeportePorNombre(string nombreDeporte);
       

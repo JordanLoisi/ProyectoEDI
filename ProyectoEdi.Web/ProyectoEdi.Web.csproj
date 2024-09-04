@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.4" />
+    <PackageReference Include="X.Web.PagedList" Version="10.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TrabajoEdi3.Datos\TrabajoEdi3.Datos.csproj" />
+    <ProjectReference Include="..\TrabajoEdi3.Entidades\TrabajoEdi3.Entidades.csproj" />
+    <ProjectReference Include="..\TrabajoEdi3.Loc\TrabajoEdi3.Loc.csproj" />
+    <ProjectReference Include="..\TrabajoEdi3.Servicios\TrabajoEdi3.Servicios.csproj" />
+  </ItemGroup>
+
+</Project>

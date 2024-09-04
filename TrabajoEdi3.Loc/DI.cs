@@ -1,10 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TrabajoEdi3.Datos;
 using TrabajoEdi3.Datos.Intefaces;
 using TrabajoEdi3.Datos.Repositorio;
@@ -16,39 +12,29 @@ namespace TrabajoEdi3.Loc
 {
     public static class DI
     {
-        public static IServiceProvider ConfigurarServicios()
+        public static void ConfigurarServicios(IServiceCollection services, IConfiguration configuration)
         {
-            var servicios = new ServiceCollection();
             //Repositorios y sus interface
-            servicios.AddScoped<IDeporteRepositorio,
-                RepositorioDeporte>();
-            servicios.AddScoped<IMarcaRepositorio,
+            services.AddScoped<IMarcaRepositorio,
                 RepositorioMarca>();
-            servicios.AddScoped<IColorRepositorio, RepositorioColor>();
-            servicios.AddScoped<IGeneroRepositorio,
-                RepositorioGenero>();
-            servicios.AddScoped<IZapatillasRepositorio, RepositorioZapatillas>();
-            servicios.AddScoped<ITallesRepositores,RepositorioTalles>();
-
+            services.AddScoped<IDeporteRepositorio,RepositorioDeporte>();
+            services.AddScoped<IColorRepositorio, RepositorioColor>();
+            services.AddScoped<IGeneroRepositorio, RepositorioGenero>();
+            services.AddScoped<ITallesRepositores, RepositorioTalles>();
             //Servicios y sus Intefaces
-            servicios.AddScoped<IServicioMarca,
+            services.AddScoped<IServicioMarca,
                 ServiciosMarca>();
-            servicios.AddScoped<IServicioDeporte, ServicioDeporte>();
-            servicios.AddScoped<IServicioColor, ServicioColor>();
-            servicios.AddScoped<IServicioGenero, ServicioGenero>();
-            servicios.AddScoped<IServicioZapatilla, ServicioZapatilla>();
-            servicios.AddScoped<ITallesServicio, ServicioTalles>();
+            services.AddScoped<IServicioDeporte, ServicioDeporte>();
+            services.AddScoped<IServicioColor, ServicioColor>();
+            services.AddScoped<IServicioGenero, ServicioGenero>();
+            services.AddScoped<ITallesServicio, ServicioTalles>();
 
-            servicios.AddScoped<IUnitOfWork, UnitOfWork>();
-            servicios.AddDbContext<DbContex>(optiones =>
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddDbContext<DbContex>(optiones =>
             {
-                optiones.UseSqlServer(@"Data Source=.; 
-                        Initial Catalog=TrabajoPracticoEDI3; 
-                        Trusted_Connection=true; 
-                        TrustServerCertificate=true;");
+                optiones.UseSqlServer(configuration.GetConnectionString("MyConn"));
             });
 
-            return servicios.BuildServiceProvider();
         }
     }
 }

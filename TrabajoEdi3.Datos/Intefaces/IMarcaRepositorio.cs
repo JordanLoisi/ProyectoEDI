@@ -7,7 +7,7 @@ using TrabajoEdi3.Entidades;
 
 namespace TrabajoEdi3.Datos.Intefaces
 {
-    public interface IMarcaRepositorio
+    public interface IMarcaRepositorio:IGenericRepositorio<Marca>
     {
         int GetCantidadFiltro(Func<Marca, bool>? filtro = null);
         void Agregar(Marca marca);
@@ -16,7 +16,7 @@ namespace TrabajoEdi3.Datos.Intefaces
         bool Existe(Marca marca);
         Marca? GetMarcaPorId(int idEditar);
         List<Marca> GetLista();
-        bool EstaRelacionado(Marca marca);
+        bool EstaRelacionado(int id);
 
         Marca? GetMarcaPorNombre(string nombreMarca);
         
