@@ -29,6 +29,8 @@ namespace TrabajoEdi3.Windows
         private Deporte? DeporteFiltro = null;
         private Entidades.Color? ColorFiltro = null;
         private Genero? GeneroFiltro = null;
+        private Talles? TalleSelec = null;
+        private Talles? TalleMax = null;
 
         
         private Func<Zapatilla, bool>? filtro = null;
@@ -58,7 +60,7 @@ namespace TrabajoEdi3.Windows
             {
                 cantidadRegistros = _servicio.GetCantidad();
                 cantidadPaginas = FromHelper.CalcularPaginas(cantidadRegistros, pageSize);
-                lista = _servicio.GetListaPaginadaOrdenadaFiltrada(pageNum, pageSize, orden, DeporteFiltro, MarcaFiltro, ColorFiltro, GeneroFiltro);
+                lista = _servicio.GetListaPaginadaOrdenadaFiltrada(pageNum, pageSize, orden, DeporteFiltro, MarcaFiltro, ColorFiltro, GeneroFiltro,TalleSelec,TalleMax);
                 CantidadPaginasLbl.Text = cantidadPaginas.ToString();
 
                 PaginaActualLbl.Text = (pageNum + 1).ToString();
@@ -330,6 +332,8 @@ namespace TrabajoEdi3.Windows
             GeneroFiltro = null;
             ColorFiltro = null;
             filtro = null;
+            TalleSelec = null;
+            TalleMax = null;
             RecargarGrillDeTodasLasZapatilla();
             tsbFiltrar.BackColor = SystemColors.Control;
 
@@ -337,13 +341,18 @@ namespace TrabajoEdi3.Windows
 
         private void tsbFiltrar_Click(object sender, EventArgs e)
         {
-            FrmZapatillaFiltro frm = new FrmZapatillaFiltro(_serviceProvider);
+            var talleservicio = _serviceProvider.GetService<ITallesServicio>();
+            FrmZapatillaFiltro frm = new FrmZapatillaFiltro(_serviceProvider, talleservicio);
             frm.ShowDialog(this);
             filtro = frm.GetFiltro();
             MarcaFiltro = frm.GetFiltroMarca();
             DeporteFiltro = frm.GetFiltroDeporte();
             GeneroFiltro = frm.GetFiltroGenero();
             ColorFiltro = frm.GetFiltroColor();
+
+            TalleSelec = frm.GetTalleSeleccionado();
+            TalleMax = frm.GetTalleMax();
+        
    
             RecargarGrillDeTodasLasZapatilla();
         }

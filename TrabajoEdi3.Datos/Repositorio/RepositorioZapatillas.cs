@@ -270,14 +270,14 @@ namespace TrabajoEdi3.Datos.Repositorio
         }
 
         public List<ZapatillaListDto> GetListaPaginadaOrdenadaFiltrada
-            (int page, int pageSize, Orden? orden = null, Deporte? DeporteFiltro = null, Marca? MarcaFiltro = null, Entidades.Color? colorFiltro = null, Genero? GeneroFiltro = null)
+            (int page, int pageSize, Orden? orden = null, Deporte? DeporteFiltro = null, Marca? MarcaFiltro = null, Entidades.Color? colorFiltro = null, Genero? GeneroFiltro = null, Talles? talleSelec = null, Talles? tallemax = null)
         {
             IQueryable<Zapatilla> query = _Context.zapatillas
               .Include(p => p.Marca)
               .Include(p => p.Deporte)
               .Include(p => p.Colores)
               .Include(p => p.Genero)
-              .Include(p => p.zapatillastalles)
+              .Include(p => p.zapatillastalles).ThenInclude(s => s.Talles)
 
               .AsNoTracking();
 
@@ -305,6 +305,14 @@ namespace TrabajoEdi3.Datos.Repositorio
             {
                 query = query
                     .Where(p => p.GeneroId == GeneroFiltro.GeneroId);
+            }
+            if (talleSelec != null && tallemax == null)
+            {
+                query = query.Where(s => _Context.zapatillastalles.Any(ss => ss.TallesId == talleSelec.TallesId && ss.ZapatillaId == s.ZapatillaId));
+            }
+            if (talleSelec != null && tallemax != null)
+            {
+                query = query.Where(s => _Context.zapatillastalles.Any(ss => ss.ZapatillaId == s.ZapatillaId && ss.TallesId <= tallemax.TallesId && ss.TallesId >= talleSelec.TallesId));
             }
 
             // Aplicar orden si se proporciona

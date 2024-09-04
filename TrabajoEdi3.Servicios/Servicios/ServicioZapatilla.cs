@@ -194,10 +194,10 @@ namespace TrabajoEdi3.Servicios.Servicios
         public List<ZapatillaListDto> GetListaPaginadaOrdenadaFiltrada
             (int page, int pageSize, Orden? orden = null, 
             Deporte? DeporteFiltro = null, Marca? MarcaFiltro = null,
-            Color? colorFiltro = null, Genero? GeneroFiltro = null)
+            Color? colorFiltro = null, Genero? GeneroFiltro = null, Talles? tallesSelec=null ,Talles? tallemax=null)
         {
             return _repository.GetListaPaginadaOrdenadaFiltrada(page, pageSize,
-               orden, DeporteFiltro, MarcaFiltro, colorFiltro, GeneroFiltro);
+               orden, DeporteFiltro, MarcaFiltro, colorFiltro, GeneroFiltro, tallesSelec,tallemax);
         }
 
         public List<ZapatillasTalles>? GetTallesPorZapatilla(int zapatillaId)

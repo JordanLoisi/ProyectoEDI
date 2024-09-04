@@ -41,6 +41,12 @@
             btnCancelar = new Button();
             btnOk = new Button();
             errorProvider1 = new ErrorProvider(components);
+            cboTalleMaximo = new ComboBox();
+            cboTalle = new ComboBox();
+            chekSize = new CheckBox();
+            label1 = new Label();
+            label9 = new Label();
+            label10 = new Label();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
             // 
@@ -120,7 +126,7 @@
             // 
             // btnCancelar
             // 
-            btnCancelar.Location = new Point(384, 303);
+            btnCancelar.Location = new Point(580, 291);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(105, 54);
             btnCancelar.TabIndex = 77;
@@ -132,7 +138,7 @@
             // btnOk
             // 
             btnOk.Image = (Image)resources.GetObject("btnOk.Image");
-            btnOk.Location = new Point(7, 291);
+            btnOk.Location = new Point(164, 291);
             btnOk.Name = "btnOk";
             btnOk.Size = new Size(289, 54);
             btnOk.TabIndex = 78;
@@ -145,13 +151,74 @@
             // 
             errorProvider1.ContainerControl = this;
             // 
+            // cboTalleMaximo
+            // 
+            cboTalleMaximo.Enabled = false;
+            cboTalleMaximo.FormattingEnabled = true;
+            cboTalleMaximo.Location = new Point(608, 151);
+            cboTalleMaximo.Name = "cboTalleMaximo";
+            cboTalleMaximo.Size = new Size(121, 23);
+            cboTalleMaximo.TabIndex = 84;
+            // 
+            // cboTalle
+            // 
+            cboTalle.FormattingEnabled = true;
+            cboTalle.Location = new Point(580, 112);
+            cboTalle.Name = "cboTalle";
+            cboTalle.Size = new Size(121, 23);
+            cboTalle.TabIndex = 83;
+            // 
+            // chekSize
+            // 
+            chekSize.AutoSize = true;
+            chekSize.Location = new Point(644, 85);
+            chekSize.Name = "chekSize";
+            chekSize.Size = new Size(35, 19);
+            chekSize.TabIndex = 82;
+            chekSize.Text = "Si";
+            chekSize.UseVisualStyleBackColor = true;
+            chekSize.CheckedChanged += chekSize_CheckedChanged;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(465, 86);
+            label1.Name = "label1";
+            label1.Size = new Size(173, 15);
+            label1.TabIndex = 81;
+            label1.Text = "Desea filtrar por rango de Sizes?";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(462, 154);
+            label9.Name = "label9";
+            label9.Size = new Size(140, 15);
+            label9.TabIndex = 79;
+            label9.Text = "Seleccionar Size Maximo:";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(464, 115);
+            label10.Name = "label10";
+            label10.Size = new Size(110, 15);
+            label10.TabIndex = 80;
+            label10.Text = "Seleccionar un Size:";
+            // 
             // FrmZapatillaFiltro
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
-            ClientSize = new Size(587, 391);
+            ClientSize = new Size(899, 391);
             ControlBox = false;
+            Controls.Add(cboTalleMaximo);
+            Controls.Add(cboTalle);
+            Controls.Add(chekSize);
+            Controls.Add(label1);
+            Controls.Add(label9);
+            Controls.Add(label10);
             Controls.Add(btnCancelar);
             Controls.Add(btnOk);
             Controls.Add(cboMarca);
@@ -183,5 +250,11 @@
         private Button btnCancelar;
         private Button btnOk;
         private ErrorProvider errorProvider1;
+        private ComboBox cboTalleMaximo;
+        private ComboBox cboTalle;
+        private CheckBox chekSize;
+        private Label label1;
+        private Label label9;
+        private Label label10;
     }
 }
