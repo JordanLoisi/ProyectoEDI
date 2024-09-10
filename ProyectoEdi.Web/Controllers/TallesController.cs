@@ -98,7 +98,7 @@ namespace ProyectoEdi.Web.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int? id)
         {

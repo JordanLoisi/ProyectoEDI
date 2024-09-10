@@ -4,22 +4,22 @@
 }
 <form method="post" asp-controller="Talles" asp-action="UpSert" class="w-75">
     @Html.AntiForgeryToken()
-    <input type="hidden" asp-for="TalleId" />
+    <input type="hidden" asp-for="TallesId" />
 
     <div class="border p-3 bg-white">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group row">
-            <h2 class="text-info pl-3">@(Model.TalleId == 0 ? "Agregar Talle" : "Editar Talle")</h2>
+            <h2 class="text-info pl-3">@(Model.TallesId == 0 ? "Agregar Talle" : "Editar Talle")</h2>
 
         </div>
         <div class="form-group row py-2">
-            <label asp-for="TallesNumero"></label>
-            <input asp-for="TallesNumero" class="form-control" />
-            <span asp-validation-for="TallesNumero" class="text-danger"></span>
+            <label asp-for="TallesNumbero"></label>
+            <input asp-for="TallesNumbero" class="form-control" />
+            <span asp-validation-for="TallesNumbero" class="text-danger"></span>
 
         </div>
 
-        @if (Model.TalleId == 0)
+        @if (Model.TallesId == 0)
         {
             <button type="submit" class="btn btn-primary">
                 <i class="bi bi-floppy2-fill"></i>
@@ -56,4 +56,8 @@
         });
     </script>
 }
+
+
+
+
 

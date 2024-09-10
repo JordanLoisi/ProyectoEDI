@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -85,9 +86,10 @@ namespace TrabajoEdi3.Servicios.Servicios
         {
             return _repository!.Get(filter, propertiesNames, tracked);
         }
-
+      
         public IEnumerable<Talles>? GetAll(Expression<Func<Talles, bool>>? filter = null, Func<IQueryable<Talles>, IOrderedQueryable<Talles>>? orderBy = null, string? propertiesNames = null)
         {
+         
             return _repository!.GetAll(filter, orderBy, propertiesNames);
         }
 

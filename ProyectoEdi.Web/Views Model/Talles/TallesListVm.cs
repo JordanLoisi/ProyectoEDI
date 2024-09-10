@@ -4,9 +4,9 @@ namespace ProyectoEdi.Web.Views_Model.Talles
 {
     public class TallesListVm
     {
-        public int TalleId { get; set; }
+        public int TallesId { get; set; }
         [DisplayName("Talles")]
-        public double TallesNumero { get; set; }
+        public decimal TallesNumbero { get; set; }
     
     }
 }

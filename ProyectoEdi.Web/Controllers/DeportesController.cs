@@ -97,7 +97,7 @@ namespace ProyectoEdi.Web.Controllers
                 return View(deporteVm);
             }
         }
-        [HttpDelete]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int? id)
         {
