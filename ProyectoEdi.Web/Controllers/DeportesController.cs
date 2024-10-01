@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using ProyectoEdi.Web.Views_Model.Deporte;
 using ProyectoEdi.Web.Views_Model.Marca;
+using ProyectoEdi.Web.Views_Model.Zapatillas;
 using TrabajoEdi3.Entidades;
 using TrabajoEdi3.Servicios.Interfaces;
+using TrabajoEdi3.Servicios.Servicios;
 using X.PagedList.Extensions;
 
 namespace ProyectoEdi.Web.Controllers
@@ -13,11 +15,13 @@ namespace ProyectoEdi.Web.Controllers
 
         private readonly IServicioDeporte? _servicio;
         private readonly IMapper? _mapper;
+        private readonly IServicioZapatilla? _servicioZapatilla;
 
-        public DeportesController(IServicioDeporte servicio, IMapper mapper)
+        public DeportesController(IServicioDeporte servicio, IMapper mapper, IServicioZapatilla servicioZapatilla)
         {
             _servicio = servicio;
             _mapper = mapper;
+            _servicioZapatilla = servicioZapatilla;
         }
         public IActionResult Index(int? page)
         {
@@ -25,9 +29,17 @@ namespace ProyectoEdi.Web.Controllers
             int pageSize = 10;
             var deporte = _servicio?
                 .GetAll(orderBy: o => o.OrderBy(c => c.NombreDeporte));
-            var deporteVm = _mapper?.Map<List<DeporteListVm>>(deporte)
-                .ToPagedList(pageNumber, pageSize);
-            return View(deporteVm);
+            var deporteVm = _mapper?.Map<List<DeporteListVm>>(deporte);
+              
+            foreach (var item in deporteVm)
+            {
+                item.CantidadZapatillas = _servicioZapatilla.GetCantidad(c => c.DeporteId == item.DeporteId);
+            }
+
+
+            return View(deporteVm.ToPagedList(pageNumber, pageSize));
+
+
         }
         public IActionResult UpSert(int? id)
         {
@@ -130,6 +142,31 @@ namespace ProyectoEdi.Web.Controllers
                 return Json(new { success = false, message = "Couldn't delete record!!! " }); ;
 
             }
+
+        }
+        public IActionResult Details(int? id, int? page)
+        {
+
+            if (id is null || id == 0)
+            {
+                return NotFound();
+            }
+            Deporte? deporte = _servicio?.Get(filter: c => c.DeporteId == id);
+            if (deporte is null)
+            {
+                return NotFound();
+            }
+            var currentPage = page ?? 1;
+            int pageSize = 10;
+            DeporteDetailsVm deporteVm = _mapper!.Map<DeporteDetailsVm>(deporte);
+            //categoryVm.ProductsQuantity = GetProductQuantity(categoryVm.CategoryId);
+            var zapatilla = _servicioZapatilla!.GetAll(
+                orderBy: o => o.OrderBy(p => p.Description),
+                filter: p => p.DeporteId == deporteVm.DeporteId,
+                propertiesNames: "Marca,Deporte,Colores,Genero");
+            deporteVm.Zapatilla = _mapper!.Map<List<ZapatillasListVm>>(zapatilla).ToPagedList(currentPage, pageSize);
+            return View(deporteVm);
+
         }
     }
 }

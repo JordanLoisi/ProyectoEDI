@@ -64,35 +64,22 @@ namespace TrabajoEdi3.Servicios.Servicios
             }
         }
 
-        public void Borrar(int zapatillaId)
+        public void Borrar(Zapatilla zapatilla)
         {
             try
             {
-                _unitOfWork.BeginTransaction();
+                _unitOfWork!.BeginTransaction();
+                _repository!.Borrar(zapatilla);
+                _unitOfWork!.Commit();
 
-                var zapatilla = _repository.GetZapatillaPorId(zapatillaId);
-                if (zapatilla == null)
-                {
-                    throw new Exception("La Zapatilla especificada no existe.");
-                }
-
-                // Eliminar relaciones con proveedores
-                _repository.EliminarRelaciones(zapatilla);
-                _unitOfWork.SaveChanges(); // Guardar cambios para confirmar eliminación de relaciones
-
-                // Eliminar la planta
-                _repository.Borrar(zapatilla);
-                _unitOfWork.SaveChanges(); // Guardar cambios para confirmar eliminación de la planta
-
-                _unitOfWork.Commit(); // Confirmar los cambios
             }
             catch (Exception)
             {
-                _unitOfWork.Rollback();
+                _unitOfWork!.Rollback();
                 throw;
             }
-        
-    }
+
+        }
 
         public void Editar(Zapatilla zapatilla, int? talleId)
         {
@@ -138,17 +125,9 @@ namespace TrabajoEdi3.Servicios.Servicios
             }
         }
 
-        public bool EstaRelacionado(Zapatilla zapatilla)
+        public bool EstaRelacionado(int id)
         {
-            try
-            {
-                return _repository.EstaRelacionado(zapatilla);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            return _repository.EstaRelacionado(id);
         }
 
         public bool Existe(Zapatilla zapatilla)
@@ -161,15 +140,9 @@ namespace TrabajoEdi3.Servicios.Servicios
             return _repository.ExisteRelacion(zapatilla, talles);
         }
 
-        public Zapatilla? Get(Expression<Func<Zapatilla, bool>>? filter = null, string? propertiesNames = null, bool tracked = true)
-        {
-            return _repository!.Get(filter, propertiesNames, tracked);
-        }
+       
 
-        public IEnumerable<Zapatilla>? GetAll(Expression<Func<Zapatilla, bool>>? filter = null, Func<IQueryable<Zapatilla>, IOrderedQueryable<Zapatilla>>? orderBy = null, string? propertiesNames = null)
-        {
-            return _repository!.GetAll(filter, orderBy, propertiesNames);
-        }
+      
 
         public int GetCantidad(Func<Zapatilla, bool>? filtro = null)
         {
@@ -312,6 +285,18 @@ namespace TrabajoEdi3.Servicios.Servicios
                 _unitOfWork.Rollback();
                 throw;
             }
+        }
+        public Zapatilla? Get(Expression<Func<Zapatilla, bool>>? filter = null, string? propertiesNames = null, bool tracked = true)
+        {
+            return _repository!.Get(filter, propertiesNames, tracked);
+        }
+
+
+        public IEnumerable<Zapatilla> GetAll(Expression<Func<Zapatilla, bool>>? filter = null,
+            Func<IQueryable<Zapatilla>, IOrderedQueryable<Zapatilla>>? orderBy = null,
+            string? propertiesNames = null)
+        {
+            return _repository!.GetAll(filter, orderBy, propertiesNames);
         }
     }
 }

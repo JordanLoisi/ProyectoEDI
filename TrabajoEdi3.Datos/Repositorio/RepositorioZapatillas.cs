@@ -19,7 +19,7 @@ namespace TrabajoEdi3.Datos.Repositorio
         private readonly DbContex _Context;
         public RepositorioZapatillas(DbContex context) : base(context)
         {
-            _Context = context;
+            _Context = context ?? throw new ArgumentException(nameof(context));
         }
         public void Agregar(Zapatilla zapatilla)
         {
@@ -400,9 +400,9 @@ namespace TrabajoEdi3.Datos.Repositorio
                  .FirstOrDefault(p => p.ZapatillaId == zapatillaId);
         }
 
-        public bool EstaRelacionado(Zapatilla zapatilla)
+        public bool EstaRelacionado(int id)
         {
-            return _Context.zapatillastalles.Any(ss => ss.ZapatillaId == zapatilla.ZapatillaId);
+            return false;  
         }
     }
 }

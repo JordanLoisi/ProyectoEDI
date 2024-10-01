@@ -14,6 +14,7 @@ namespace TrabajoEdi3.Entidades
         [StringLength(20)]
         public string NombreDeporte { get; set; } = null!;
 
+       
 
         public ICollection<Zapatilla> zapatillas { get; set; }
     }

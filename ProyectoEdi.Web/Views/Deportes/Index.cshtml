@@ -23,6 +23,8 @@
     <thead>
         <tr>
             <th style="width:30%">Deporte</th>
+            <th style="width:30%">CantidadZapatillas</th>
+
             <th style="width:25%">Actions</th>
         </tr>
     </thead>
@@ -34,7 +36,9 @@
                 <tr id="@item.DeporteId">
                     <td>
                         @item.NombreDeporte
-
+                    </td>
+                    <td>
+                        @item.CantidadZapatillas
                     </td>
                     <td>
                         <a class="btn btn-warning" asp-controller="Deportes" asp-action="UpSert" asp-route-id="@item.DeporteId">
@@ -45,6 +49,10 @@
                             <i class="bi bi-trash-fill"></i>
                             Borrar
 
+                        </a>
+                        <a class="btn btn-info" asp-controller="Deportes" asp-action="Details" asp-route-id="@item.DeporteId">
+                            <i class="bi bi-card-list"></i>&nbsp;
+                            Details
                         </a>
 
 

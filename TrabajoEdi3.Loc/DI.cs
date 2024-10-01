@@ -21,6 +21,7 @@ namespace TrabajoEdi3.Loc
             services.AddScoped<IColorRepositorio, RepositorioColor>();
             services.AddScoped<IGeneroRepositorio, RepositorioGenero>();
             services.AddScoped<ITallesRepositores, RepositorioTalles>();
+            services.AddScoped<IZapatillasRepositorio, RepositorioZapatillas>();
             //Servicios y sus Intefaces
             services.AddScoped<IServicioMarca,
                 ServiciosMarca>();
@@ -28,6 +29,8 @@ namespace TrabajoEdi3.Loc
             services.AddScoped<IServicioColor, ServicioColor>();
             services.AddScoped<IServicioGenero, ServicioGenero>();
             services.AddScoped<ITallesServicio, ServicioTalles>();
+            services.AddScoped<IServicioZapatilla, ServicioZapatilla>();
+
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddDbContext<DbContex>(optiones =>

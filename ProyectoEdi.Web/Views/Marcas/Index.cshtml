@@ -23,7 +23,9 @@
         <thead>
             <tr>
                 <th style="width:30%">Marca</th>
+                <th style="width:30%">CantidadZapatillas</th>
                 <th style="width:25%">Actions</th>
+
             </tr>
         </thead>
         <tbody>
@@ -33,9 +35,12 @@
                 {
                             <tr id="@item.MarcaId">
                                 <td>
-                            @item.MarcaNombre
-
+                                    @item.MarcaNombre
                                 </td>
+                                <td>
+                                    @item.CantidadZapatillas
+                                </td>
+
                                 <td>
                                     <a class="btn btn-warning" asp-controller="Marcas" asp-action="UpSert" asp-route-id="@item.MarcaId">
                                         <i class="bi bi-pencil-square"></i>&nbsp;
@@ -45,9 +50,13 @@
                                         <i class="bi bi-trash-fill"></i>
                                         Delete
                                     </a>
-      
+                                    <a class="btn btn-info" asp-controller="Marcas" asp-action="Details" asp-route-id="@item.MarcaId">
+                                        <i class="bi bi-card-list"></i>&nbsp;
+                                        Details
+                                    </a>
                                   
                                 </td>
+
                             </tr>
                 }
             }

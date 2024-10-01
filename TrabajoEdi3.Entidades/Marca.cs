@@ -9,7 +9,7 @@ namespace TrabajoEdi3.Entidades
         [StringLength(50)]
         public string MarcaNombre { get; set; } = null!;
 
-
+        public string? ImageUrl { get; set; }
         public ICollection<Zapatilla> zapatillas { get; set; }
     }
 }

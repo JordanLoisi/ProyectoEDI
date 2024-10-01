@@ -1,0 +1,96 @@
+﻿@model MarcaDetailsVm
+@using X.PagedList
+@using X.Web.PagedList
+
+<div>
+    <h4>Detalle Marca</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            <label asp-for="MarcaNombre"></label>
+        </dt>
+        <dd class="col-sm-4">
+            <input asp-for="MarcaNombre" class="form-control form-control-sm" readonly />
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index" class="btn btn-success btn-sm">
+        <i class="bi bi-backspace"></i>&nbsp;
+        Back to List
+    </a>
+</div>
+<table class="table table-bordered table-hover mt-3">
+    <thead>
+        <tr>
+            <th style="width:20%">Descripcion</th>
+            <th style="width:10%">Modelo</th>
+            <th style="width:10%">Precio</th>
+            <th style="width:15%">Marca</th>
+            <th style="width:15%">Deporte</th>
+            <th style="width:15%">Color</th>
+            <th style="width:15%">Genero</th>
+            
+
+            
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Zapatilla!.Any())
+        {
+            foreach (var item in Model.Zapatilla!)
+            {
+                <tr id="@item.ZapatillaId">
+                    <td>
+                        @item.Description
+
+                    </td>
+                    <td>
+                        @item.Modelo
+                    </td>
+                    <td>
+                        @item.Precio
+                    </td>
+                    <td>
+                        @item.Marca
+                    </td>
+                    <td>
+                        @item.Deporte
+                    </td>
+                    <td>
+                        @item.Color
+                    </td>
+                    <td>
+                        @item.Genero
+                    </td>
+
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7" class="text-center">
+                    F?uck!!! No zapatilla have been added yet!
+
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+<div class="d-flex">
+    @Html.PagedListPager(Model.Zapatilla, page => Url.Action("Details",
+            new
+            {
+                page,
+            }), new PagedListRenderOptions
+    {
+        UlElementClasses = new[] { "pagination" },
+        LiElementClasses = new[] { "page-item" },
+        PageClasses = new[] { "page-link" },
+        DisplayLinkToIndividualPages = true,
+        DisplayPageCountAndCurrentLocation = false,
+        MaximumPageNumbersToDisplay = 10
+    })
+</div>

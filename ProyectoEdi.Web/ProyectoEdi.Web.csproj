@@ -19,4 +19,8 @@
     <ProjectReference Include="..\TrabajoEdi3.Servicios\TrabajoEdi3.Servicios.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
 </Project>
