@@ -18,6 +18,7 @@ namespace ProyectoEdi.Web.Mapping
             LoadGeneroMapping();
             LoadTalleMapping();
             LoadZapatillaMapping();
+            
         }
         private void LoadZapatillaMapping()
         {
@@ -27,6 +28,7 @@ namespace ProyectoEdi.Web.Mapping
              .ForMember(dest => dest.Genero, opt => opt.MapFrom(src => src.Genero.GeneroNombre))
              .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Colores.ColorName));
             CreateMap<Zapatilla, ZapatillasEditVm>().ReverseMap();
+
         }
         private void LoadTalleMapping()
         {

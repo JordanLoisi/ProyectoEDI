@@ -33,11 +33,11 @@ namespace TrabajoEdi3.Servicios.Interfaces
         void GuardarConTalle(Zapatilla zapatilla, Talles nuevotalle);
         void AsignarTalleAZapatilla(Zapatilla zapatillaSinProveedor, Talles nuevoTalle, int stock);
         void Editar(Zapatilla zapatilla, int? talleId);
-        List<ZapatillasTalles>? GetTallesPorZapatilla(int zapatillaId);
+        ZapatillasTalles? GetTallesPorZapatilla(int zapatillaId, int tallesId);
         bool ExisteRelacion(Zapatilla zapatilla, Talles talles);
 
         bool EstaRelacionado(int id);
         List<ZapatillaListDto>? GetZapatillaSinTalle();
-
+        void AsignarTallesZapatilla(ZapatillasTalles zapatillaTalle);
     }
 }

@@ -1,0 +1,50 @@
+﻿@model AgregarTalleVm
+@{
+    ViewData["Title"] = "Nuevo Talle";
+}
+<form method="post" asp-action="Agregar" class="w-75">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="ZapatillaId" />
+    
+
+    <div class="border p-3 bg-white">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group row">
+            <h2 class="text-info pl-3"> Agregar/Editar Talles</h2>
+
+        </div>
+       
+        <div class="form-group row py-2">
+            <label asp-for="TallesId"></label>
+            <select asp-for="TallesId" class="form-control">
+                <option selected disabled>Select Talles</option>
+                @foreach (var item in Model.Talles)
+                {
+                    <option value="@item.TallesId">
+                        @item.TallesNumbero
+                    </option>
+                }
+              
+            </select>
+
+           
+        </div>
+        <div class="form-group row py-2">
+            <label asp-for="Stok" class="col-sm-2 col-form-label">Stok</label>
+            <div class="col-sm-10">
+                <input asp-for="Stok" class="form-control" type="number" min="1" />
+                <span asp-validation-for="Stok" class="text-danger"></span>
+            </div>
+        </div>
+       
+        <div>
+
+            <button type="submit" class="btn btn-primary mt-9">
+                <i class="bi bi-floppy2-fill"></i>
+                Agregar
+            </button>
+            
+        </div>
+            
+</form>
+

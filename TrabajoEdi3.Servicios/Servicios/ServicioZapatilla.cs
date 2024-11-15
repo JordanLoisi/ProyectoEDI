@@ -173,9 +173,9 @@ namespace TrabajoEdi3.Servicios.Servicios
                orden, DeporteFiltro, MarcaFiltro, colorFiltro, GeneroFiltro, tallesSelec,tallemax);
         }
 
-        public List<ZapatillasTalles>? GetTallesPorZapatilla(int zapatillaId)
+        public ZapatillasTalles? GetTallesPorZapatilla(int zapatillaId, int tallesId)
         {
-            return _repository.GetTallesPorZapatilla(zapatillaId);
+            return _repository.GetTallesPorZapatilla(zapatillaId,tallesId);
         }
 
         public Zapatilla? GetZapatillaPorId(int zapatillaId)
@@ -297,6 +297,22 @@ namespace TrabajoEdi3.Servicios.Servicios
             string? propertiesNames = null)
         {
             return _repository!.GetAll(filter, orderBy, propertiesNames);
+        }
+
+        public void AsignarTallesZapatilla(ZapatillasTalles zapatillaTalle)
+        {
+            try
+            {
+                _unitOfWork.BeginTransaction();
+                _repository.AgregarTallesZapatilla(zapatillaTalle);
+                _unitOfWork.Commit();
+            }
+            catch (Exception)
+            {
+                _unitOfWork.Rollback();
+                throw;
+            }
+          
         }
     }
 }

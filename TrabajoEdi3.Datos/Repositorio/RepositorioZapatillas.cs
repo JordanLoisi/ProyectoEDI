@@ -89,7 +89,7 @@ namespace TrabajoEdi3.Datos.Repositorio
                 }
                 else
                 {
-                    _Context.talles.Attach(tallesExistente); // Attach si el proveedor ya existe y está detached
+                    _Context.talles.Attach(tallesExistente);
                 }
 
                 if (!ExisteRelacion(zapatilla, tallesExistente))
@@ -382,12 +382,12 @@ namespace TrabajoEdi3.Datos.Repositorio
                 .ToList();
         }
 
-        public List<ZapatillasTalles>? GetTallesPorZapatilla(int zapatillaId)
+        public ZapatillasTalles? GetTallesPorZapatilla(int zapatillaId ,int talleId)
         {
             return _Context.zapatillastalles
                 .Include(pp => pp.Talles)
-               .Where(pp => pp.ZapatillaId == zapatillaId)
-               .ToList();
+               .FirstOrDefault(pp => pp.ZapatillaId == zapatillaId && pp.TallesId== talleId);
+               
         }
 
         public Zapatilla? GetZapatillaPorId(int zapatillaId)

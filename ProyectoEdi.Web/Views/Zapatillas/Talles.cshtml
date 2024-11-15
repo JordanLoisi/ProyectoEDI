@@ -1,0 +1,81 @@
+﻿@model ZapatillaTallesVm
+
+
+@{
+    ViewData["Title"] = "Listado de Zapatillas con sus Talles ";
+}
+
+@Html.AntiForgeryToken()//Faltaba esto Joder!!!
+<input type="hidden" asp-for="@Model.ZapatillaId" />
+ 
+<div class="row mb-3">
+    <div class="col-6">
+        <h3>Listado de Zapatillas con Talles </h3>
+
+    </div>
+</div>
+<div class="Row ">
+    <label>Marca:@Model.Marca</label>
+    <label>Deporte:@Model.Deporte</label>
+    <label>Genero:@Model.Genero</label>
+</div>
+<div class= "Row" >
+    <label>Color:@Model.Color</label>
+    <label>Modelo:@Model.Modelo</label>
+    <a asp-controller="Zapatillas" asp-action="Agregar" asp-route-id="@Model.ZapatillaId" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i>
+        add
+    </a>
+
+</div>
+
+
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr> 
+            <th style="width:15%">Talles</th>
+            <th style="width:15%">Stock</th>
+            <th style="width:10%">EditarStock</th>
+            
+        </tr>
+
+    </thead>
+    <tbody>
+       
+        @if (@Model.tallesyStock.Any())
+        {
+            foreach (var item in @Model.tallesyStock)
+            {
+               
+                <tr>
+                    <td>
+                        @item.Talles.TallesNumbero
+
+                    </td>
+                    <td>
+                        @item.Stok
+                    </td>
+                    <td>
+                        <a asp-controller="Zapatillas" asp-action="EditarStock" asp-route-TallesId="@item.TallesId"asp-route-ZapatillaId="@Model.ZapatillaId" class="btn btn-primary">
+                            <i class="bi bi-plus-circle"></i>
+                            Editar
+                        </a>
+                    </td>
+                </tr>
+               
+                    
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6" class="text-center">
+                    F?uck!!! No Zapatilla have been added yet!
+
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>

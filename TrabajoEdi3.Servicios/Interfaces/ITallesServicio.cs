@@ -28,6 +28,8 @@ namespace TrabajoEdi3.Servicios.Interfaces
         int GetCantidad();
         List<Talles> GetTallesPaginadosOrdenados(int page, int pageSize, Orden? orden = null);
 
+        List<ZapatillasTalles?> GetTallesPorZapatilla(int zapatillaId);
+
         bool EstaRelacionado(int id);
 
         void EditarStocks(ZapatillasTalles zapatillasTalles);

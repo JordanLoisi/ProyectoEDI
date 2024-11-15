@@ -1,0 +1,16 @@
+﻿@model EditarStockVm
+
+<form method="post" asp-action="EditarStock">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="ZapatillaId" />
+    <input type="hidden" asp-for="TallesId" />
+
+    <div class="form-group">
+        <label asp-for="Stok" class="col-form-label">Nuevo Stock</label>
+        <input asp-for="Stok" class="form-control" type="number" min="0" />
+        <span asp-validation-for="Stok" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Actualizar Stock</button>
+</form>
+

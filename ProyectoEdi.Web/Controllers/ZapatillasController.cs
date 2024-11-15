@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using ProyectoEdi.Web.Views_Model.Zapatillas;
 using System.Drawing;
 using TrabajoEdi3.Datos;
@@ -18,21 +19,23 @@ namespace ProyectoEdi.Web.Controllers
         private readonly IServicioDeporte? _deporteServicio;
         private readonly IServicioColor? _colorServicio;
         private readonly IServicioGenero? _generoServicio;
+        private readonly ITallesServicio? _tallesServicio;
         private readonly IMapper? _mapper;
-       
+
 
 
 
         public ZapatillasController(IServicioZapatilla servicio, IServicioMarca servicioMarca, IServicioDeporte servicioDeporte,
-            IServicioGenero servicioGenero, IServicioColor servicioColor, IMapper mapper, DbContex dbContex)
+            IServicioGenero servicioGenero, IServicioColor servicioColor, ITallesServicio tallesServicio, IMapper mapper, DbContex dbContex)
         {
             _servicio = servicio ?? throw new ApplicationException("Dependencies not set"); ;
             _marcaServicio = servicioMarca ?? throw new ApplicationException("Dependencies not set");
             _deporteServicio = servicioDeporte ?? throw new ApplicationException("Dependencies not set");
             _colorServicio = servicioColor ?? throw new ApplicationException("Dependencies not set");
             _generoServicio = servicioGenero ?? throw new ApplicationException("Dependencies not set");
+            _tallesServicio = tallesServicio ?? throw new ApplicationException("Dependencies not set");
             _mapper = mapper ?? throw new ApplicationException("Dependencies not set");
-           
+
         }
         public IActionResult Index(int? page, int? filterMarcaId, int? filterColorId, bool viewAll = false, int pageSize = 10,
             string orderBy = "Description")
@@ -41,7 +44,7 @@ namespace ProyectoEdi.Web.Controllers
             int PageNumber = page ?? 1;
             ViewBag.currentPageSize = pageSize;
             ViewBag.currentOrderBy = orderBy;
-           
+
 
             var marca = _marcaServicio!.GetAll(orderBy: o => o.OrderBy(b => b.MarcaNombre))!.ToList();
             var color = _colorServicio!.GetAll(orderBy: o => o.OrderBy(c => c.ColorName))!.ToList();
@@ -105,7 +108,7 @@ namespace ProyectoEdi.Web.Controllers
                     Text = b.MarcaNombre,
                     Value = b.MarcaId.ToString()
                 }).ToList(),
-               Color = color.Select(c => new SelectListItem
+                Color = color.Select(c => new SelectListItem
                 {
                     Text = c.ColorName,
                     Value = c.ColorId.ToString()
@@ -122,7 +125,7 @@ namespace ProyectoEdi.Web.Controllers
                 zapatillaVm = new ZapatillasEditVm();
                 zapatillaVm.Marca = GetMarca();
                 zapatillaVm.Deporte = GetDeporte();
-                zapatillaVm.Color = GetColor(); 
+                zapatillaVm.Color = GetColor();
                 zapatillaVm.Genero = GetGenero();
 
 
@@ -271,5 +274,123 @@ namespace ProyectoEdi.Web.Controllers
 
             }
         }
+
+        public IActionResult Talles(int? id)
+        {
+            Zapatilla? zapatilla = _servicio?.Get(filter: c => c.ZapatillaId == id,
+            propertiesNames: "Marca,Deporte,Genero,Colores");
+
+            var talles = _tallesServicio.GetTallesPorZapatilla(zapatilla.ZapatillaId);
+
+            ZapatillaTallesVm zapatillaTallesVm = new ZapatillaTallesVm()
+            {
+                ZapatillaId = zapatilla.ZapatillaId,
+                Marca = zapatilla.Marca.MarcaNombre,
+                Deporte = zapatilla.Deporte.NombreDeporte,
+                Genero = zapatilla.Genero.GeneroNombre,
+                Color = zapatilla.Colores.ColorName,
+                Modelo = zapatilla.Modelo,
+                tallesyStock = talles
+            };
+           
+
+            return View(zapatillaTallesVm);
+
+        }
+        public IActionResult EditarStock(int? ZapatillaId , int? TallesId )
+        {
+            Zapatilla? zapatilla = _servicio?.Get(filter: c => c.ZapatillaId == ZapatillaId);
+            var talles = _tallesServicio?.Get(filter: c => c.TallesId == TallesId);
+
+           
+            var editarStockVm = new EditarStockVm()
+            {
+                ZapatillaId = zapatilla.ZapatillaId,
+                TallesId = talles.TallesId,
+                
+            };
+            return View (editarStockVm);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditarStock(EditarStockVm editarStockVm)
+        {
+            Zapatilla? zapatilla = _servicio?.Get(filter: c => c.ZapatillaId == editarStockVm.ZapatillaId);
+            var talles = _tallesServicio?.Get(filter: c => c.TallesId == editarStockVm.TallesId);
+
+            if (!ModelState.IsValid)
+            {
+                editarStockVm.ZapatillaId = zapatilla.ZapatillaId;
+                editarStockVm.TallesId=talles.TallesId;
+                return View(editarStockVm);
+            }  
+            if (editarStockVm == null || editarStockVm.Stok == 0)
+            {
+                TempData["error"] = "Este registro ya no tiene stock 0 y no puede ser editado.";
+                return View(editarStockVm);
+            }
+            if (_servicio.ExisteRelacion(zapatilla, talles))
+            {
+                var talleszapas = _servicio.GetTallesPorZapatilla(zapatilla.ZapatillaId, talles.TallesId);
+                talleszapas.Stok += editarStockVm.Stok;
+               _tallesServicio.EditarStocks(talleszapas);
+                TempData["success"] = "Stock actualizado correctamente.";
+            }
+            
+            return RedirectToAction("Index");
+        }
+        public IActionResult Agregar(int? id)
+        {
+            Zapatilla? zapatilla = _servicio?.Get(filter: c => c.ZapatillaId == id);
+
+            var talles = _tallesServicio.GetLista();
+            AgregarTalleVm agregarTalleVm = new AgregarTalleVm()
+            {
+                ZapatillaId = zapatilla.ZapatillaId,
+                Talles = talles
+
+            };
+
+            return View(agregarTalleVm);
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Agregar(AgregarTalleVm agregarTalleVm)
+        { 
+            Zapatilla? zapatilla = _servicio?.Get(filter: c => c.ZapatillaId == agregarTalleVm.ZapatillaId);
+            var talles = _tallesServicio?.Get(filter: c => c.TallesId == agregarTalleVm.TallesId);
+            agregarTalleVm.Talles = _tallesServicio?.GetLista();
+            ModelState.Remove("Talles");
+            if (!ModelState.IsValid)
+            {
+                agregarTalleVm.ZapatillaId = zapatilla.ZapatillaId;
+                agregarTalleVm.TallesId = talles.TallesId ;
+                agregarTalleVm.Talles = _tallesServicio.GetLista();
+                return View(agregarTalleVm);
+
+            }
+            if (!_servicio.ExisteRelacion(zapatilla,talles))
+            {
+                var zapatillaTalle = new TrabajoEdi3.Entidades.ZapatillasTalles()
+                {
+                    ZapatillaId = zapatilla.ZapatillaId,
+                    TallesId = talles.TallesId,
+                    Stok = agregarTalleVm.Stok
+
+                };
+                _servicio.AsignarTallesZapatilla(zapatillaTalle);
+            }
+            else
+            {
+                agregarTalleVm.Talles=_tallesServicio?.GetLista();
+                return View(agregarTalleVm);
+            }
+           
+            TempData["success"] = "Record successfully added/edited";
+            return RedirectToAction("Index");
+        }
+        
     }
-}
+    }
+

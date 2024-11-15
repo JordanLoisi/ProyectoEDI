@@ -145,6 +145,11 @@ namespace TrabajoEdi3.Servicios.Servicios
             }
         }
 
+        public List<ZapatillasTalles?> GetTallesPorZapatilla(int zapatillaId)
+        {
+            return _repository.GetTallesPorZapatilla(zapatillaId);
+        }
+
         public void Guardar(Talles talles)
         {
             try

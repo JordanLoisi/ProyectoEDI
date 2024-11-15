@@ -29,7 +29,7 @@ namespace TrabajoEdi3.Datos.Intefaces
         void AgregarTallesZapatilla(ZapatillasTalles nuevaRelacion);
         void Editar(Zapatilla zapatilla, int? TallesId);
 
-        List<ZapatillasTalles>? GetTallesPorZapatilla(int zapatillaId);
+        ZapatillasTalles GetTallesPorZapatilla(int zapatillaId, int tallesId);
         bool ExisteRelacion(Zapatilla zapatilla, Talles talles);
         void AgregarZapatillaTalles(Zapatilla zapatilla, List<Talles> talles);
 

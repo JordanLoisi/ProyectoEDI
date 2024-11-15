@@ -108,5 +108,14 @@ namespace TrabajoEdi3.Datos.Repositorio
             return query
                 .FirstOrDefault(p => p.TallesId == id);
         }
+
+        public List<ZapatillasTalles> GetTallesPorZapatilla(int zapatillaId)
+        {
+            return _context.zapatillastalles
+                .Include(pp => pp.Talles)
+               .Where(pp => pp.ZapatillaId == zapatillaId)
+               .ToList();
+
+        }
     }
 }
